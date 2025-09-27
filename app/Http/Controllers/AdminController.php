@@ -27,4 +27,27 @@ class AdminController extends Controller
         // kembali ke halaman list user, tetap login sebagai admin
         return redirect()->back()->with('success', 'User baru berhasil ditambahkan.');
     }
+
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('success', 'User berhasil diupdate.');
+    }
+
 }

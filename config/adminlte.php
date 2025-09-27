@@ -329,7 +329,7 @@ return [
         ],
         [
             'text' => 'User Profil',
-            'url' => '/user-profil',
+            'url' => '/user-profile',
             'icon' => 'fas fa-fw fa-user',
         ],
         ['header' => 'SETTING'],
@@ -386,7 +386,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

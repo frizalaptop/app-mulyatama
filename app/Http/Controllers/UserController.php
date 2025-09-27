@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -23,17 +24,7 @@ class UserController extends Controller
             ['label' => 'Aksi', 'no-export' => true],
         ];
 
-        $btnEdit = '<button class="btn btn-xs btn-default text-primary mx-1 shadow" title="Edit">
-                        <i class="fa fa-lg fa-fw fa-pen"></i>
-                    </button>';
-        $btnDelete = '<button class="btn btn-xs btn-default text-danger mx-1 shadow" title="Delete">
-                        <i class="fa fa-lg fa-fw fa-trash"></i>
-                    </button>';
-        $btnDetails = '<button class="btn btn-xs btn-default text-teal mx-1 shadow" title="Details">
-                        <i class="fa fa-lg fa-fw fa-eye"></i>
-                    </button>';
-
-        // Ubah collection User jadi array datatable
+        // siapkan array data untuk datatable
         $data = [];
         foreach ($users as $user) {
             $data[] = [
@@ -45,7 +36,7 @@ class UserController extends Controller
                 $user->last_login_at ? $user->last_login_at->format('d/m/Y H:i') : '-',
                 $user->created_at->format('d/m/Y H:i'),
                 $user->updated_at->format('d/m/Y H:i'),
-                $btnEdit . $btnDelete . $btnDetails,
+                $user->id, // untuk kolom aksi (edit/delete)
             ];
         }
 
@@ -57,4 +48,32 @@ class UserController extends Controller
 
         return view('user.user-list', compact('users', 'heads', 'config'));
     }
+
+    public function userProfile()
+    {
+        return view('user.user-profile');
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profil berhasil diperbarui.');
+    }
+
 }
