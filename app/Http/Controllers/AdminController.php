@@ -17,12 +17,17 @@ class AdminController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        // simpan user baru
-        User::create([
+        $data = [
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-        ]);
+            ...($request->aktifasi != 'Aktif'
+            ? ['active' => false] 
+            : [])
+        ];
+
+        // simpan user baru
+        User::create($data);
 
         // kembali ke halaman list user, tetap login sebagai admin
         return redirect()->back()->with('success', 'User baru berhasil ditambahkan.');
@@ -40,6 +45,8 @@ class AdminController extends Controller
 
         $user->name = $request->name;
         $user->email = $request->email;
+        
+        $request->aktifasi == 'Aktif' ? $user->active = true : $user->active = false; 
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);

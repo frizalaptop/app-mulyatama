@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function userList()
     {
-        $users = User::paginate(5);
+        $users = User::all();
 
         $heads = [
             'ID',
@@ -43,7 +43,32 @@ class UserController extends Controller
         $config = [
             'data' => $data,
             'order' => [[1, 'asc']],
-            'columns' => [null, null, null, null, null, null, null, null, ['orderable' => false]],
+            'columns' => [
+                ['orderable' => false],
+                ['orderable' => true],  
+                ['orderable' => false], 
+                ['orderable' => true],  
+                ['orderable' => true],  
+                ['orderable' => false], 
+                ['orderable' => false], 
+                ['orderable' => false], 
+                ['orderable' => false],
+            ],
+            'dom' => '<"d-flex justify-content-between mb-2"Blf>rtip', // lf=length & filter, B=buttons
+            'buttons' => [
+                [
+                    'text' => 'Add',
+                    'className' => 'btn btn-outline-dark btn-sm',
+                    'attr' => [
+                        'data-target' => '#modalAdd',
+                        'data-toggle' => 'modal',
+                    ],
+                ],
+                [
+                    'text' => 'Excel',
+                    'className' => 'btn btn-outline-dark btn-sm',
+                ],
+            ],
         ];
 
         return view('user.user-list', compact('users', 'heads', 'config'));
