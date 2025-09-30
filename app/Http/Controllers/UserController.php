@@ -54,11 +54,15 @@ class UserController extends Controller
                 ['orderable' => false], 
                 ['orderable' => false],
             ],
-            'dom' => '<"d-flex justify-content-between mb-2"Blf>rtip', // lf=length & filter, B=buttons
+            'dom' => <<<DOM
+                        <"row mb-2"<"col-sm-2"B><"col-sm-2"l><"col-sm-8"f>>
+                        <"row"<"col-sm-12"tr>>
+                        <"row mt-2"<"col-sm-5"i><"col-sm-7"p>>
+                    DOM, 
             'buttons' => [
                 [
                     'text' => 'Add',
-                    'className' => 'btnAdd dt-button',
+                    'className' => 'btn btn-default btn-sm dt-button',
                     'attr' => [
                         'data-target' => '#modalAdd',
                         'data-toggle' => 'modal',
@@ -66,8 +70,9 @@ class UserController extends Controller
                 ],
                 [
                     'text' => 'Excel',
-                    'className' => 'btnExcel dt-button',
+                    'className' => 'btnExcel btn btn-default btn-sm dt-button',
                 ],
+                
             ],
         ];
 
