@@ -1,1 +1,54 @@
-.dataTables_wrapper,.dataTables_wrapper .btn-sm,.dataTables_wrapper .form-control{font-size:13px}.dataTables_wrapper .dt-button{padding:5px 10px;background:transparent;border:1px solid #ced4da;border-radius:4px;color:#444;margin-right:.2rem}.dataTables_wrapper .dt-button:hover{background:#000;color:#fff}
+/* Tombol */
+.dataTables_wrapper,
+.dataTables_wrapper .btn-sm,
+.dataTables_wrapper .form-control {
+  font-size: 13px
+}
+
+.dataTables_wrapper .dt-button {
+  padding: 5px 10px;
+  background: transparent;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  color: #444;
+  margin-right: 0.2rem;
+}
+
+.dataTables_wrapper .dt-button:hover {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Reset bawaan DataTables */
+table.dataTable>thead .sorting::before,
+table.dataTable>thead .sorting::after,
+table.dataTable>thead .sorting_asc::before,
+table.dataTable>thead .sorting_asc::after,
+table.dataTable>thead .sorting_desc::before,
+table.dataTable>thead .sorting_desc::after {
+  float: none !important;
+  position: absolute !important;
+  right: 0.4em !important;
+  /* konsisten untuk semua ikon */
+  line-height: 0.2;
+  font-size: 0.8em;
+  margin-right: 5px
+}
+
+/* Segitiga ke atas */
+table.dataTable>thead .sorting::before,
+table.dataTable>thead .sorting_asc::before,
+table.dataTable>thead .sorting_desc::before {
+  content: "\25B2" !important;
+  /* ▲ */
+  top: calc(50% - 0.6em) !important;
+}
+
+/* Segitiga ke bawah */
+table.dataTable>thead .sorting::after,
+table.dataTable>thead .sorting_asc::after,
+table.dataTable>thead .sorting_desc::after {
+  content: "\25BC" !important;
+  /* ▼ */
+  top: calc(50% + 0.2em) !important;
+}

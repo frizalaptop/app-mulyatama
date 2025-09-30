@@ -33,7 +33,7 @@
             'buttons' => [
                 [
                     'text' => 'Add',
-                    'className' => 'btn btn-default btn-sm dt-button',
+                    'className' => 'btn-default btn-sm dt-button',
                     'attr' => [
                         'data-target' => '#modalAdd',
                         'data-toggle' => 'modal',
@@ -41,14 +41,14 @@
                 ],
                 [
                     'text' => 'Excel',
-                    'className' => 'btnExcel btn btn-default btn-sm dt-button',
+                    'className' => 'btn-default btn-sm dt-button',
                 ],
             ],
         ];
     @endphp
 
     <!-- Modal Add User -->
-    <form method="POST" action="{{ route('user.add') }}" >
+    <form id="formAddUser" method="POST" action="{{ route('user.add') }}" >
         @csrf
         <x-adminlte-modal id="modalAdd" title="Tambah User" theme="blue" size='lg'>
 
@@ -108,7 +108,9 @@
 
             <x-slot name="footerSlot">
                 <div class="d-flex justify-content-end w-100">
-                    <x-adminlte-button class="btn-flat" type="submit" label="Simpan" theme="success" icon="fas fa-lg fa-save"/>
+                    <button type="submit" class="btn btn-success btn-flat">
+                        <i class="fas fa-lg fa-save"></i> Simpan
+                    </button>
                     <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal"/>
                 </div>
             </x-slot>
@@ -124,7 +126,7 @@
     <x-adminlte-card theme="light">
 
         <!-- Table -->
-        <x-adminlte-datatable id="tableUserList" :heads="$heads" :config="$config">
+        <x-adminlte-datatable :heads="$heads" :config="$config" class="table-bordered">
         </x-adminlte-datatable>
 
     </x-adminlte-card>

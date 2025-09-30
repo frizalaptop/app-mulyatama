@@ -18,3 +18,18 @@
   background: #000000;
   color: #ffffff;
 }
+
+table.dataTable.dtr-inline.collapsed>tbody>tr>td.dtr-control:before {
+    content: '+';  
+    background-color: #28a745; /* hijau */
+    color: #fff;
+    border-radius: 3px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* saat expand (row terbuka) */
+table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td.dtr-control:before {
+    content: '-';  
+    background-color: #dc3545; /* merah */
+}
