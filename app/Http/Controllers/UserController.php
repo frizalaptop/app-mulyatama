@@ -44,7 +44,7 @@ class UserController extends Controller
             'data' => $data,
             'order' => [[1, 'asc']],
             'columns' => [
-                ['orderable' => false],
+                ['orderable' => true],
                 ['orderable' => true],  
                 ['orderable' => false], 
                 ['orderable' => true],  
@@ -58,7 +58,7 @@ class UserController extends Controller
             'buttons' => [
                 [
                     'text' => 'Add',
-                    'className' => 'btn btn-outline-dark btn-sm',
+                    'className' => 'btnAdd dt-button',
                     'attr' => [
                         'data-target' => '#modalAdd',
                         'data-toggle' => 'modal',
@@ -66,7 +66,7 @@ class UserController extends Controller
                 ],
                 [
                     'text' => 'Excel',
-                    'className' => 'btn btn-outline-dark btn-sm',
+                    'className' => 'btnExcel dt-button',
                 ],
             ],
         ];

@@ -1,0 +1,18 @@
+/* Tombol */
+.dataTables_wrapper,
+.dataTables_wrapper .btn-sm,
+.dataTables_wrapper .form-control {
+  font-size: 13px
+}
+
+.dataTables_wrapper .dt-button {
+  padding: 5px 10px;
+  background: transparent;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+}
+
+.dataTables_wrapper .dt-button:hover {
+  background: #000000;
+  color: #ffffff;
+}

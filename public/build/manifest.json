@@ -1,16 +1,30 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-tn0RQdqM.css",
+    "file": "assets/app-tn0RQdqM.min.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
       "app.css"
     ]
   },
+  "resources/css/custom.css": {
+    "file": "assets/custom.min.css",
+    "src": "resources/css/custom.css",
+    "isEntry": true,
+    "names": [
+      "custom.css"
+    ]
+  },
   "resources/js/app.js": {
-    "file": "assets/app-Bj43h_rG.js",
+    "file": "assets/app-Bj43h_rG.min.js",
     "name": "app",
     "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/custom.js": {
+    "file": "assets/custom.min.js",
+    "name": "custom",
+    "src": "resources/js/custom.js",
     "isEntry": true
   }
 }

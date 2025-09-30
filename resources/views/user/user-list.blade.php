@@ -162,20 +162,9 @@
 
 @section('css')
     <style>
-        .modal .modal-title {
+        /* .modal .modal-title {
             text-align: center;
             width: 100%;
-        }
-
-        .dt-buttons .btn.btn-secondary {
-            background-color: transparent !important;
-            color: #343a40 !important;
-        }
-
-        .dt-buttons .btn.btn-secondary:hover {
-            background-color: #343a40 !important;
-            color: #fff !important;
-        }
-
+        } */
     </style>
 @stop
