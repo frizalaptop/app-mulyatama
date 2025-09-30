@@ -319,12 +319,12 @@ return [
         ['header' => 'USER'],
         [
             'text' => 'User List',
-            'url' => '/user-list',
+            'url' => '/admin/user-list',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'User Login',
-            'url' => '/user-login',
+            'url' => '/admin/user-login',
             'icon' => 'fas fa-fw fa-user',
         ],
         [

@@ -48,7 +48,15 @@
                 @if(config('adminlte.google_fonts.allowed', true))
                     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
                 @endif
+            
+                <!-- DataTables core + bootstrap4 theme -->
+                <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap4.min.css">
+                <!-- Responsive extension -->
+                <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap4.min.css">
+                <!-- Buttons extension (jika butuh export Excel/PDF/Print) -->
+                <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap4.min.css">
         @endswitch
+        
     @endif
 
     {{-- Extra Configured Plugins Stylesheets --}}
@@ -115,6 +123,20 @@
                 <script src="{{ asset('vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
                 <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
                 <script src="{{ asset('build/assets/custom.min.js') }}"></script>
+                
+                <!-- DataTables core + bootstrap4 theme -->
+                <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+                <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
+        
+                <!-- Responsive extension -->
+                <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+                <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap4.min.js"></script>
+        
+                <!-- Buttons extension (optional) -->
+                <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap4.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+                <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
         @endswitch
     @endif
 

@@ -11,7 +11,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::middleware(['auth'])
     ->controller(UserController::class)
     ->group(function () {
-        Route::get('/user-list', 'userList')->name('user.list');
+        Route::get('/admin/user-list', 'userList')->name('user.list');
+        Route::get('/admin/user-datatable', 'datatable')->name('user.datatable');
         Route::get('/user-profile', 'userProfile')->name('user.profile');
         Route::put('/user-profile', 'updateProfile')->name('profile.update');
 });

@@ -6,15 +6,20 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
+
 class AdminController extends Controller
 {
+    /**
+     * Menambah data user oleh admin
+     * @param \Illuminate\Http\Request $request [name, email, password, password_confirm]
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function addUser(Request $request)
     {
-        // validasi
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:100', 'min:3'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'max:100', 'min:8', 'confirmed'],
         ]);
 
         $data = [
@@ -26,13 +31,21 @@ class AdminController extends Controller
             : [])
         ];
 
-        // simpan user baru
-        User::create($data);
+        $user = User::create($data);
 
-        // kembali ke halaman list user, tetap login sebagai admin
-        return redirect()->back()->with('success', 'User baru berhasil ditambahkan.');
+        return response()->json([
+            'success' => true,
+            'message' => 'User baru berhasil ditambahkan.',
+            'user' => $user,
+        ]);
     }
 
+    /**
+     * Mengubah data user oleh admin
+     * @param \Illuminate\Http\Request $request [name, email, password, password_confirm]
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -54,7 +67,11 @@ class AdminController extends Controller
 
         $user->save();
 
-        return redirect()->back()->with('success', 'User berhasil diupdate.');
+        return response()->json([
+            'success' => true,
+            'message' => 'User berhasil diperbarui.',
+            'user' => $user,
+        ]);
     }
 
 }
