@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('pf_iduser')->references('id')->on('users')->onDelete('cascade');
             $table->string('pf_company')->nullable();
             $table->string('pf_wa', 15)->nullable();
-            $table->string('pf_telegram')->nullable();
+            $table->string('pf_telegram', 15)->nullable();
             $table->text('pf_address')->nullable();
             $table->string('pf_photo')->nullable();
             $table->timestamps();

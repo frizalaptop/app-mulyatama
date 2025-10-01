@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -59,28 +61,52 @@ class AdminController extends Controller
             'name' => ['required', 'string', 'max:100', 'min:3'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'max:100', 'min:8', 'confirmed'],
+
+            'company'  => ['nullable', 'string', 'max:100'],
+            'wa'       => ['nullable', 'string', 'max:15'],
+            'telegram' => ['nullable', 'string', 'max:15'],
+            'address'  => ['nullable', 'string'], 
         ]);
 
-        $data = [
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            ...($request->aktifasi != 'Aktif'
-            ? ['active' => false] 
-            : [])
-        ];
+        DB::beginTransaction();
 
-        $user = User::create($data);
+        try {
+            // buat user
+            $user = User::create([
+                'name'     => $validated['name'],
+                'email'    => $validated['email'],
+                'password' => Hash::make($validated['password']),
+                'active'   => $request->aktifasi == 'Aktif',
+            ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'User baru berhasil ditambahkan.',
-            'user' => $user,
-        ]);
+            $profile = Profile::create([
+                'pf_iduser'   => $user->id,
+                'pf_company'  => $validated['company'] ?? null,
+                'pf_wa'       => $validated['wa'] ?? null,
+                'pf_telegram' => $validated['telegram'] ?? null,
+                'pf_address'  => $validated['address'] ?? null,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User baru berhasil ditambahkan.',
+                'user'    => $user,
+            ]);
+
+        } catch (\Throwable $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menambahkan user: '.$e->getMessage(),
+            ], 500);
+        }
     }
 
     public function getUserById($id){
-        $user = User::findOrFail($id);
+        $user = User::with('profile')->findOrFail($id);
         return response()->json([
             'success' => true,
             'message' => 'User ditemukan.',
@@ -98,28 +124,57 @@ class AdminController extends Controller
     public function updateUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:100|min:3',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
+            'company' => 'nullable|string|max:255',
+            'wa' => 'nullable|string|max:15',
+            'telegram' => 'nullable|string|max:255',
+            'address' => 'nullable|string',
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        
-        $request->aktifasi == 'Aktif' ? $user->active = true : $user->active = false; 
+        DB::beginTransaction();
+        try {
+            $user->name = $validated['name'];
+            $user->email = $validated['email'];
+            $user->active = $request->aktifasi === 'Aktif';
 
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+            if (!empty($validated['password'])) {
+                $user->password = Hash::make($validated['password']);
+            }
+
+            $user->save();
+
+            $profileData = [
+                'pf_company'  => $validated['company'] ?? null,
+                'pf_wa'       => $validated['wa'] ?? null,
+                'pf_telegram' => $validated['telegram'] ?? null,
+                'pf_address'  => $validated['address'] ?? null,
+            ];
+
+            if ($user->profile) {
+                $user->profile->update($profileData);
+            } else {
+                $user->profile()->create($profileData);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User berhasil diperbarui.',
+                'user' => $user,
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
+            ], 500);
         }
-
-        $user->save();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'User berhasil diperbarui.',
-            'user' => $user,
-        ]);
     }
 
 }
