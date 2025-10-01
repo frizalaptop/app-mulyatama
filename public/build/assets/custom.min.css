@@ -19,6 +19,23 @@
   color: #ffffff;
 }
 
+.dataTables_wrapper .custom-select-sm {
+  font-size: 90%;
+}
+
+.dataTable tbody tr:hover {
+  background-color: #f0f8ff;
+}
+
+.dataTable .dtr-details {
+  width: 100%;
+}
+
+table.dataTable>tbody>tr.child span.dtr-title {
+  font-weight: 600;
+  min-width: 110px;
+}
+
 /* Modal */
 .modal-header {
   justify-content: center;
@@ -26,8 +43,6 @@
 .close {
   display: none;
 }
-
-
 
 /* Reset bawaan DataTables */
 table.dataTable>thead .sorting::before,
@@ -43,6 +58,11 @@ table.dataTable>thead .sorting_desc::after {
   line-height: 0.2;
   font-size: 0.8em;
   margin-right: 5px
+}
+
+#tableUserList td.col-status,
+#tableUserList th.col-status {
+    min-width: 80px;
 }
 
 /* Segitiga ke atas */
@@ -61,4 +81,11 @@ table.dataTable>thead .sorting_desc::after {
   content: "\25BC" !important;
   /* ▼ */
   top: calc(50% + 0.2em) !important;
+}
+
+/* lencana status */
+.lencana {
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 6px;
 }

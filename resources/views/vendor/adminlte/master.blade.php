@@ -45,7 +45,7 @@
                 <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
                 
                 @if(config('adminlte.google_fonts.allowed', true))
-                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
                 @endif
                 
                 <link rel="stylesheet" href="{{ asset("/vendor/datatables/css/dataTables.bootstrap4.min.css") }}">
@@ -121,14 +121,12 @@
                 
                 <script src="{{ asset('/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
                 <script src="{{ asset('/vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
-                
                 <script src="{{ asset('/vendor/datatables-plugins/responsive/js/dataTables.responsive.min.js') }}"></script>
                 <script src="{{ asset('/vendor/datatables-plugins/responsive/js/responsive.bootstrap4.min.js') }}"></script>
-                
                 <script src="{{ asset('/vendor/datatables-plugins/buttons/js/dataTables.buttons.min.js') }}"></script>
                 <script src="{{ asset('/vendor/datatables-plugins/buttons/js/buttons.html5.min.js') }}"></script>
                 <script src="{{ asset('/vendor/datatables-plugins/jszip/jszip.min.js') }}"></script>
-                <script src="{{ asset('build/assets/custom.min.js') }}"></script>
+                
         @endswitch
     @endif
 
@@ -146,7 +144,7 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
-
+    <script src="{{ asset('build/assets/custom.min.js') }}"></script>
 </body>
 
 </html>

@@ -30,5 +30,4 @@
 @stop
 
 @section('js')
-
 @stop

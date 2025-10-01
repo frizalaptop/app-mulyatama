@@ -5,47 +5,6 @@
 @stop
 
 @section('content')
-    @php
-        $heads = ['ID', 'Nama', 'Email', 'Status', 'Aksi'];
-        $config = [
-            'ajax' => route('user.datatable'),
-            'paging' => true,
-            'searching' => true,
-            'ordering' => true,
-            'info' => true,
-            'autoWidth' => false,
-            'responsive' => true,
-            'processing' => true,
-            'serverSide' => false,
-            'order' => [[1, 'asc']],
-            'columns' => [
-                ['data' => 'id'],
-                ['data' => 'name'],
-                ['data' => 'email'],
-                ['data' => 'status'],
-                ['data' => 'aksi', 'orderable' => false, 'searchable' => false],
-            ],
-            'dom' => <<<DOM
-                <"row mb-2"<"col-sm-2"B><"col-sm-2"l><"col-sm-8"f>>
-                <"row"<"col-sm-12"tr>>
-                <"row mt-2"<"col-sm-5"i><"col-sm-7"p>>
-            DOM,
-            'buttons' => [
-                [
-                    'text' => 'Add',
-                    'className' => 'btn-default btn-sm dt-button',
-                    'attr' => [
-                        'data-target' => '#modalAddUser',
-                        'data-toggle' => 'modal',
-                    ],
-                ],
-                [
-                    'text' => 'Excel',
-                    'className' => 'btn-default btn-sm dt-button',
-                ],
-            ],
-        ];
-    @endphp
 
     <!-- Modal Add User -->
     <form id="formAddUser" method="POST" action="{{ route('user.add') }}" >
@@ -196,9 +155,7 @@
 
     <x-adminlte-card theme="light">
         <!-- Table -->
-        <x-adminlte-datatable id="tableUserList" :heads="$heads" :config="$config" class="table-bordered">
-        </x-adminlte-datatable>
-
+        <table id="tableUserList" class="table table-bordered table-hover dataTable dtr-inline"></table>
     </x-adminlte-card>
 @stop
 
@@ -209,6 +166,7 @@
 <script>
     window.routes = {
         getUser: "{{ route('user.get', ['id' => ':id']) }}",
+        dataTable: "{{ route('user.datatable') }}",
     };
 </script>
 @stop

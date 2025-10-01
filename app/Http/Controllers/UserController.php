@@ -10,27 +10,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
-    public function userList()
-    {
-        return view('user.user-list');
-    }
-
-    public function datatable()
-    {
-         $users = User::get(['id', 'name', 'email', 'active']);
-
-        return response()->json([
-            'data' => $users->map(function($user) {
-                return [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'status' => $user->active ? 'Aktif' : 'Nonaktif',
-                    'aksi' => '<button class="btn btn-sm btn-dark" data-id="'.$user->id.'"  data-target="#modalEditUser" data-toggle="modal">Edit</button>',
-                ];
-            }),
-        ]);
-    }
 
     public function userProfile()
     {

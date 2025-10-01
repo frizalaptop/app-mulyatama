@@ -10,7 +10,46 @@ use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
     /**
-     * Menambah data user oleh admin
+     * Mengambil ui daftar user 
+     * Role admin
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function userList()
+    {
+        return view('user.user-list');
+    }
+
+    /**
+     * Mengambil data-tabel user
+     * Role admin
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function datatable()
+    {
+         $users = User::get();
+
+        return response()->json([
+            'data' => $users->map(function($user) {
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'status' => $user->active ? 
+                        '<span class="lencana bg-primary">aktif</span>' : 
+                        '<span class="lencana bg-danger">Non aktif</span>',
+                    'role' => $user->role ?? '-',
+                    'last_login_at' => $user->last_login_at,
+                    'created_at' => $user->created_at,
+                    'updated_at' => $user->updated_at,
+                    'action' => '<button class="btn btn-sm btn-dark" data-id="'.$user->id.'"  data-target="#modalEditUser" data-toggle="modal">Edit</button><button class="btn btn-sm btn-success" data-id="'.$user->id.'">Profil</button>',
+                ];
+            }),
+        ]);
+    }
+
+    /**
+     * Menambah data user
+     * Role admin
      * @param \Illuminate\Http\Request $request [name, email, password, password_confirm]
      * @return \Illuminate\Http\JsonResponse
      */
@@ -50,7 +89,8 @@ class AdminController extends Controller
     }
 
     /**
-     * Mengubah data user oleh admin
+     * Mengubah data user
+     * Role admin
      * @param \Illuminate\Http\Request $request [name, email, password, password_confirm]
      * @param mixed $id
      * @return \Illuminate\Http\JsonResponse

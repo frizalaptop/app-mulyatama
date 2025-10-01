@@ -48,4 +48,6 @@ class User extends Authenticatable
             'last_login_at' => 'datetime',
         ];
     }
+
+    protected $dateFormat = 'Y-m-d H:i:s';
 }
