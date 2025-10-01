@@ -40,6 +40,15 @@ class AdminController extends Controller
         ]);
     }
 
+    public function getUserById($id){
+        $user = User::findOrFail($id);
+        return response()->json([
+            'success' => true,
+            'message' => 'User ditemukan.',
+            'user' => $user,
+        ]);
+    }
+
     /**
      * Mengubah data user oleh admin
      * @param \Illuminate\Http\Request $request [name, email, password, password_confirm]
@@ -49,10 +58,9 @@ class AdminController extends Controller
     public function updateUser(Request $request, $id)
     {
         $user = User::findOrFail($id);
-
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 

@@ -19,6 +19,16 @@
   color: #ffffff;
 }
 
+/* Modal */
+.modal-header {
+  justify-content: center;
+}
+.close {
+  display: none;
+}
+
+
+
 /* Reset bawaan DataTables */
 table.dataTable>thead .sorting::before,
 table.dataTable>thead .sorting::after,

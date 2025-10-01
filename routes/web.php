@@ -21,5 +21,6 @@ Route::middleware(['auth'])
     ->controller(AdminController::class)
     ->group(function () {
         Route::post('/admin/users', 'addUser')->name('user.add');
+        Route::get('/admin/users/{id}', 'getUserById')->name('user.get');
         Route::put('/admin/users/{id}', 'updateUser')->name('user.update');
     });
