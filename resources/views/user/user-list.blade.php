@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('content_header')
-    <h1>User List</h1>
-@stop
-
 @section('content')
 
     <!-- Modal Add User -->
@@ -11,7 +7,7 @@
         @csrf
         <x-adminlte-modal id="modalAddUser" title="Tambah User" theme="blue" size='lg' v-centered disable-x="false">
 
-            <div class="row">
+            <div class="row pl-3 pr-3 pt-3">
                 <!-- akun -->
                 <div class="col-md-6">
                     <x-adminlte-input name="name" placeholder="Nama Lengkap" label-class="text-lightblue">
@@ -48,7 +44,10 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <x-adminlte-select name="aktifasi" label="Status">
+                            <x-adminlte-select name="aktifasi">
+                                <x-slot name="label">
+                                    Status <span class="text-danger">*</span>
+                                </x-slot>
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text">
                                         <i class="fas fa-user-check text-lightblue"></i>
@@ -58,7 +57,10 @@
                             </x-adminlte-select>
                         </div>
                         <div class="col-md-6">
-                            <x-adminlte-select name="role" label="Hak Akses">
+                            <x-adminlte-select name="role">
+                                <x-slot name="label">
+                                    Hak Akses <span class="text-danger">*</span>
+                                </x-slot>
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text">
                                         <i class="fas fa-user-cog text-lightblue"></i>
@@ -109,10 +111,10 @@
 
             <x-slot name="footerSlot">
                 <div class="d-flex justify-content-end w-100">
-                    <button type="submit" class="btn btn-primary btn-flat">
-                        <i class="fas fa-lg fa-save"></i> Simpan
+                    <button type="submit" class="btn btn-primary m-1">
+                        Simpan
                     </button>
-                    <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal"/>
+                    <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal" class="m-1"/>
                 </div>
             </x-slot>
 
@@ -127,7 +129,7 @@
         @method('PUT')
         <x-adminlte-modal id="modalEditUser" title="Edit User" theme="blue" size='lg' v-centered disable-x="false">
 
-            <div class="row">
+            <div class="row pl-3 pr-3 pt-3">
                 <!-- akun -->
                 <div class="col-md-6">
                     <x-adminlte-input name="name" placeholder="Nama Lengkap" label-class="text-lightblue" id="edit_name">
@@ -164,7 +166,10 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <x-adminlte-select name="aktifasi" label="Status" id="edit_aktifasi">
+                            <x-adminlte-select name="aktifasi" id="edit_aktifasi">
+                                <x-slot name="label">
+                                    Status <span class="text-danger">*</span>
+                                </x-slot>
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text">
                                         <i class="fas fa-user-check text-lightblue"></i>
@@ -174,7 +179,10 @@
                             </x-adminlte-select>
                         </div>
                         <div class="col-md-6">
-                            <x-adminlte-select name="role" label="Hak Akses" id="edit_role">
+                            <x-adminlte-select name="role" id="edit_role">
+                                <x-slot name="label">
+                                    Hak Akses <span class="text-danger">*</span>
+                                </x-slot>
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text">
                                         <i class="fas fa-user-cog text-lightblue"></i>
@@ -225,10 +233,10 @@
 
             <x-slot name="footerSlot">
                 <div class="d-flex justify-content-end w-100">
-                    <button type="submit" class="btn btn-primary btn-flat">
-                        <i class="fas fa-lg fa-save"></i>Update
+                    <button type="submit" class="btn btn-primary m-1">
+                        Update
                     </button>
-                    <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal"/>
+                    <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal" class="m-1"/>
                 </div>
             </x-slot>
 

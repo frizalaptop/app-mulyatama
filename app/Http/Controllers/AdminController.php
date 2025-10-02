@@ -18,7 +18,7 @@ class AdminController extends Controller
      */
     public function userList()
     {
-        return view('user.user-list');
+        return view('user.user-list', ['title' => 'User List']);
     }
 
     /**
@@ -37,7 +37,7 @@ class AdminController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'status' => $user->active ? 
-                        '<span class="lencana bg-primary">aktif</span>' : 
+                        '<span class="lencana bg-primary">Aktif</span>' : 
                         '<span class="lencana bg-danger">Non aktif</span>',
                     'role' => $user->getRoleNames()->first(),
                     'last_login_at' => $user->last_login_at,
