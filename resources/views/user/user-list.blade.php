@@ -69,7 +69,7 @@
 
                 <!-- profil -->
                 <div class="col-md-6">
-                    <x-adminlte-input name="company" placeholder="Perusahaan" label-class="text-lightblue">
+                    <x-adminlte-input name="company" placeholder="Perusahaan" label-class="text-lightblue" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="fas fa-building text-lightblue"></i>
@@ -93,7 +93,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="address" placeholder="Alamat" label-class="text-lightblue">
+                    <x-adminlte-input name="address" placeholder="Alamat" label-class="text-lightblue" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="fas fa-home text-lightblue"></i>
@@ -118,7 +118,7 @@
     
 
     <!-- Modal Edit User -->
-    <form id="formEditUser" method="POST">
+    <form id="formEditUser" method="POST" data-cek="true">
         @csrf
         @method('PUT')
         <x-adminlte-modal id="modalEditUser" title="Edit User" theme="blue" size='lg' v-centered disable-x="false">
@@ -181,7 +181,7 @@
 
                 <!-- profil -->
                 <div class="col-md-6">
-                    <x-adminlte-input name="company" placeholder="Perusahaan" label-class="text-lightblue" id="edit_company">
+                    <x-adminlte-input name="company" placeholder="Perusahaan" label-class="text-lightblue" id="edit_company" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="fas fa-building text-lightblue"></i>
@@ -205,7 +205,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="address" placeholder="Alamat" label-class="text-lightblue" id="edit_address">
+                    <x-adminlte-input name="address" placeholder="Alamat" label-class="text-lightblue" id="edit_address" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="fas fa-home text-lightblue"></i>

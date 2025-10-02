@@ -10,8 +10,6 @@
   background: transparent;
   border: 1px solid #ced4da;
   border-radius: 4px;
-  color: #444;
-  margin-right: 0.2rem;
 }
 
 .dataTables_wrapper .dt-button:hover {
@@ -88,4 +86,20 @@ table.dataTable>thead .sorting_desc::after {
     font-size: 11px;
     padding: 5px 12px;
     border-radius: 6px;
+}
+
+@media screen and (max-width: 600px) {
+  .small-box p {
+    margin-bottom: 0;
+  }
+
+  .dataTables_wrapper .dt-buttons {
+    float: none;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .dataTable tr.child .dtr-data {
+    float: right;
+  }
 }

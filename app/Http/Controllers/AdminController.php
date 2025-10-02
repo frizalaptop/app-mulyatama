@@ -43,7 +43,12 @@ class AdminController extends Controller
                     'last_login_at' => $user->last_login_at,
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,
-                    'action' => '<button class="btn btn-sm btn-dark" data-id="'.$user->id.'"  data-target="#modalEditUser" data-toggle="modal">Edit</button><button class="btn btn-sm btn-success" data-id="'.$user->id.'">Profil</button>',
+                    'action' => '
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm btn-dark" data-id="'.$user->id.'"  data-target="#modalEditUser" data-toggle="modal">Edit</button>
+                            <button class="btn btn-sm btn-success" data-id="'.$user->id.'">Profil</button>
+                        </div>
+                        ',
                 ];
             }),
         ]);
