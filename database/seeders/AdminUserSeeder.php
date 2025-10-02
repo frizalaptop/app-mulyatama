@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,12 +15,16 @@ class AdminUserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::updateOrCreate(
+        $user = User::updateOrCreate(
             ['email' => 'admin@mail.com'],
             [
                 'name' => 'Administrator',
                 'password' => Hash::make('cirebon321'),
             ]
         );
+
+        Profile::create(['pf_iduser' => $user->id]);
+
+        $user->assignRole('Admin');
     }
 }

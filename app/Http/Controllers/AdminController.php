@@ -28,7 +28,7 @@ class AdminController extends Controller
      */
     public function datatable()
     {
-         $users = User::get();
+        $users = User::with('roles')->get();
 
         return response()->json([
             'data' => $users->map(function($user) {
@@ -39,7 +39,7 @@ class AdminController extends Controller
                     'status' => $user->active ? 
                         '<span class="lencana bg-primary">aktif</span>' : 
                         '<span class="lencana bg-danger">Non aktif</span>',
-                    'role' => $user->role ?? '-',
+                    'role' => $user->getRoleNames()->first(),
                     'last_login_at' => $user->last_login_at,
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,
@@ -71,6 +71,8 @@ class AdminController extends Controller
             'wa'       => ['nullable', 'string', 'max:15'],
             'telegram' => ['nullable', 'string', 'max:15'],
             'address'  => ['nullable', 'string'], 
+
+            'role'     => ['required', 'string', 'in:Admin,Klien']
         ]);
 
         DB::beginTransaction();
@@ -84,6 +86,10 @@ class AdminController extends Controller
                 'active'   => $request->aktifasi == 'Aktif',
             ]);
 
+            // buat role user
+            $user->assignRole($validated['role']);
+
+            // buat profil user
             $profile = Profile::create([
                 'pf_iduser'   => $user->id,
                 'pf_company'  => $validated['company'] ?? null,
@@ -91,6 +97,7 @@ class AdminController extends Controller
                 'pf_telegram' => $validated['telegram'] ?? null,
                 'pf_address'  => $validated['address'] ?? null,
             ]);
+            
 
             DB::commit();
 
@@ -112,6 +119,8 @@ class AdminController extends Controller
 
     public function getUserById($id){
         $user = User::with('profile')->findOrFail($id);
+        $user->role = $user->getRoleNames()->first();
+
         return response()->json([
             'success' => true,
             'message' => 'User ditemukan.',
@@ -138,6 +147,8 @@ class AdminController extends Controller
             'wa' => 'nullable|string|max:15',
             'telegram' => 'nullable|string|max:255',
             'address' => 'nullable|string',
+
+            'role' => ['required', 'string', 'in:Admin,Klien']
         ]);
 
         DB::beginTransaction();
@@ -152,6 +163,9 @@ class AdminController extends Controller
 
             $user->save();
 
+            // sinkronisasi role dengan Spatie
+            $user->syncRoles([$validated['role']]);
+            
             $profileData = [
                 'pf_company'  => $validated['company'] ?? null,
                 'pf_wa'       => $validated['wa'] ?? null,

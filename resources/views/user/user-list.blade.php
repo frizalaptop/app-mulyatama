@@ -46,24 +46,28 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <div class="d-flex justify-content-between">
-                        <x-adminlte-select name="aktifasi" label="Status">
-                            <x-slot name="prependSlot">
-                                <div class="input-group-text">
-                                    <i class="fas fa-user-check text-lightblue"></i>
-                                </div>
-                            </x-slot>
-                            <x-adminlte-options :options="['Aktif'=> 'Aktif', 'Nonaktif' => 'Nonaktif']"/>
-                        </x-adminlte-select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <x-adminlte-select name="aktifasi" label="Status">
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-user-check text-lightblue"></i>
+                                    </div>
+                                </x-slot>
+                                <x-adminlte-options :options="['Aktif'=> 'Aktif', 'Nonaktif' => 'Nonaktif']"/>
+                            </x-adminlte-select>
+                        </div>
+                        <div class="col-md-6">
+                            <x-adminlte-select name="role" label="Hak Akses">
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-user-cog text-lightblue"></i>
+                                    </div>
+                                </x-slot>
+                                <x-adminlte-options :options="['Admin'=> 'Admin', 'Klien' => 'Klien']"/>
+                            </x-adminlte-select>
+                        </div>
 
-                        <x-adminlte-select name="akses" label="Hak Akses">
-                            <x-slot name="prependSlot">
-                                <div class="input-group-text">
-                                    <i class="fas fa-user-setting text-lightblue"></i>
-                                </div>
-                            </x-slot>
-                            <x-adminlte-options :options="['Aktif', 'Nonaktif']"/>
-                        </x-adminlte-select>
                     </div>
                 </div>
 
@@ -158,24 +162,28 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <div class="d-flex justify-content-between">
-                        <x-adminlte-select name="aktifasi" label="Status" id="edit_aktifasi">
-                            <x-slot name="prependSlot">
-                                <div class="input-group-text">
-                                    <i class="fas fa-user-check text-lightblue"></i>
-                                </div>
-                            </x-slot>
-                            <x-adminlte-options :options="['Aktif'=> 'Aktif', 'Nonaktif' => 'Nonaktif']"/>
-                        </x-adminlte-select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <x-adminlte-select name="aktifasi" label="Status" id="edit_aktifasi">
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-user-check text-lightblue"></i>
+                                    </div>
+                                </x-slot>
+                                <x-adminlte-options :options="['Aktif'=> 'Aktif', 'Nonaktif' => 'Nonaktif']"/>
+                            </x-adminlte-select>
+                        </div>
+                        <div class="col-md-6">
+                            <x-adminlte-select name="role" label="Hak Akses" id="edit_role">
+                                <x-slot name="prependSlot">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-user-cog text-lightblue"></i>
+                                    </div>
+                                </x-slot>
+                                <x-adminlte-options :options="['Admin'=> 'Admin', 'Klien'=> 'Klien']"/>
+                            </x-adminlte-select>
+                        </div>
 
-                        <x-adminlte-select name="akses" label="Hak Akses" id="edit_akses">
-                            <x-slot name="prependSlot">
-                                <div class="input-group-text">
-                                    <i class="fas fa-user-cog text-lightblue"></i>
-                                </div>
-                            </x-slot>
-                            <x-adminlte-options :options="['Admin'=> 'Admin', 'User'=> 'User']"/>
-                        </x-adminlte-select>
                     </div>
                 </div>
 
