@@ -16,17 +16,27 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                        @if (!empty($breadcrumb))
-                            @foreach ($breadcrumb as $name => $url)
-                                @if ($loop->last)
-                                    <li class="breadcrumb-item active" aria-current="page">{{ $name }}</li>
-                                @else
-                                    <li class="breadcrumb-item"><a href="{{ $url }}">{{ $name }}</a></li>
-                                @endif
-                            @endforeach
-                        @else
-                            <li class="breadcrumb-item active" aria-current="page">{{ $title ?? ((Auth::user()->getRoleNames()->contains('Admin')) ? 'Admin' : 'Dashboard') }}</li>
-                        @endif
+
+                        @php
+                            $segments = request()->segments();
+                            if(empty($segments)){
+                                $segments = [ Auth::user()->getRoleNames()->first()];
+                            }
+                        @endphp
+
+                        @foreach ($segments as $index => $segment)
+                            @php
+
+                                // ubah "user-list" jadi "User List", "create-new" jadi "Create New", dll
+                                $label = collect(explode('-', $segment))
+                                            ->map(fn($word) => ucfirst($word))
+                                            ->join(' ');
+                            @endphp
+
+                            <li class="breadcrumb-item active" aria-current="page">{{ $label }}</li>        
+                            
+                        @endforeach
+
                     </ol>
                 </div>
             </div>

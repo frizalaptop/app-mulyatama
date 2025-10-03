@@ -82,31 +82,31 @@ li.nav-header {
 * Custom CSS
 */
 
-/* .wh-3rem {
+.wh-3rem {
   width: 3rem;
   height: 3rem;
-} */
+}
 
 /* .card-header h3 {
   font-size: 16px;
   font-weight: 600;
 } */
 
-/* .small-box h3 {
+.small-box h3 {
   font-weight: 800;
 }
 
 .small-box p {
   font-size: 15px;
-} */
+}
 
-/* .bg-dark .icon {
+.bg-dark .icon {
   color: rgba(255, 255, 255, 0.15);
 }
 
 .small-box .icon>i {
   top: -15px;
-} */
+}
 
 /* .info-kecil {
   border-left: 1px solid #919191;
@@ -257,7 +257,7 @@ table.dataTable>tbody>tr.child span.dtr-title {
 }
 
 /* loading */ 
-/* .loadingSpinner {
+.loadingSpinner {
   display: none;
   position: absolute;
   top: 50%;
@@ -270,7 +270,7 @@ table.dataTable>tbody>tr.child span.dtr-title {
   padding: 10px 20px;
   border-radius: 6px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-} */
+}
 
 
 #tableUserList td.col-status,
@@ -278,7 +278,7 @@ table.dataTable>tbody>tr.child span.dtr-title {
     min-width: 80px;
 }
 
-/* @media (min-width: 992px) {
+@media (min-width: 992px) {
   .small-box>.inner {
     padding-left: 20px;
   }
@@ -287,7 +287,7 @@ table.dataTable>tbody>tr.child span.dtr-title {
     flex: 0 0 20%;
     max-width: 20%;
   }
-} */
+}
 
 @media screen and (min-width: 768px) {
   /* pencarian */

@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+
 
 
 class AdminController extends Controller
@@ -55,6 +57,26 @@ class AdminController extends Controller
     }
 
     /**
+     * Mengambil statistik user
+     * Role admin
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function statistic()
+    {
+        return response()->json([
+            'user_total'    => User::get()->count(),
+            'user_aktif'    => User::where('active', true)->get()->count(),
+            'user_nonaktif' => User::where('active', false)->get()->count(),
+            'user_admin'    => User::with('roles')->get()->filter(
+                                    fn ($user) => $user->roles->where('name', 'Admin')->toArray()
+                                )->count(),
+            'user_klien'    => User::with('roles')->get()->filter(
+                                    fn ($user) => $user->roles->where('name', 'Klien')->toArray()
+                                )->count(),
+        ]);
+    }
+
+    /**
      * Menambah data user
      * Role admin
      * @param \Illuminate\Http\Request $request [name, email, password, password_confirm]
@@ -65,7 +87,9 @@ class AdminController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100', 'min:3'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'max:100', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'confirmed', Password::min(8)
+                    ->uncompromised() // cek ke database haveibeenpwned, tolak sandi yang bocor/umum
+            ],
 
             'company'  => ['nullable', 'string', 'max:100'],
             'wa'       => ['nullable', 'string', 'max:15'],
@@ -117,6 +141,12 @@ class AdminController extends Controller
         }
     }
 
+    /**
+     * Mengambil data user berdasarkan id
+     * Role admin
+     * @param mixed $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getUserById($id){
         $user = User::with('profile')->findOrFail($id);
         $user->role = $user->getRoleNames()->first();
@@ -142,7 +172,9 @@ class AdminController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:100|min:3',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
+            'password' => ['nullable', 'string', 'confirmed', Password::min(8)
+                    ->uncompromised() // cek ke database haveibeenpwned, tolak sandi yang bocor/umum
+            ],
             'company' => 'nullable|string|max:255',
             'wa' => 'nullable|string|max:15',
             'telegram' => 'nullable|string|max:255',

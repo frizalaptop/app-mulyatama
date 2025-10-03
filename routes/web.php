@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/klien', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware(['auth'])
     ->controller(UserController::class)
@@ -23,4 +25,6 @@ Route::middleware(['auth'])
         Route::post('/admin/users', 'addUser')->name('user.add');
         Route::get('/admin/users/{id}', 'getUserById')->name('user.get');
         Route::put('/admin/users/{id}', 'updateUser')->name('user.update');
+
+        Route::get('/statistic/user', 'statistic')->name('statistic.user');
     });

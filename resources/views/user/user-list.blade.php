@@ -2,6 +2,82 @@
 
 @section('content')
 
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg col-5">
+            <div class="small-box bg-dark">
+                <div class="overlay dark">
+                    <span class="spinner-border wh-3rem" role="status"></span>
+                </div>
+                <div class="inner">
+                    <h3 class="stat-value" data-key="user_total">0</h3>
+                    <p>Total User</p>
+                </div>
+                <div class="icon"><i class="bi bi-people-fill"></i></div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg col-5">
+            <div class="small-box bg-primary">
+                <div class="overlay dark">
+                    <span class="spinner-border wh-3rem" role="status"></span>
+                </div>
+                <div class="inner">
+                    <h3 class="stat-value" data-key="user_aktif">0</h3>
+                    <p>User Aktif</p>
+                </div>
+                <div class="icon"><i class="bi bi-person-fill-check"></i></div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg col-5">
+            <div class="small-box bg-danger">
+                <div class="overlay dark">
+                    <span class="spinner-border wh-3rem" role="status"></span>
+                </div>
+                <div class="inner">
+                    <h3 class="stat-value" data-key="user_nonaktif">0</h3>
+                    <p>User Nonaktif</p>
+                </div>
+                <div class="icon"><i class="bi bi-person-fill-slash"></i></div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg col-5">
+            <div class="small-box bg-success">
+                <div class="overlay dark">
+                    <span class="spinner-border wh-3rem" role="status"></span>
+                </div>
+                <div class="inner">
+                    <h3 class="stat-value" data-key="user_admin">0</h3>
+                    <p>User Admin</p>
+                </div>
+                <div class="icon"><i class="bi bi-person-fill"></i></div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg col-5">
+            <div class="small-box bg-success">
+                <div class="overlay dark">
+                    <span class="spinner-border wh-3rem" role="status"></span>
+                </div>
+                <div class="inner">
+                    <h3 class="stat-value" data-key="user_klien">0</h3>
+                    <p>User Klien</p>
+                </div>
+                <div class="icon"><i class="bi bi-person-fill"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <x-adminlte-card theme="light">
+                <!-- Table -->
+                <table id="tableUserList" class="table table-bordered table-hover dataTable dtr-inline"></table>
+            </x-adminlte-card>
+        </div>
+    </div>
+
     <!-- Modal Add User -->
     <form id="formAddUser" method="POST" action="{{ route('user.add') }}" >
         @csrf
@@ -111,6 +187,10 @@
 
             <x-slot name="footerSlot">
                 <div class="d-flex justify-content-end w-100">
+                    <button type="button" id="btn-loading" class="btn btn-primary" disabled="" style="display: none;">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
                     <button type="submit" class="btn btn-primary m-1">
                         Simpan
                     </button>
@@ -233,6 +313,10 @@
 
             <x-slot name="footerSlot">
                 <div class="d-flex justify-content-end w-100">
+                    <button type="button" id="btn-loading" class="btn btn-primary" disabled="" style="display: none;">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
                     <button type="submit" class="btn btn-primary m-1">
                         Update
                     </button>
@@ -243,12 +327,6 @@
         </x-adminlte-modal>
     </form>
 
-    
-
-    <x-adminlte-card theme="light">
-        <!-- Table -->
-        <table id="tableUserList" class="table table-bordered table-hover dataTable dtr-inline"></table>
-    </x-adminlte-card>
 @stop
 
 @section('css')
@@ -259,6 +337,7 @@
     window.routes = {
         getUser: "{{ route('user.get', ['id' => ':id']) }}",
         dataTable: "{{ route('user.datatable') }}",
+        statisticUser: "{{ route('statistic.user') }}",
     };
 </script>
 @stop
