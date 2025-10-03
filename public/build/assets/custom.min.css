@@ -238,14 +238,6 @@ table.dataTable>tbody>tr.child span.dtr-title {
   min-width: 110px;
 }
 
-/* Modal */
-.modal-header {
-  justify-content: center;
-}
-.close {
-  display: none;
-}
-
 /*  Form Input */
 .input-group-text {
   background-color: #fff;

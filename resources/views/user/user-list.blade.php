@@ -142,7 +142,7 @@
                                         <i class="fas fa-user-cog text-lightblue"></i>
                                     </div>
                                 </x-slot>
-                                <x-adminlte-options :options="['Admin'=> 'Admin', 'Klien' => 'Klien']"/>
+                                <x-adminlte-options :options="['Klien' => 'Klien', 'Admin'=> 'Admin']"/>
                             </x-adminlte-select>
                         </div>
 
@@ -326,18 +326,8 @@
 
         </x-adminlte-modal>
     </form>
-
 @stop
 
-@section('css')
-@stop
-
-@section('js')
-<script>
-    window.routes = {
-        getUser: "{{ route('user.get', ['id' => ':id']) }}",
-        dataTable: "{{ route('user.datatable') }}",
-        statisticUser: "{{ route('statistic.user') }}",
-    };
-</script>
+@section('page_js')
+    <script src="{{ asset('build/assets/user-list.min.js') }}"></script>
 @stop

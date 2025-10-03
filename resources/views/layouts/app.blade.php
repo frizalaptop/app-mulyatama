@@ -2,8 +2,18 @@
 
 @section('usermenu_body')
     <a href="{{ route('user.profile') }}" class="dropdown-item">
-        <i class="fas fa-user mr-2"></i> profile
+        <i class="bi bi-caret-right mr-1"></i> Profil
     </a>
+    <div class="dropdown-divider"></div>
+
+    <a href="#" class="dropdown-item"
+       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <i class="bi bi-caret-right mr-1"></i> Keluar
+    </a>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
 @endsection
 
 @section('content_header')
@@ -19,25 +29,32 @@
 
                         @php
                             $segments = request()->segments();
-                            if(empty($segments)){
-                                $segments = [ Auth::user()->getRoleNames()->first()];
+                            if (empty($segments)) {
+                                $segments = [ Auth::user()->getRoleNames()->first() ];
                             }
                         @endphp
 
                         @foreach ($segments as $index => $segment)
                             @php
-
                                 // ubah "user-list" jadi "User List", "create-new" jadi "Create New", dll
                                 $label = collect(explode('-', $segment))
                                             ->map(fn($word) => ucfirst($word))
                                             ->join(' ');
+
+                                // gabungkan segmen untuk bikin URL parsial
+                                $url = url(implode('/', array_slice($segments, 0, $index + 1)));
                             @endphp
 
-                            <li class="breadcrumb-item active" aria-current="page">{{ $label }}</li>        
-                            
+                            @if ($index + 1 < count($segments))
+                                <li class="breadcrumb-item">
+                                    <a href="{{ $url }}">{{ $label }}</a>
+                                </li>
+                            @else
+                                <li class="breadcrumb-item active" aria-current="page">{{ $label }}</li>
+                            @endif
                         @endforeach
-
                     </ol>
+
                 </div>
             </div>
         </div>
@@ -45,7 +62,7 @@
 @stop
 
 @section('content')
-    <p>Welcome to this beautiful admin panel.</p>
+    @yield('content')
 @stop
 
 @section('footer')
@@ -61,8 +78,23 @@
     </div>
 @stop
 
-@section('css')
+@section('adminlte_css')
+    <link rel="stylesheet" href="{{ asset('build/assets/custom.min.css') }}">
+
+    @yield('page_css')
 @stop
 
-@section('js')
+@section('adminlte_js')
+    <script>
+        window.routes = {
+            getUser: "{{ route('user.get', ['id' => ':id']) }}",
+            dataTable: "{{ route('user.datatable') }}",
+            statisticUser: "{{ route('statistic.user') }}",
+        };
+    </script>
+    <script src="{{ asset('build/assets/custom_format.min.js') }}"></script>
+    <script src="{{ asset('build/assets/custom_form.min.js') }}"></script>
+    <script src="{{ asset('build/assets/custom_table.min.js') }}"></script>
+
+    @yield('page_js')
 @stop

@@ -13,7 +13,7 @@
     @php( $logout_url = $logout_url ? url($logout_url) : '' )
 @endif
 
-<li class="nav-item dropdown user-menu">
+<li class="nav-item dropdown">
 
     {{-- User menu toggler --}}
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
@@ -23,12 +23,12 @@
                  alt="{{ Auth::user()->name }}">
         @endif
         <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
-            {{ Auth::user()->name }}
+            Hay, {{ Auth::user()->name }}
         </span>
     </a>
 
     {{-- User menu dropdown --}}
-    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+    <!-- <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
         {{-- User menu header --}}
         @if(!View::hasSection('usermenu_header') && config('adminlte.usermenu_header'))
@@ -51,17 +51,17 @@
         @endif
 
         {{-- Configured user menu links --}}
-        @each('adminlte::partials.navbar.dropdown-item', $adminlte->menu("navbar-user"), 'item')
+        @each('adminlte::partials.navbar.dropdown-item', $adminlte->menu("navbar-user"), 'item') -->
 
         {{-- User menu body --}}
         @hasSection('usermenu_body')
-            <li class="user-body">
+            <div class="dropdown-menu dropdown-menu-sm dropdown-menu border-0 shadow">
                 @yield('usermenu_body')
-            </li>
+            </div>
         @endif
 
         {{-- User menu footer --}}
-        <li class="user-footer">
+        <!-- <li class="user-footer">
             @if($profile_url)
                 <a href="{{ $profile_url }}" class="nav-link btn btn-default btn-flat d-inline-block">
                     <i class="fa fa-fw fa-user text-lightblue"></i>
@@ -81,6 +81,6 @@
             </form>
         </li>
 
-    </ul>
+    </ul> -->
 
 </li>

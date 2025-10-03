@@ -51,7 +51,6 @@
                 
                 <link rel="stylesheet" href="{{ asset("/vendor/datatables/css/dataTables.bootstrap4.min.css") }}">
                 <link rel="stylesheet" href="{{ asset('/vendor/datatables-plugins/responsive/css/responsive.bootstrap4.min.css') }}">
-                <link rel="stylesheet" href="{{ asset('build/assets/custom.min.css') }}">
         @endswitch
         
     @endif
@@ -148,10 +147,6 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
-    <script src="{{ asset('build/assets/custom_format.min.js') }}"></script>
-    <script src="{{ asset('build/assets/custom_form.min.js') }}"></script>
-    <script src="{{ asset('build/assets/custom_table.min.js') }}"></script>
-    <script src="{{ asset('build/assets/user-list.min.js') }}"></script>
-</body>
+ </body>
 
 </html>

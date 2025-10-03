@@ -313,7 +313,7 @@ return [
             'type' => 'navbar-item',
             'text' => 'Home',
             'url'  => '/',
-            'topnav' => true,   // tampil di navbar (bukan sidebar)
+            'topnav' => true,  
         ],
         [
             'type'   => 'navbar-item',
