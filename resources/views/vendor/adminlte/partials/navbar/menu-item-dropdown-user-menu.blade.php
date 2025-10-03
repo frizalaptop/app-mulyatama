@@ -16,14 +16,14 @@
 <li class="nav-item dropdown">
 
     {{-- User menu toggler --}}
-    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+    <a href="#" class="nav-link " data-toggle="dropdown">
         @if(config('adminlte.usermenu_image'))
             <img src="{{ Auth::user()->adminlte_image() }}"
                  class="user-image img-circle elevation-2"
                  alt="{{ Auth::user()->name }}">
         @endif
         <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
-            Hay, {{ Auth::user()->name }}
+            Hai, {{ Auth::user()->name }} <i class="bi bi-caret-down ml-1"></i>
         </span>
     </a>
 

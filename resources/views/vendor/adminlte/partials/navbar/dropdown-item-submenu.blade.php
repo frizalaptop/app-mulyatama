@@ -13,6 +13,7 @@
 
         {{-- Text --}}
         {{ $item['text'] }}
+        <i class="bi bi-caret-right"></i>
 
         {{-- Label (optional) --}}
         @isset($item['label'])

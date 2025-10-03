@@ -1,4 +1,4 @@
-<li @isset($item['id']) id="{{ $item['id'] }}" @endisset class="nav-item">
+<li @isset($item['id']) id="{{ $item['id'] }}" @endisset class="nav-item d-none d-sm-inline-block">
 
     <a class="nav-link {{ $item['class'] }}" href="{{ $item['href'] }}"
        @isset($item['target']) target="{{ $item['target'] }}" @endisset

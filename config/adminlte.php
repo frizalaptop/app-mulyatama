@@ -301,15 +301,6 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'type' => 'navbar-search',
-            'text' => 'search',
-            'topnav_right' => false,
-        ],
-        [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => false,
-        ],
-        [
             'type' => 'navbar-item',
             'text' => 'Home',
             'url'  => '/',
@@ -351,40 +342,50 @@ return [
         [
             'text' => 'Dashboard',
             'url' => '/',
-            'icon' => 'fas fa-fw fa-tachometer-alt',
-        ],
-        ['header' => 'USER'],
-        [
-            'text' => 'User List',
-            'url' => '/admin/user-list',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'bi bi-speedometer',
         ],
         [
-            'text' => 'User Login',
-            'url' => '/admin/user-login',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Profil',
+            'url' => '/profile',
+            'icon' => 'bi bi-person-vcard',
         ],
+        
+        // User with submenu
         [
-            'text' => 'User Profil',
-            'url' => '/user-profile',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'User',
+            'icon' => 'bi bi-person-circle',
+            'submenu' => [
+                [
+                    'text' => 'User List',
+                    'url'  => '/admin/user-list',
+                    'icon' => 'bi bi-person-circle', // optional
+                ],
+                [
+                    'text' => 'User Login',
+                    'url'  => '/admin/user-login',
+                    'icon' => 'bi bi-person-circle', // optional
+                ],
+            ],
         ],
-        ['header' => 'SETTING'],
+
+        // Setting with submenu
         [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
+            'text' => 'Setting',
+            'icon' => 'bi bi-gear',
+            'submenu' => [
+                [
+                    'text' => 'Setting Umum',
+                    'url'  => '/admin/setting-umum',
+                    'icon' => 'bi bi-gear'
+                ],
+                [
+                    'text' => 'Setting Cache',
+                    'url'  => '/admin/setting-cache',
+                    'icon' => 'bi bi-gear'
+                ],
+            ],
         ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
-        ],
+        
     ],
 
     /*

@@ -1,4 +1,4 @@
-<li @isset($item['id']) id="{{ $item['id'] }}" @endisset class="nav-item dropdown">
+<li @isset($item['id']) id="{{ $item['id'] }}" @endisset class="nav-item d-none d-sm-inline-block">
 
     {{-- Menu toggler --}}
     <a class="nav-link {{ $item['class'] }}" href=""
@@ -13,6 +13,7 @@
 
         {{-- Text --}}
         {{ $item['text'] }}
+        <i class="bi bi-caret-down ml-1"></i>
 
         {{-- Label (optional) --}}
         @isset($item['label'])

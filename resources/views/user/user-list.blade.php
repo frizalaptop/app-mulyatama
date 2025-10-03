@@ -89,7 +89,7 @@
                     <x-adminlte-input name="name" placeholder="Nama Lengkap" label-class="text-lightblue">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fas fa-user text-lightblue"></i>
+                                <i class="bi bi-person-circle"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -97,7 +97,7 @@
                     <x-adminlte-input name="email" type="email" placeholder="Alamat Email" label-class="text-lightblue">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fas fa-envelope text-lightblue"></i>
+                                <i class="bi bi-envelope-fill"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -105,7 +105,7 @@
                     <x-adminlte-input name="password" type="password" placeholder="Password" label-class="text-lightblue">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fas fa-lock text-lightblue"></i>
+                                <i class="bi bi-eye-fill"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -113,7 +113,7 @@
                     <x-adminlte-input name="password_confirmation" type="password" placeholder="Konfirmasi Password" label-class="text-lightblue">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fas fa-check text-lightblue"></i>
+                                <i class="bi bi-eye-fill"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -126,7 +126,7 @@
                                 </x-slot>
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text">
-                                        <i class="fas fa-user-check text-lightblue"></i>
+                                        <i class="bi bi-person-fill-check"></i>
                                     </div>
                                 </x-slot>
                                 <x-adminlte-options :options="['Aktif'=> 'Aktif', 'Nonaktif' => 'Nonaktif']"/>
@@ -139,7 +139,7 @@
                                 </x-slot>
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text">
-                                        <i class="fas fa-user-cog text-lightblue"></i>
+                                        <i class="bi bi-person-fill-gear"></i>
                                     </div>
                                 </x-slot>
                                 <x-adminlte-options :options="['Klien' => 'Klien', 'Admin'=> 'Admin']"/>
@@ -154,7 +154,7 @@
                     <x-adminlte-input name="company" placeholder="Perusahaan" label-class="text-lightblue" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fas fa-building text-lightblue"></i>
+                                <i class="bi bi-building-fill"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -162,7 +162,7 @@
                     <x-adminlte-input name="wa" placeholder="Whatsapp" label-class="text-lightblue">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fab fa-whatsapp text-lightblue"></i>
+                                <i class="bi bi-whatsapp"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -170,7 +170,7 @@
                     <x-adminlte-input name="telegram" placeholder="Telegram" label-class="text-lightblue">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fab fa-telegram-plane text-lightblue"></i>
+                                <i class="bi bi-telegram"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -178,7 +178,7 @@
                     <x-adminlte-input name="address" placeholder="Alamat" label-class="text-lightblue" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fas fa-home text-lightblue"></i>
+                                <i class="bi bi-house-fill"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -215,7 +215,7 @@
                     <x-adminlte-input name="name" placeholder="Nama Lengkap" label-class="text-lightblue" id="edit_name">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fas fa-user text-lightblue"></i>
+                                <i class="bi bi-person-circle"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -223,7 +223,7 @@
                     <x-adminlte-input name="email" type="email" placeholder="Alamat Email" label-class="text-lightblue" id="edit_email">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fas fa-envelope text-lightblue"></i>
+                                <i class="bi bi-envelope-fill"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -231,7 +231,7 @@
                     <x-adminlte-input name="password" type="password" placeholder="Password (biarkan kosong jika tidak diganti)" label-class="text-lightblue" id="edit_password">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fas fa-lock text-lightblue"></i>
+                                <i class="bi bi-eye-fill"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -239,7 +239,7 @@
                     <x-adminlte-input name="password_confirmation" type="password" placeholder="Konfirmasi Password" label-class="text-lightblue" id="edit_password_confirmation">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fas fa-check text-lightblue"></i>
+                                <i class="bi bi-eye-fill"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -252,7 +252,7 @@
                                 </x-slot>
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text">
-                                        <i class="fas fa-user-check text-lightblue"></i>
+                                        <i class="bi bi-person-fill-check"></i>
                                     </div>
                                 </x-slot>
                                 <x-adminlte-options :options="['Aktif'=> 'Aktif', 'Nonaktif' => 'Nonaktif']"/>
@@ -265,7 +265,7 @@
                                 </x-slot>
                                 <x-slot name="prependSlot">
                                     <div class="input-group-text">
-                                        <i class="fas fa-user-cog text-lightblue"></i>
+                                        <i class="bi bi-person-fill-gear"></i>
                                     </div>
                                 </x-slot>
                                 <x-adminlte-options :options="['Admin'=> 'Admin', 'Klien'=> 'Klien']"/>
@@ -280,7 +280,7 @@
                     <x-adminlte-input name="company" placeholder="Perusahaan" label-class="text-lightblue" id="edit_company" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fas fa-building text-lightblue"></i>
+                                <i class="bi bi-building-fill"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -288,7 +288,7 @@
                     <x-adminlte-input name="wa" placeholder="Whatsapp" label-class="text-lightblue" id="edit_wa">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fab fa-whatsapp text-lightblue"></i>
+                                <i class="bi bi-whatsapp"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -296,7 +296,7 @@
                     <x-adminlte-input name="telegram" placeholder="Telegram" label-class="text-lightblue" id="edit_telegram">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fab fa-telegram-plane text-lightblue"></i>
+                                <i class="bi bi-telegram"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>
@@ -304,7 +304,7 @@
                     <x-adminlte-input name="address" placeholder="Alamat" label-class="text-lightblue" id="edit_address" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
-                                <i class="fas fa-home text-lightblue"></i>
+                                <i class="bi bi-house-fill"></i>
                             </div>
                         </x-slot>
                     </x-adminlte-input>

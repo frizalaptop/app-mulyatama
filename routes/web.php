@@ -13,7 +13,7 @@ Route::get('/klien', [App\Http\Controllers\HomeController::class, 'index'])->nam
 Route::middleware(['auth'])
     ->controller(UserController::class)
     ->group(function () {
-        Route::get('/user-profile', 'userProfile')->name('user.profile');
+        Route::get('/profile', 'userProfile')->name('user.profile');
         Route::put('/user-profile', 'updateProfile')->name('profile.update');
 });
 
