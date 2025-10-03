@@ -309,6 +309,43 @@ return [
             'type' => 'fullscreen-widget',
             'topnav_right' => false,
         ],
+        [
+            'type' => 'navbar-item',
+            'text' => 'Home',
+            'url'  => '/',
+            'topnav' => true,   // tampil di navbar (bukan sidebar)
+        ],
+        [
+            'type'   => 'navbar-item',
+            'text'   => 'User',
+            'topnav' => true,
+            'submenu' => [
+                [
+                    'text' => 'User List',
+                    'url'  => '/admin/user-list',
+                ],
+                [
+                    'text' => 'User Login',
+                    'url'  => '/admin/user-login',
+                ],
+            ],
+        ],
+        [
+            'type'   => 'navbar-item',
+            'text'   => 'Setting',
+            'topnav' => true,
+            'submenu' => [
+                [
+                    'text' => 'Setting Umum',
+                    'url'  => '/admin/setting-umum',
+                ],
+                [
+                    'text' => 'Setting Cache',
+                    'url'  => '/admin/setting-cache',
+                ],
+            ],
+        ],
+
 
         // Sidebar items:
         [
