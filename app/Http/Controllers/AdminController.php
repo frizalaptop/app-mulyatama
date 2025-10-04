@@ -43,8 +43,8 @@ class AdminController extends Controller
                         '<span class="lencana bg-danger">Non aktif</span>',
                     'role' => $user->getRoleNames()->first(),
                     'last_login_at' => $user->last_login_at,
-                    'created_at' => $user->created_at,
-                    'updated_at' => $user->updated_at,
+                    'created_at' => $user->created_at->format('Y-m-d H:i:s'),
+                    'updated_at' => $user->updated_at->format('Y-m-d H:i:s'),
                     'action' => '
                         <div class="btn-group" role="group">
                             <button class="btn btn-sm btn-dark" data-id="'.$user->id.'"  data-target="#modalEditUser" data-toggle="modal">Edit</button>

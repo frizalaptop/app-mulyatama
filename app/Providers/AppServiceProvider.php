@@ -20,8 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Carbon::serializeUsing(function ($carbon) {
-            return $carbon->format('Y-m-d H:i:s');
-        });
+        //
     }
 }

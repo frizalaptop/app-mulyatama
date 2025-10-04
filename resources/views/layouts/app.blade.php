@@ -71,7 +71,7 @@
 
     <div class="text-center text-md-right">
         Versi 1.0.50 <br>
-        Render: <span id="microtime">3.52</span> detik. <br>
+        Render: <span id="microtime">0.83</span> detik. <br>
     </div>
 @stop
 
