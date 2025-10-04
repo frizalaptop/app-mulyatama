@@ -104,7 +104,7 @@
             
                     <x-adminlte-input name="password" type="password" placeholder="Password" label-class="text-lightblue">
                         <x-slot name="prependSlot">
-                            <div class="input-group-text">
+                            <div class="input-group-text toggle-password">
                                 <i class="bi bi-eye-fill"></i>
                             </div>
                         </x-slot>
@@ -112,7 +112,7 @@
             
                     <x-adminlte-input name="password_confirmation" type="password" placeholder="Konfirmasi Password" label-class="text-lightblue">
                         <x-slot name="prependSlot">
-                            <div class="input-group-text">
+                            <div class="input-group-text toggle-password">
                                 <i class="bi bi-eye-fill"></i>
                             </div>
                         </x-slot>
@@ -230,7 +230,7 @@
 
                     <x-adminlte-input name="password" type="password" placeholder="Password (biarkan kosong jika tidak diganti)" label-class="text-lightblue" id="edit_password">
                         <x-slot name="prependSlot">
-                            <div class="input-group-text">
+                            <div class="input-group-text toggle-password">
                                 <i class="bi bi-eye-fill"></i>
                             </div>
                         </x-slot>
@@ -238,7 +238,7 @@
 
                     <x-adminlte-input name="password_confirmation" type="password" placeholder="Konfirmasi Password" label-class="text-lightblue" id="edit_password_confirmation">
                         <x-slot name="prependSlot">
-                            <div class="input-group-text">
+                            <div class="input-group-text toggle-password">
                                 <i class="bi bi-eye-fill"></i>
                             </div>
                         </x-slot>
