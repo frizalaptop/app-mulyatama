@@ -40,18 +40,14 @@
             @break
 
             @default
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous" />
+                <!-- <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}"> -->
+                <!-- <link rel="stylesheet" href="{{ asset('vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}"> -->
                 <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}">
-                <link rel="stylesheet" href="{{ asset('/vendor/sweetalert2/sweetalert2.min.css') }}">
-                
-                @if(config('adminlte.google_fonts.allowed', true))
-                    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
-                @endif
-                
-                <link rel="stylesheet" href="{{ asset("/vendor/datatables/css/dataTables.bootstrap4.min.css") }}">
-                <link rel="stylesheet" href="{{ asset('/vendor/datatables-plugins/responsive/css/responsive.bootstrap4.min.css') }}">
+
+                <!-- @if(config('adminlte.google_fonts.allowed', true))
+                    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+                @endif -->
         @endswitch
-        
     @endif
 
     {{-- Extra Configured Plugins Stylesheets --}}
@@ -115,19 +111,8 @@
             @default
                 <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
                 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+                <!-- <script src="{{ asset('vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script> -->
                 <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
-                <script src="{{ asset('/vendor/sweetalert2/sweetalert2.min.js') }}"></script>
-                
-                <script src="{{ asset('/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
-                <script src="{{ asset('/vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
-                <script src="{{ asset('/vendor/datatables-plugins/responsive/js/dataTables.responsive.min.js') }}"></script>
-                <script src="{{ asset('/vendor/datatables-plugins/responsive/js/responsive.bootstrap4.min.js') }}"></script>
-                <script src="{{ asset('/vendor/datatables-plugins/buttons/js/dataTables.buttons.min.js') }}"></script>
-                <script src="{{ asset('/vendor/datatables-plugins/buttons/js/buttons.html5.min.js') }}"></script>
-                <script src="{{ asset('/vendor/datatables-plugins/jszip/jszip.min.js') }}"></script>
-                <script src="{{ asset('/vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-                <script src="{{ asset('/vendor/jquery-validation/localization/messages_id.min.js') }}"></script>
-
         @endswitch
     @endif
 
@@ -145,6 +130,7 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
- </body>
+
+</body>
 
 </html>
