@@ -44,7 +44,7 @@ class AdminController extends Controller
      */
     public function datatable()
     {
-        $users = User::with('roles')->get();
+        $users = User::get();
 
         return response()->json([
             'data' => $users->map(function($user) {
