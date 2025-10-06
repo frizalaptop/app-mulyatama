@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +14,14 @@ use Illuminate\Validation\Rules\Password;
 
 class AdminController extends Controller
 {
+
+    protected $userService;
+
+    public function __construct(UserService $userService)
+    {
+        $this->userService = $userService;
+    }
+
     /**
      * Mengambil ui daftar user 
      * Role admin
@@ -20,7 +29,12 @@ class AdminController extends Controller
      */
     public function userList()
     {
-        return view('user.user-list', ['title' => 'User List']);
+        try {
+            $data = $this->userService->getUserListViewData();
+            return view('user.user-list', $data);
+        } catch (\Throwable $e) {
+            abort(500, 'Terjadi kesalahan saat memuat halaman User List.');
+        }
     }
 
     /**
