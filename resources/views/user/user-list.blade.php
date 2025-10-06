@@ -151,7 +151,7 @@
 
                 <!-- profil -->
                 <div class="col-md-6">
-                    <x-adminlte-input name="company" placeholder="Perusahaan" label-class="text-lightblue" class="upper">
+                    <x-adminlte-input name="perusahaan" placeholder="Perusahaan" label-class="text-lightblue" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-building-fill"></i>
@@ -159,7 +159,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="wa" placeholder="Whatsapp" label-class="text-lightblue">
+                    <x-adminlte-input name="whatsapp" placeholder="Whatsapp" label-class="text-lightblue">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-whatsapp"></i>
@@ -175,7 +175,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="address" placeholder="Alamat" label-class="text-lightblue" class="upper">
+                    <x-adminlte-input name="alamat" placeholder="Alamat" label-class="text-lightblue" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-house-fill"></i>
@@ -277,7 +277,7 @@
 
                 <!-- profil -->
                 <div class="col-md-6">
-                    <x-adminlte-input name="company" placeholder="Perusahaan" label-class="text-lightblue" id="edit_company" class="upper">
+                    <x-adminlte-input name="perusahaan" placeholder="Perusahaan" label-class="text-lightblue" id="edit_perusahaan" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-building-fill"></i>
@@ -285,7 +285,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="wa" placeholder="Whatsapp" label-class="text-lightblue" id="edit_wa">
+                    <x-adminlte-input name="whatsapp" placeholder="Whatsapp" label-class="text-lightblue" id="edit_whatsapp">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-whatsapp"></i>
@@ -301,7 +301,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="address" placeholder="Alamat" label-class="text-lightblue" id="edit_address" class="upper">
+                    <x-adminlte-input name="alamat" placeholder="Alamat" label-class="text-lightblue" id="edit_alamat" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-house-fill"></i>

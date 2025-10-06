@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('user_profile', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pf_iduser');
-            $table->foreign('pf_iduser')->references('id')->on('users')->onDelete('cascade');
-            $table->string('pf_company')->nullable();
-            $table->string('pf_wa', 15)->nullable();
-            $table->string('pf_telegram', 15)->nullable();
-            $table->text('pf_address')->nullable();
-            $table->string('pf_photo')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('perusahaan')->nullable();
+            $table->string('whatsapp', 15)->nullable();
+            $table->string('telegram', 15)->nullable();
+            $table->text('alamat')->nullable();
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

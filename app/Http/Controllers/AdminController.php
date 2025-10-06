@@ -88,13 +88,13 @@ class AdminController extends Controller
             'name' => ['required', 'string', 'max:100', 'min:3'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'confirmed', Password::min(8)
-                    ->uncompromised() // cek ke database haveibeenpwned, tolak sandi yang bocor/umum
+                    ->uncompromised()
             ],
 
-            'company'  => ['nullable', 'string', 'max:100'],
-            'wa'       => ['nullable', 'string', 'max:15'],
+            'perusahaan'  => ['nullable', 'string', 'max:100'],
+            'whatsapp'       => ['nullable', 'string', 'max:15'],
             'telegram' => ['nullable', 'string', 'max:15'],
-            'address'  => ['nullable', 'string'], 
+            'alamat'  => ['nullable', 'string'], 
 
             'role'     => ['required', 'string', 'in:Admin,Klien']
         ]);
@@ -115,13 +115,12 @@ class AdminController extends Controller
 
             // buat profil user
             $profile = Profile::create([
-                'pf_iduser'   => $user->id,
-                'pf_company'  => $validated['company'] ?? null,
-                'pf_wa'       => $validated['wa'] ?? null,
-                'pf_telegram' => $validated['telegram'] ?? null,
-                'pf_address'  => $validated['address'] ?? null,
-            ]);
-            
+                'user_id'   => $user->id,
+                'perusahaan'  => $validated['perusahaan'] ?? null,
+                'whatsapp'       => $validated['whatsapp'] ?? null,
+                'telegram' => $validated['telegram'] ?? null,
+                'alamat'  => $validated['alamat'] ?? null,
+            ]); 
 
             DB::commit();
 
@@ -173,12 +172,12 @@ class AdminController extends Controller
             'name' => 'required|string|max:100|min:3',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => ['nullable', 'string', 'confirmed', Password::min(8)
-                    ->uncompromised() // cek ke database haveibeenpwned, tolak sandi yang bocor/umum
+                    ->uncompromised()
             ],
-            'company' => 'nullable|string|max:255',
-            'wa' => 'nullable|string|max:15',
+            'perusahaan' => 'nullable|string|max:255',
+            'whatsapp' => 'nullable|string|max:15',
             'telegram' => 'nullable|string|max:255',
-            'address' => 'nullable|string',
+            'alamat' => 'nullable|string',
 
             'role' => ['required', 'string', 'in:Admin,Klien']
         ]);
@@ -199,10 +198,10 @@ class AdminController extends Controller
             $user->syncRoles([$validated['role']]);
             
             $profileData = [
-                'pf_company'  => $validated['company'] ?? null,
-                'pf_wa'       => $validated['wa'] ?? null,
-                'pf_telegram' => $validated['telegram'] ?? null,
-                'pf_address'  => $validated['address'] ?? null,
+                'perusahaan'  => $validated['perusahaan'] ?? null,
+                'whatsapp'       => $validated['whatsapp'] ?? null,
+                'telegram' => $validated['telegram'] ?? null,
+                'alamat'  => $validated['alamat'] ?? null,
             ];
 
             if ($user->profile) {

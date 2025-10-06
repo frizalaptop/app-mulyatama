@@ -23,7 +23,7 @@ class AdminUserSeeder extends Seeder
             ]
         );
 
-        Profile::create(['pf_iduser' => $user->id]);
+        Profile::create(['user_id' => $user->id]);
 
         $user->assignRole('Admin');
     }

@@ -7,15 +7,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Profile extends Model
 {
+    // tabel database
     protected $table = 'user_profile';
 
+    // kolom yang dapat diisi
     protected $fillable = [
         'user_id',
         'perusahaan',
         'whatsapp',
         'telegram',
         'alamat',
-        'photo',
+        'foto',
     ];
 
     // relasi balik ke user
