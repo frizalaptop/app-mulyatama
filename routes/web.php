@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -11,7 +11,7 @@ Route::get('/admin', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/klien', [App\Http\Controllers\HomeController::class, 'index']);
 
 Route::middleware(['auth'])
-    ->controller(UserController::class)
+    ->controller(ProfileController::class)
     ->group(function () {
         Route::get('/profile', 'userProfile')->name('user.profile');
         Route::put('/user-profile', 'updateProfile')->name('profile.update');
