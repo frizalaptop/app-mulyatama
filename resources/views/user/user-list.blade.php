@@ -120,7 +120,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <x-adminlte-select name="aktifasi">
+                            <x-adminlte-select name="aktivasi">
                                 <x-slot name="label">
                                     Status <span class="text-danger">*</span>
                                 </x-slot>
@@ -246,7 +246,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <x-adminlte-select name="aktifasi" id="edit_aktifasi">
+                            <x-adminlte-select name="aktivasi" id="edit_aktivasi">
                                 <x-slot name="label">
                                     Status <span class="text-danger">*</span>
                                 </x-slot>
