@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +18,7 @@ Route::middleware(['auth'])
 });
 
 Route::middleware(['auth'])
-    ->controller(AdminController::class)
+    ->controller(UserController::class)
     ->group(function () {
         Route::get('/admin/user-list', 'userList')->name('user.list');
         Route::get('/admin/user-datatable', 'datatable')->name('user.datatable');
