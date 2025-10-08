@@ -3,13 +3,16 @@
 namespace App\Listeners;
 
 use App\Events\UserSensitiveDataChanged;
+use App\Traits\ServiceLogger;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Log;
 
 
 class LogUserSensitiveDataChange
 {
+
+    use ServiceLogger;
+
     /**
      * Create the event listener.
      */
@@ -23,9 +26,6 @@ class LogUserSensitiveDataChange
      */
     public function handle(UserSensitiveDataChanged $event): void
     {
-        Log::channel('daily')->info("Perubahan data sensitif user ID {$event->user->id}", [
-            'changes' => $event->changes,
-            'updated_by' => $event->updatedBy,
-        ]);
+        $this->logUserSensitiveDataChange($event);
     }
 }
