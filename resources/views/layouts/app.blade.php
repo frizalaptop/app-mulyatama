@@ -100,10 +100,10 @@
     
     <script>
         window.routes = {
-            getUser: "{{ route('user.get', ['id' => ':id']) }}",
-            updateUser: "{{ route('user.update', ['id' => ':id']) }}",
-            dataTable: "{{ route('user.datatable') }}",
-            statisticUser: "{{ route('statistic.user') }}",
+            getUser: "{{ route('admin.user.list.getId', ['id' => ':id']) }}",
+            updateUser: "{{ route('admin.user.list.update', ['id' => ':id']) }}",
+            dataTable: "{{ route('admin.user.list.tabel') }}",
+            statisticUser: "{{ route('admin.statistik.user.list') }}",
         };
     </script>
     

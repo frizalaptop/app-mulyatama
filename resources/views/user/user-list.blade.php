@@ -79,7 +79,7 @@
     </div>
 
     <!-- Modal Add User -->
-    <form id="formAddUser" method="POST" action="{{ route('user.add') }}" >
+    <form id="formAddUser" method="POST" action="{{ route('admin.user.list.simpan') }}" >
         @csrf
         <x-adminlte-modal id="modalAddUser" title="Tambah User" theme="blue" size='lg' v-centered disable-x="false">
 
