@@ -313,7 +313,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'User List',
-                    'url'  => '/admin/user-list',
+                    'url'  => '/admin/user/user-list',
                 ],
                 [
                     'text' => 'User Login',
@@ -357,7 +357,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'User List',
-                    'url'  => '/admin/user-list',
+                    'url'  => '/admin/user/user-list',
                     'icon' => 'bi bi-person-circle', // optional
                 ],
                 [
