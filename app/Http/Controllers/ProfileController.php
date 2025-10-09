@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Yajra\DataTables\Facades\DataTables;
 
-
-class UserController extends Controller
+class ProfileController extends Controller
 {
 
     public function userProfile()
@@ -29,10 +26,10 @@ class UserController extends Controller
          *
          * ⚠️ Koreksi dan Saran Perbaikan:
          * 1. Hapus `use` yang tidak digunakan (contoh: `DataTables` tidak dipakai di controller ini).
-         * 2. Validasi email harus tetap unik, tapi pengecualian untuk user saat ini harus jelas:
+         * ✅2. Validasi email harus tetap unik, tapi pengecualian untuk user saat ini harus jelas:
          *    Gunakan: `Rule::unique('users')->ignore($user->id)` agar lebih aman dan terbaca.
-         * 3. Validasi sebaiknya dipindahkan ke `FormRequest` agar controller tetap bersih dan mudah diuji.
-         * 4. Gunakan `$request->filled('password')` sebelum mengubah password, untuk menghindari overwrite kosong.
+         * ✅3. Validasi sebaiknya dipindahkan ke `FormRequest` agar controller tetap bersih dan mudah diuji.
+         * ✅4. Gunakan `$request->filled('password')` sebelum mengubah password, untuk menghindari overwrite kosong.
          * 5. Tambahkan pengecekan `save()` agar bisa menangani kegagalan simpan:
          *    ```php
          *    if (!$user->save()) {
@@ -40,7 +37,7 @@ class UserController extends Controller
          *    }
          *    ```
          * 6. Pertimbangkan untuk memisahkan logika update ke Service atau Action agar lebih modular.
-         * 7. Tambahkan logging atau event untuk perubahan data sensitif seperti email dan password.
+         * ✅7. Tambahkan logging atau event untuk perubahan data sensitif seperti email dan password.
          * 8. Gunakan komentar yang menjelaskan tujuan setiap blok kode agar mudah dipahami oleh developer lain.
          */
 

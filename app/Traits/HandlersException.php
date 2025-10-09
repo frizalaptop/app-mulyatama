@@ -4,7 +4,6 @@ namespace App\Traits;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Log;
 use Throwable;
 
 /**
