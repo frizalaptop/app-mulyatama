@@ -8,6 +8,8 @@ use Throwable;
 
 /**
  * Menangani semua error yang mungkin terjadi pada aplikasi
+ * @see app\Http\Controllers\Admin\User\UserListController.php
+ * @see app\Http\Controllers\Admin\StatistikController.php
  */
 trait HandlersException {
 
@@ -16,8 +18,8 @@ trait HandlersException {
    /**
      * Menangani seluruh exception dan mengembalikan response yang sesuai.
      *
-     * @param Throwable $e
-     * @param string|null $notFoundMsg
+     * @param Throwable $e base interface untuk object apapun yang dapat di throw melalui throw statement
+     * @param string|null $notFoundMsg pesan custom jika suatu data tidak ditemukan
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      */
     protected function handleException(Throwable $e, ?string $notFoundMsg = null)

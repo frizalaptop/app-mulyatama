@@ -7,6 +7,11 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Event ini dipicu ketika instance User merubah data sensitif (email atau password)
+ * @see app\Listeners\LogUserSensitiveDataChange.php sebagai event yang didengan
+ * @see app\Services\UserListService.php sebagai event yang dibuat
+ */
 class UserSensitiveDataChanged
 {
     use Dispatchable, SerializesModels;
@@ -16,7 +21,10 @@ class UserSensitiveDataChanged
     public $updatedBy;
 
     /**
-     * Create a new event instance.
+     * Membuat instance event baru.
+     * @param User $user instance user
+     * @param array $change menampung kolom yang berubah
+     * @param string|int $updatedBy menyimpan id pengubah data
      */
     public function __construct(User $user, array $changes, $updatedBy)
     {

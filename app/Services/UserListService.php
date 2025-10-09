@@ -9,14 +9,20 @@ use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
-
-class UserService
+/**
+ * Bertugas sebagai eksekutor logika inti dari suatu proses controller
+ * Tiap method menjalankan logika bisnis dan aturan kerja aplikasi
+ * Tidak boleh berinteraksi dengan database langsung
+ * @see app\Http\Controllers\Admin\User\UserListController.php
+ */
+class UserListService 
 {
 
     protected $userRepository;
     protected $profileRepository;
     protected $roleRepository;
 
+    // Inject dependecy repository yang dibutuhkan dalam service
     public function __construct(
         UserRepository $userRepository,
         ProfileRepository $profileRepository,
@@ -27,8 +33,12 @@ class UserService
         $this->profileRepository = $profileRepository;
         $this->roleRepository = $roleRepository;
     }
-    
-    public function getUserListView()
+
+    /**
+     * Mengembalikan data title
+     * @return array{title: string}
+     */
+    public function getUserListViewData()
     {
         try {
             return ['title' => 'User List'];
@@ -37,6 +47,10 @@ class UserService
         }
     }
 
+    /**
+     * Meminta data semua user
+     * @return \Illuminate\Database\Eloquent\Collection<int, array{created_at: mixed, email: string, id: mixed, last_login_at: mixed, name: string, role: TFirstDefault|TValue, status: bool, updated_at: mixed>|\Illuminate\Support\Collection<int, array{created_at: mixed, email: string, id: mixed, last_login_at: mixed, name: string, role: TFirstDefault|TValue, status: bool, updated_at: mixed}>}
+     */
     public function getUserDataTable()
     {
         try {
@@ -59,6 +73,12 @@ class UserService
         }
     }
 
+    /**
+     * Meminta data suatu user
+     * Meminta data profil dan role dari user terkait
+     * @param mixed $id id milik user dibutuhkan
+     * @return \App\Models\User|\Illuminate\Database\Eloquent\Collection<int, \App\Models\User>
+     */
     public function getUserById($id)
     {
         try {
@@ -71,21 +91,11 @@ class UserService
         }
     }
 
-    public function getUserStatistics(): array
-    {
-        try {
-            return [
-                'user_total'    => $this->userRepository->getAllCount(),
-                'user_aktif'    => $this->userRepository->getActiveCount(),
-                'user_nonaktif' => $this->userRepository->getInactiveCount(),
-                'user_admin'    => $this->roleRepository->getRoleCount('Admin'),
-                'user_klien'    => $this->roleRepository->getRoleCount('Klien'),
-            ];
-        } catch (Throwable $e) {
-            throw $e;
-        }
-    }
-
+    /**
+     * Menjakankan proses pembuatan data user baru
+     * @param array $data data user baru dan role user dibutuhkan, opsional untuk profile
+     * @return void
+     */
     public function addUser(array $data)
     {
         try {
@@ -98,7 +108,14 @@ class UserService
             throw $e;
         }
     }
-    
+
+    /**
+     * Menjalankan proses pembaruan data user, role dan profile terkait
+     * Menjalankan event-listener untuk log perubahan data sensitif user
+     * @param int $id id user dibutuhkan
+     * @param array $data data-data user, role dan profile yang ingin diperbarui
+     * @return void
+     */
     public function updateUser(int $id, array $data)
     {
         DB::transaction(function () use ($id, $data) {
@@ -118,7 +135,7 @@ class UserService
                 $changes['email'] = ['old' => $oldEmail, 'new' => $user->email];
             }
 
-            // Jika ada perubahan sensitif, buat event
+            // Jika ada perubahan sensitif setelah perubahan dicommit, buat event
             if (!empty($changes)) {
                 DB::afterCommit(function () use ($user, $changes) {
                     event(new UserSensitiveDataChanged($user, $changes, auth()->user()->id));

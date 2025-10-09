@@ -15,12 +15,19 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * Mengarahkan respon halaman berdasarkan role user
+     * @return \Illuminate\Contracts\Support\Renderable|\Illuminate\Http\RedirectResponse
      */
     public function index()
     {
-        return view('home');
+        $userRole = auth()->user()->getRoleNames()->first();
+
+        if($userRole === 'Admin'){
+            return redirect()->route('admin.index');
+        } elseif ($userRole === 'Klien') {
+            return redirect()->route('klien.index');
+        } else {
+            return view('home');
+        }
     }
 }
