@@ -3,16 +3,14 @@
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\StatistikController;
 use App\Http\Controllers\Admin\User\UserListController;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
 Auth::routes();
 
+// Dashboard
 Route::get('/', [HomeController::class, 'index'])->name('home');
-// Route::get('/admin', [HomeController::class, 'index']);
-// Route::get('/klien', [HomeController::class, 'index']);
 
 Route::middleware(['auth'])
     ->controller(ProfileController::class)
@@ -21,17 +19,25 @@ Route::middleware(['auth'])
         Route::put('/user-profile', 'updateProfile')->name('profile.update');
 });
 
+// Role admin 
 Route::prefix('admin')
-    ->middleware(['auth'])
+    ->middleware(['auth', 'role:Admin'])
     ->group(
         function () {
 
-            Route::get('/', [DashboardController::class, 'index']);
+            // admin dashboard
+            Route::get('/', [DashboardController::class, 'index'])
+                ->name('admin.index');
 
+            // admin -> statistik json
             Route::prefix('statistik')
                 ->group(function () {
-                    Route::get('/user-list', [StatistikController::class, 'userList']);
-                    Route::get('/user-login', [StatistikController::class, 'userLogin']);
+
+                    Route::get('/user-list', [StatistikController::class, 'userList'])
+                        ->name('admin.statistik.user.list');
+                    Route::get('/user-login', [StatistikController::class, 'userLogin'])
+                        ->name('admin.statistik.user.login');
+
                 });
 
             Route::prefix('user')
@@ -39,8 +45,16 @@ Route::prefix('admin')
 
                     Route::prefix('user-list')
                         ->group(function () {
-                            Route::get('/', [UserListController::class, 'index']);
-                            Route::post('/tabel', [UserListController::class, 'tabel']);
+                            Route::get('/', [UserListController::class, 'index'])
+                                ->name('admin.user.list');
+                            Route::get('/tabel', [UserListController::class, 'tabel'])
+                                ->name('admin.user.list.tabel');
+                            Route::get('/get-id/{id}', [UserListController::class, 'getId'])
+                                ->name('admin.user.list.getId'); 
+                            Route::post('/simpan', [UserListController::class, 'simpan'])
+                                ->name('admin.user.list.simpan'); 
+                            Route::put('/update/{id}', [UserListController::class, 'update'])
+                                ->name('admin.user.list.update'); 
                         });
 
                 });
@@ -48,14 +62,10 @@ Route::prefix('admin')
     });
 
 
-Route::middleware(['auth'])
-    ->controller(UserController::class)
-    ->group(function () {
-        Route::get('/admin/user-list', 'userList')->name('user.list');
-        Route::get('/admin/user-datatable', 'datatable')->name('user.datatable');
-        Route::post('/admin/users', 'addUser')->name('user.add');
-        Route::get('/admin/users/{id}', 'getUserById')->name('user.get');
-        Route::put('/admin/users/{id}', 'updateUser')->name('user.update');
+Route::prefix('klien')
+    ->middleware(['auth', 'role:Klien'])
+    ->group(function (){
+        Route::get('/', [DashboardController::class, 'index'])
+            ->name('klien.index');
 
-        Route::get('/statistic/user', 'statistic')->name('statistic.user');
     });
