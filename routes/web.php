@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Klien\DashboardController as KlienDashboardController;
 use App\Http\Controllers\Admin\StatistikController;
 use App\Http\Controllers\Admin\User\UserListController;
 use App\Http\Controllers\ProfileController;
@@ -65,7 +66,7 @@ Route::prefix('admin')
 Route::prefix('klien')
     ->middleware(['auth', 'role:Klien'])
     ->group(function (){
-        Route::get('/', [DashboardController::class, 'index'])
+        Route::get('/', [KlienDashboardController::class, 'index'])
             ->name('klien.index');
 
     });
