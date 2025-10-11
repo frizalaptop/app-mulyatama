@@ -71,7 +71,7 @@
 
     <div class="text-center text-md-right">
         Versi 1.0.50 <br>
-        Render: <span id="microtime">0.83</span> detik. <br>
+        Render: <span id="microtime"></span> detik. <br>
     </div>
 @stop
 
@@ -110,6 +110,12 @@
     <script src="{{ asset('build/assets/custom_format.min.js') }}"></script>
     <script src="{{ asset('build/assets/custom_form.min.js') }}"></script>
     <script src="{{ asset('build/assets/custom_table.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            window.addEventListener("load",(function(){const renderTime=performance.now();document.getElementById("microtime").textContent=(renderTime/1e3).toFixed(2)}));;
+        });
+    </script>
 
     @yield('page_js')
 @stop
