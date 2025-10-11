@@ -2,15 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ProfilService;
+use App\Traits\HandlersException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class ProfileController extends Controller
+class ProfilController extends Controller
 {
 
-    public function userProfile()
+    use HandlersException;
+
+    protected $profilService;
+
+    // Inject class service yang dibutuhkan dalam controller
+    public function __construct(ProfilService $profilService)
     {
-        return view('user.user-profile');
+        $this->profilService = $profilService;
+    }
+
+    public function index()
+    {
+        try {
+            $data = $this->profilService->getProfilViewData();
+            return view('user.user-profile', $data);
+        } catch (\Throwable $e) {
+            return $this->handleException($e);
+        }
     }
 
     public function updateProfile(Request $request)

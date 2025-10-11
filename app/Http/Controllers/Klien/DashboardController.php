@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Klien;
 
 use App\Http\Controllers\Controller;
 
+/**
+ * Controller khusus role Klien
+ */
 class DashboardController extends Controller
 {
     /**
