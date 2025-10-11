@@ -115,11 +115,11 @@ li.nav-header {
   top: -15px;
 }
 
-/* .info-kecil {
+.info-kecil {
   border-left: 1px solid #919191;
   padding-left: 10px;
   margin-bottom: 10px;
-} */
+}
 
 /* .kotak {
   border: 1px solid #ccc;
@@ -133,7 +133,7 @@ li.nav-header {
     border-radius: 6px;
 }
 
-/* small,
+small,
 .info-kecil {
   line-height: 1;
 }
@@ -142,18 +142,19 @@ li.nav-header {
   border-left: 1px solid #919191;
   padding-left: 10px;
   margin-bottom: 10px;
-} */
+}
 
 /* button */
 .btn-group > .btn,
 .btn-sm {
   padding: 5px 11px;
   font-size: 12px;
+  line-height: 15px;
 }
 
-/* .btn-block {
+.btn-block {
   padding: 10px 0px
-} */
+}
 
 .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active {
   background-color: #0068d7;
