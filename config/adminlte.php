@@ -346,7 +346,7 @@ return [
         ],
         [
             'text' => 'Profil',
-            'url' => '/profile',
+            'url' => '/profil',
             'icon' => 'bi bi-person-vcard',
         ],
         
