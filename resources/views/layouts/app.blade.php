@@ -112,9 +112,10 @@
     <script src="{{ asset('build/assets/custom_table.min.js') }}"></script>
 
     <script>
-        $(document).ready(function() {
-            window.addEventListener("load",(function(){const renderTime=performance.now();document.getElementById("microtime").textContent=(renderTime/1e3).toFixed(2)}));;
-        });
+        $(function () {
+            const renderTime=performance.now();
+            document.getElementById("microtime").textContent=(renderTime/1e3).toFixed(2)
+        })
     </script>
 
     @yield('page_js')
