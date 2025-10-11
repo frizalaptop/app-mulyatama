@@ -4,7 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Klien\DashboardController as KlienDashboardController;
 use App\Http\Controllers\Admin\StatistikController;
 use App\Http\Controllers\Admin\User\UserListController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
@@ -13,11 +13,11 @@ Auth::routes();
 // Dashboard
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::middleware(['auth'])
-    ->controller(ProfileController::class)
+Route::prefix('profil')
+    ->middleware(['auth'])
     ->group(function () {
-        Route::get('/profile', 'userProfile')->name('user.profile');
-        Route::put('/user-profile', 'updateProfile')->name('profile.update');
+        Route::get('/', [ProfilController::class, 'index'])->name('user.profile');
+        Route::put('/user-profile', [ProfilController::class, 'index'])->name('profile.update');
 });
 
 // Role admin 
