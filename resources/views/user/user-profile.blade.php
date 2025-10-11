@@ -62,51 +62,133 @@
 
                 <div class="card-body">
                     <div class="tab-content">
-                        <form method="POST" action="{{ route('profile.update') }}">
-                            @csrf
-                            @method('PUT')
-            
-                            <x-adminlte-input name="name" value="{{ old('name', auth()->user()->name) }}"
-                                            label-class="text-lightblue" placeholder="Masukkan nama baru">
-                                <x-slot name="prependSlot">
-                                    <div class="input-group-text">
-                                        <i class="fas fa-user text-lightblue"></i>
+
+                    <!-- Tab Akun -->
+                        <div class="tab-pane fade active show" id="akun">
+                            <form method="POST" action="{{ route('profile.update') }}">
+                                @csrf
+                                @method('PUT')
+                                <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <x-adminlte-input name="name" value="{{ old('name', auth()->user()->name) }}"
+                                                label-class="text-lightblue" placeholder="Masukkan nama baru">
+                                                    <x-slot name="prependSlot">
+                                                        <div class="input-group-text">
+                                                            <i class="bi bi-person-circle"></i>
+                                                        </div>
+                                                    </x-slot>
+                                                </x-adminlte-input>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <x-adminlte-input name="email" type="email" value="{{ old('email', auth()->user()->email) }}" label-class="text-lightblue" placeholder="Masukkan email baru">
+                                                    <x-slot name="prependSlot">
+                                                        <div class="input-group-text">
+                                                            <i class="bi bi-envelope-fill"></i>
+                                                        </div>
+                                                    </x-slot>
+                                                </x-adminlte-input>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <x-adminlte-input name="password" type="password" label-class="text-lightblue" placeholder="Password">
+                                                    <x-slot name="prependSlot">
+                                                        <div class="input-group-text">
+                                                            <i class="bi bi-eye-fill"></i>
+                                                        </div>
+                                                    </x-slot>
+                                                </x-adminlte-input>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <x-adminlte-input name="password_confirmation" type="password" label-class="text-lightblue" placeholder="Ulangi Password">
+                                                    <x-slot name="prependSlot">
+                                                        <div class="input-group-text">
+                                                            <i class="bi bi-eye-fill"></i>
+                                                        </div>
+                                                    </x-slot>
+                                                </x-adminlte-input>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button type="submit" id="akun-submit" class="btn btn-dark mr-1 float-right">Simpan</button>
+                                            <button type="button" id="akun-loading" class="btn btn-dark float-right" disabled="" style="display: none;">
+                                                <span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
+                                                Loading...
+                                            </button>
+                                        </div>
+
                                     </div>
-                                </x-slot>
-                            </x-adminlte-input>
-            
-                            <x-adminlte-input name="email" type="email" 
-                                            value="{{ old('email', auth()->user()->email) }}"
-                                            label-class="text-lightblue" placeholder="Masukkan email baru">
-                                <x-slot name="prependSlot">
-                                    <div class="input-group-text">
-                                        <i class="fas fa-envelope text-lightblue"></i>
+                            </form>
+                        </div>
+                        
+                    <!-- Tab info -->
+                        <div class="tab-pane fade active show" id="info">
+                            <form method="POST" action="{{ route('profile.update') }}">
+                                @csrf
+                                @method('PUT')
+                                <div class="row">
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <x-adminlte-input name="perusahaan" placeholder="Perusahaan" label-class="text-lightblue" id="edit_perusahaan" class="upper" value="{{ old('perusahaan', auth()->user()->profile->perusahaan) }}">
+                                                    <x-slot name="prependSlot">
+                                                        <div class="input-group-text">
+                                                            <i class="bi bi-building-fill"></i>
+                                                        </div>
+                                                    </x-slot>
+                                                </x-adminlte-input>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <x-adminlte-input name="whatsapp" placeholder="Whatsapp" label-class="text-lightblue" id="edit_whatsapp" value="{{ old('perusahaan', auth()->user()->profile->whatsapp) }}">
+                                                    <x-slot name="prependSlot">
+                                                        <div class="input-group-text">
+                                                            <i class="bi bi-whatsapp"></i>
+                                                        </div>
+                                                    </x-slot>
+                                                </x-adminlte-input>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <x-adminlte-input name="telegram" placeholder="Telegram" label-class="text-lightblue" id="edit_telegram" value="{{ old('perusahaan', auth()->user()->profile->telegram) }}">
+                                                    <x-slot name="prependSlot">
+                                                        <div class="input-group-text">
+                                                            <i class="bi bi-telegram"></i>
+                                                        </div>
+                                                    </x-slot>
+                                                </x-adminlte-input>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <x-adminlte-input name="alamat" placeholder="Alamat" label-class="text-lightblue" id="edit_alamat" class="upper" value="{{ old('perusahaan', auth()->user()->profile->alamat) }}">
+                                                    <x-slot name="prependSlot">
+                                                        <div class="input-group-text">
+                                                            <i class="bi bi-house-fill"></i>
+                                                        </div>
+                                                    </x-slot>
+                                                </x-adminlte-input>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <button type="submit" id="akun-submit" class="btn btn-dark mr-1 float-right">Simpan</button>
+                                            <button type="button" id="akun-loading" class="btn btn-dark float-right" disabled="" style="display: none;">
+                                                <span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true"></span>
+                                                Loading...
+                                            </button>
+                                        </div>
+
                                     </div>
-                                </x-slot>
-                            </x-adminlte-input>
-            
-                            <x-adminlte-input name="password" type="password" 
-                                            label-class="text-lightblue" placeholder="Isi jika ingin mengganti password">
-                                <x-slot name="prependSlot">
-                                    <div class="input-group-text">
-                                        <i class="fas fa-lock text-lightblue"></i>
-                                    </div>
-                                </x-slot>
-                            </x-adminlte-input>
-            
-                            <x-adminlte-input name="password_confirmation" type="password" 
-                                            label-class="text-lightblue">
-                                <x-slot name="prependSlot">
-                                    <div class="input-group-text">
-                                        <i class="fas fa-check text-lightblue"></i>
-                                    </div>
-                                </x-slot>
-                            </x-adminlte-input>
-            
-                            <div class="d-flex justify-content-end">
-                                <x-adminlte-button type="submit" label="Simpan Perubahan" theme="success" icon="fas fa-save"/>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
