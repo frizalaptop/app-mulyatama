@@ -118,29 +118,33 @@ class UserListService
      */
     public function updateUser(int $id, array $data)
     {
-        DB::transaction(function () use ($id, $data) {
-            $user = $this->userRepository->find($id);
-            $oldEmail = $user->email;
-            $user = $this->userRepository->updateUser($user, $data);
-            $this->profileRepository->updateProfile($user, $data);
-            $this->roleRepository->syncRole($user, $data['role']);
-
-            $changes = [];
-
-            if (!empty($data['password'])) {
-                $changes['password'] = 'updated';
-            }
-
-            if ($user->email !== $oldEmail) {
-                $changes['email'] = ['old' => $oldEmail, 'new' => $user->email];
-            }
-
-            // Jika ada perubahan sensitif setelah perubahan dicommit, buat event
-            if (!empty($changes)) {
-                DB::afterCommit(function () use ($user, $changes) {
-                    event(new UserSensitiveDataChanged($user, $changes, auth()->user()->id));
-                });
-            }
-        });
+        try {
+            DB::transaction(function () use ($id, $data) {
+                $user = $this->userRepository->find($id);
+                $oldEmail = $user->email;
+                $user = $this->userRepository->updateUser($user, $data);
+                $this->profileRepository->updateProfile($user, $data);
+                $this->roleRepository->syncRole($user, $data['role']);
+    
+                $changes = [];
+    
+                if (!empty($data['password'])) {
+                    $changes['password'] = 'updated';
+                }
+    
+                if ($user->email !== $oldEmail) {
+                    $changes['email'] = ['old' => $oldEmail, 'new' => $user->email];
+                }
+    
+                // Jika ada perubahan sensitif setelah perubahan dicommit, buat event
+                if (!empty($changes)) {
+                    DB::afterCommit(function () use ($user, $changes) {
+                        event(new UserSensitiveDataChanged($user, $changes, auth()->user()->id));
+                    });
+                }
+            });
+        } catch (Throwable $e) {
+            throw $e;
+        }
     }
 }

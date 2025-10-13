@@ -18,7 +18,7 @@ class StatistikService
     protected $userRepository;
     protected $roleRepository;
 
-    // Inject dependency yang dibutuhkan
+    // Inject dependency repository yang dibutuhkan dalam service
     public function __construct(
         UserRepository $userRepository,
         RoleRepository $roleRepository,
