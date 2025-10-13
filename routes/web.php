@@ -13,12 +13,12 @@ Auth::routes();
 // Dashboard
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::prefix('profil')
-    ->middleware(['auth'])
-    ->group(function () {
-        Route::get('/', [ProfilController::class, 'index'])->name('user.profile');
-        Route::put('/user-profile', [ProfilController::class, 'index'])->name('profile.update');
-});
+// Route::prefix('profil')
+//     ->middleware(['auth'])
+//     ->group(function () {
+//         Route::get('/', [ProfilController::class, 'index'])->name('user.profile');
+//         Route::put('/user-profile', [ProfilController::class, 'index'])->name('profile.update');
+// });
 
 // Role admin 
 Route::prefix('admin')
@@ -62,7 +62,7 @@ Route::prefix('admin')
 
     });
 
-
+// Role klien
 Route::prefix('klien')
     ->middleware(['auth', 'role:Klien'])
     ->group(function (){
@@ -70,3 +70,19 @@ Route::prefix('klien')
             ->name('klien.index');
 
     });
+
+
+// Role umum
+Route::prefix('profil')
+    ->middleware(['auth'])
+    ->group(function () {
+        Route::get('/', [ProfilController::class, 'index'])
+            ->name('profil.index');
+        Route::put('/update-akun/{userId}', [ProfilController::class, 'updateAkun'])
+            ->name('profil.update.akun');
+        Route::put('/update-info/{userId}', [ProfilController::class, 'updateInfo'])
+            ->name('profil.update.info');
+    });
+
+
+
