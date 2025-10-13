@@ -329,5 +329,6 @@
 @stop
 
 @section('page_js')
+    <script src="{{ asset('build/assets/beranda.min.js') }}"></script>
     <script src="{{ asset('build/assets/user-list.min.js') }}"></script>
 @stop
