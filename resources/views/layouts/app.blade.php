@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('usermenu_body')
-    <a href="{{ route('user.profile') }}" class="dropdown-item">
+    <a href="{{ route('profil.index') }}" class="dropdown-item">
         <i class="bi bi-person mr-3"></i></i> Profil
     </a>
     <div class="dropdown-divider"></div>
@@ -99,6 +99,13 @@
     <script src="{{ asset('/vendor/jquery-validation/localization/messages_id.min.js') }}"></script>
     
     <script>
+        // Pasang csrf token untuk semua permintaan ajax
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+        });
+        
         window.routes = {
             getUser: "{{ route('admin.user.list.getId', ['id' => ':id']) }}",
             updateUser: "{{ route('admin.user.list.update', ['id' => ':id']) }}",
