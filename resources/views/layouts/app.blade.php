@@ -75,11 +75,12 @@
     </div>
 @stop
 
+<!-- adminlte_css dan adminlte_js jangan di render semua halaman -->
 @section('adminlte_css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous" />
     <link rel="stylesheet" href="{{ asset('/vendor/sweetalert2/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
-    <link rel="stylesheet" href="{{ asset("/vendor/datatables/css/dataTables.bootstrap4.min.css") }}">
+    <link rel="stylesheet" href="{{ asset('/vendor/datatables/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/vendor/datatables-plugins/responsive/css/responsive.bootstrap4.min.css') }}">                
     <link rel="stylesheet" href="{{ asset('build/assets/custom.min.css') }}">
 
@@ -106,10 +107,12 @@
             statisticUser: "{{ route('admin.statistik.user.list') }}",
         };
     </script>
-    
-    <script src="{{ asset('build/assets/custom_format.min.js') }}"></script>
-    <script src="{{ asset('build/assets/custom_form.min.js') }}"></script>
-    <script src="{{ asset('build/assets/custom_table.min.js') }}"></script>
+    <!-- js dan css yang bersifat custom pindahkan ke folder page, -->
+    <!-- untuk membedakan dengan file lainnya. -->
+    <!-- jangan render di global page. render di page yang diperlukan saja. -->
+    <script src="{{ asset('page/custom_format.min.js') }}"></script>
+    <script src="{{ asset('page/custom_form.min.js') }}"></script>
+    <script src="{{ asset('page/custom_table.min.js') }}"></script>
 
     <script>
         $(function () {

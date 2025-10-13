@@ -329,5 +329,5 @@
 @stop
 
 @section('page_js')
-    <script src="{{ asset('build/assets/user-list.min.js') }}"></script>
+    <script src="{{ asset('page/user_list.min.js') }}"></script>
 @stop
