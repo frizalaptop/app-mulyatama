@@ -86,7 +86,10 @@ class UserRepository
     {
         $user->name = $data['name'];
         $user->email = $data['email'];
-        $user->active = $data['aktivasi'] === 'Aktif';
+
+        if (!empty($data['aktivasi'])) {
+            $user->active = $data['aktivasi'] === 'Aktif';
+        }
 
         if (!empty($data['password'])) {
             $user->password = Hash::make($data['password']);
