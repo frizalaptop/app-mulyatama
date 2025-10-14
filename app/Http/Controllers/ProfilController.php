@@ -22,6 +22,10 @@ class ProfilController extends Controller
         $this->profilService = $profilService;
     }
 
+    /**
+     * Mengembalikan view user profil
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
     public function index()
     {
         try {
@@ -32,6 +36,12 @@ class ProfilController extends Controller
         }
     }
 
+    /**
+     * Mengubah data akun profil
+     * @param \App\Http\Requests\UpdateProfilAkunRequest $request
+     * @param mixed $userId user id
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
     public function updateAkun(UpdateProfilAkunRequest $request, $userId)
     { 
         try {
@@ -45,6 +55,12 @@ class ProfilController extends Controller
         }
     }
 
+    /**
+     * Mengubah data info profil
+     * @param \App\Http\Requests\UpdateProfilInfoRequest $request
+     * @param mixed $userId user id
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
     public function updateInfo(UpdateProfilInfoRequest $request, $userId)
     {
         try {
