@@ -1,5 +1,12 @@
 @extends('layouts.app')
 
+@push('css')
+    <link rel="stylesheet" href="{{ asset('/vendor/datatables/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/vendor/datatables-plugins/responsive/css/responsive.bootstrap4.min.css') }}">   
+@endpush
+
+
+
 @section('content')
 
     <div class="row">
@@ -328,7 +335,28 @@
     </form>
 @stop
 
-@section('page_js')
-    <script src="{{ asset('build/assets/beranda.min.js') }}"></script>
-    <script src="{{ asset('build/assets/user-list.min.js') }}"></script>
-@stop
+@push('js')
+    <script>
+        // Definisi route endpoint yang dibutuhkan
+        window.routes = {
+            getUser: "{{ route('admin.user.list.getId', ['id' => ':id']) }}",
+            updateUser: "{{ route('admin.user.list.update', ['id' => ':id']) }}",
+            dataTable: "{{ route('admin.user.list.tabel') }}",
+            statisticUser: "{{ route('admin.statistik.user.list') }}",
+        };
+    </script>
+    <script src="{{ asset('/vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('/vendor/jquery-validation/localization/messages_id.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables-plugins/responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables-plugins/responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables-plugins/buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables-plugins/buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables-plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('page/custom_format.min.js') }}"></script>
+    <script src="{{ asset('page/custom_form.min.js') }}"></script>
+    <script src="{{ asset('page/custom_table.min.js') }}"></script>
+    <script src="{{ asset('page/user-list.min.js') }}"></script>
+@endpush
+

@@ -77,26 +77,14 @@
 
 @section('adminlte_css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" crossorigin="anonymous" />
-    <link rel="stylesheet" href="{{ asset('/vendor/sweetalert2/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
-    <link rel="stylesheet" href="{{ asset("/vendor/datatables/css/dataTables.bootstrap4.min.css") }}">
-    <link rel="stylesheet" href="{{ asset('/vendor/datatables-plugins/responsive/css/responsive.bootstrap4.min.css') }}">                
-    <link rel="stylesheet" href="{{ asset('build/assets/custom.min.css') }}">
-
-    @yield('page_css')
+    <link rel="stylesheet" href="{{ asset('/vendor/sweetalert2/sweetalert2.min.css') }}">             
+    @stack('css')
+    <link rel="stylesheet" href="{{ asset('page/custom.min.css') }}">
 @stop
 
 @section('adminlte_js')
     <script src="{{ asset('/vendor/sweetalert2/sweetalert2.min.js') }}"></script>
-    <script src="{{ asset('/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('/vendor/datatables/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('/vendor/datatables-plugins/responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('/vendor/datatables-plugins/responsive/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('/vendor/datatables-plugins/buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('/vendor/datatables-plugins/buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('/vendor/datatables-plugins/jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('/vendor/jquery-validation/jquery.validate.min.js') }}"></script>
-    <script src="{{ asset('/vendor/jquery-validation/localization/messages_id.min.js') }}"></script>
     
     <script>
         // Pasang csrf token untuk semua permintaan ajax
@@ -105,18 +93,9 @@
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
         });
-        
-        window.routes = {
-            getUser: "{{ route('admin.user.list.getId', ['id' => ':id']) }}",
-            updateUser: "{{ route('admin.user.list.update', ['id' => ':id']) }}",
-            dataTable: "{{ route('admin.user.list.tabel') }}",
-            statisticUser: "{{ route('admin.statistik.user.list') }}",
-        };
     </script>
     
-    <script src="{{ asset('build/assets/custom_format.min.js') }}"></script>
-    <script src="{{ asset('build/assets/custom_form.min.js') }}"></script>
-    <script src="{{ asset('build/assets/custom_table.min.js') }}"></script>
+    <script src="{{ asset('page/beranda.min.js') }}"></script>
 
     <script>
         $(function () {
@@ -125,5 +104,5 @@
         })
     </script>
 
-    @yield('page_js')
+    @stack('js')
 @stop

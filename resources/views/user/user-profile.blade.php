@@ -22,8 +22,8 @@
                             <p class="text-center mt-n1">{{ auth()->user()->email }}</p>
     
                             <ul class="list-group list-group-unbordered mb-3">
-                                <li class="list-group-item"><b>Tanggal Daftar</b> <a class="float-right">{{ auth()->user()->created_at }}</a></li>
-                                <li class="list-group-item"><b>Terakhir Login</b> <a class="float-right">{{ auth()->user()->last_login_at }}</a></li>
+                                <li class="list-group-item"><b>Tanggal Daftar</b> <a class="float-right">{{ auth()->user()->created_at->format('d M Y → H:i:s') }}</a></li>
+                                <li class="list-group-item"><b>Terakhir Login</b> <a class="float-right">{{ auth()->user()->last_login_at->format('d M Y → H:i:s')}}</a></li>
                                 <li class="list-group-item text-center"><b>Upload foto profil</b> <span class="ml-2" data-toggle="tooltip" data-placement="top" title="" style="font-size: 15px;" data-original-title="Dimensi foto ideal 215 x 215 px. Format foto: .jpg .jpeg .png"><i class="bi bi-question-circle"></i></span></li>
                             </ul>
     
@@ -202,6 +202,10 @@
 </div>
 @stop
 
-@section('page_js')
-    <script src="{{ asset('build/assets/profil.min.js') }}"></script>
-@stop
+@push('js')
+    <script src="{{ asset('/vendor/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('/vendor/jquery-validation/localization/messages_id.min.js') }}"></script>
+    <script src="{{ asset('page/custom_format.min.js') }}"></script>
+    <script src="{{ asset('page/custom_form.min.js') }}"></script>
+    <script src="{{ asset('page/profil.min.js') }}"></script>
+@endpush
