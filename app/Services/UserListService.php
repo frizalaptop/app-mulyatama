@@ -66,6 +66,10 @@ class UserListService
                     'last_login_at' => $user->last_login_at?->format('Y-m-d H:i:s'),
                     'created_at' => $user->created_at->format('Y-m-d H:i:s'),
                     'updated_at' => $user->updated_at->format('Y-m-d H:i:s'),
+                    'aksi'  => '<div class="btn-group" role="group">
+                                <button class="btn btn-sm btn-dark btn-edit" data-id="'. $user->id .'" data-toggle="modal" data-target="#modalEditUser">Edit</button>
+                                <button class="btn btn-sm btn-success btn-profile" data-id="'. $user->id .'">Profil</button>
+                           </div>'
                 ];
             });
         } catch (Throwable $e) {
