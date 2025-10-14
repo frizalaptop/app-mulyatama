@@ -63,7 +63,7 @@ class UserListService
                     'email' => $user->email,
                     'status' => $user->active,
                     'role' => $this->roleRepository->getRoleName($user),
-                    'last_login_at' => $user->last_login_at,
+                    'last_login_at' => $user->last_login_at?->format('Y-m-d H:i:s'),
                     'created_at' => $user->created_at->format('Y-m-d H:i:s'),
                     'updated_at' => $user->updated_at->format('Y-m-d H:i:s'),
                 ];
@@ -136,7 +136,7 @@ class UserListService
                     $changes['email'] = ['old' => $oldEmail, 'new' => $user->email];
                 }
     
-                // Jika ada perubahan sensitif setelah perubahan dicommit, buat event
+                // Jika ada perubahan data sensitif setelah perubahan dicommit, buat event
                 if (!empty($changes)) {
                     DB::afterCommit(function () use ($user, $changes) {
                         event(new UserSensitiveDataChanged($user, $changes, auth()->user()->id));
