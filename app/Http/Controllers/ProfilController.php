@@ -2,25 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserSensitiveDataChanged;
 use App\Http\Requests\UpdateProfilAkunRequest;
 use App\Http\Requests\UpdateProfilInfoRequest;
-use App\Services\ProfilService;
+use App\Models\User;
 use App\Traits\HandlersException;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ProfilController extends Controller
 {
 
     use HandlersException;
-
-    protected $profilService;
-
-    // Inject class service yang dibutuhkan dalam controller
-    public function __construct(ProfilService $profilService)
-    {
-        $this->profilService = $profilService;
-    }
 
     /**
      * Mengembalikan view user profil
@@ -29,7 +22,7 @@ class ProfilController extends Controller
     public function index()
     {
         try {
-            $data = $this->profilService->getProfilViewData();
+            $data = ['title' => 'Profil'];
             return view('user.user-profile', $data);
         } catch (\Throwable $e) {
             return $this->handleException($e);
@@ -45,7 +38,40 @@ class ProfilController extends Controller
     public function updateAkun(UpdateProfilAkunRequest $request, $userId)
     { 
         try {
-            $this->profilService->updateProfilAkun($request->validated(), $userId);
+            $data = $request->validated();
+
+            DB::transaction(function () use ($data, $userId) {
+                $user = User::findOrFail($userId);
+                $oldEmail = $user->email;
+
+                $user->name = $data['name'];
+                $user->email = $data['email'];
+
+                if (!empty($data['aktivasi'])) {
+                    $user->active = $data['aktivasi'] === 'Aktif';
+                }
+
+                $changes = [];
+
+                if (!empty($data['password'])) {
+                    $user->password = Hash::make($data['password']);
+                    $changes['password'] = 'updated';
+                }
+
+                $user->save();
+
+                if ($user->email !== $oldEmail) {
+                    $changes['email'] = [
+                        'old' => $oldEmail,
+                        'new' => $user->email,
+                    ];
+                }
+
+                if (!empty($changes)) {
+                    event(new UserSensitiveDataChanged($user, $changes, $user->id));
+                }
+            });
+            
             return response()->json([
                 'success' => true,
                 'message' => 'Data berhasil diperbarui.',
@@ -64,7 +90,17 @@ class ProfilController extends Controller
     public function updateInfo(UpdateProfilInfoRequest $request, $userId)
     {
         try {
-            $this->profilService->updateProfilInfo($request->validated(), $userId);
+            $data = $request->validated();
+            $user = User::findOrFail($userId);
+
+            $profileData = [
+                    'perusahaan' => $data['perusahaan'] ?? null,
+                    'whatsapp'   => $data['whatsapp'] ?? null,
+                    'telegram'   => $data['telegram'] ?? null,
+                    'alamat'     => $data['alamat'] ?? null,
+                ];
+            $user->profil()->update($profileData);
+
             return response()->json([
                 'success' => true,
                 'message' => 'Data berhasil diperbarui.',

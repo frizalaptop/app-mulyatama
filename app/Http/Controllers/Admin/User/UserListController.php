@@ -8,7 +8,6 @@ use App\Http\Requests\AddUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Profile;
 use App\Models\User;
-use App\Services\UserListService;
 use App\Traits\HandlersException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -21,14 +20,6 @@ class UserListController extends Controller
 {
 
     use HandlersException;
-
-    protected $userListService;
-
-    // Inject class service yang dibutuhkan dalam controller
-    public function __construct(UserListService $userListService)
-    {
-        $this->userListService = $userListService;
-    }
 
     /**
      * Mengambil view daftar user 
@@ -162,8 +153,11 @@ class UserListController extends Controller
                     $user->active = $data['aktivasi'] === 'Aktif';
                 }
 
+                $changes = [];
+
                 if (!empty($data['password'])) {
                     $user->password = Hash::make($data['password']);
+                    $changes['password'] = 'updated';
                 }
 
                 $user->save();
@@ -179,12 +173,6 @@ class UserListController extends Controller
                 }
 
                 $user->syncRoles($data['role']);
-
-                $changes = [];
-
-                if (!empty($data['password'])) {
-                    $changes['password'] = 'updated';
-                }
 
                 if ($user->email !== $oldEmail) {
                     $changes['email'] = [
