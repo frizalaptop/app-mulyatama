@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+
 class HomeController extends Controller
 {
     /**
@@ -20,7 +22,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $userRole = auth()->user()->getRoleNames()->first();
+        $userRole = Auth::user()->getRoleNames()->first();
 
         if($userRole === 'Admin'){
             return redirect()->route('admin.index');
