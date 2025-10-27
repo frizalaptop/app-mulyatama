@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-4 col-lg-3">
             <div class="card card-primary card-outline">
-                <div class="card-body box-profile">
+                <div class="card-body box-profil">
                     <form action="https://portal.mulyatamaabadi.co.id/profil/update-foto" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" id="id_profil" name="id_profil" value="7">
@@ -18,7 +18,7 @@
                                 <img id="preview_foto_profil" class="img-fluid p-2 border border-primary rounded" src="https://portal.mulyatamaabadi.co.id/upload/profil/crb-profil.png" style="max-width: 215px;">
                             </div>
     
-                            <h3 class="profile-username text-center">{{ auth()->user()->name }}</h3>
+                            <h3 class="profil-username text-center">{{ auth()->user()->name }}</h3>
                             <p class="text-center mt-n1">{{ auth()->user()->email }}</p>
     
                             <ul class="list-group list-group-unbordered mb-3">
@@ -139,7 +139,7 @@
 
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <x-adminlte-input name="perusahaan" placeholder="Perusahaan" label-class="text-lightblue" id="edit_perusahaan" class="upper" value="{{ old('perusahaan', auth()->user()->profile->perusahaan) }}">
+                                                <x-adminlte-input name="perusahaan" placeholder="Perusahaan" label-class="text-lightblue" id="edit_perusahaan" class="upper" value="{{ old('perusahaan', auth()->user()->profil->perusahaan) }}">
                                                     <x-slot name="prependSlot">
                                                         <div class="input-group-text">
                                                             <i class="bi bi-building-fill"></i>
@@ -149,7 +149,7 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <x-adminlte-input name="whatsapp" placeholder="Whatsapp" label-class="text-lightblue" id="edit_whatsapp" value="{{ old('perusahaan', auth()->user()->profile->whatsapp) }}">
+                                                <x-adminlte-input name="whatsapp" placeholder="Whatsapp" label-class="text-lightblue" id="edit_whatsapp" value="{{ old('perusahaan', auth()->user()->profil->whatsapp) }}">
                                                     <x-slot name="prependSlot">
                                                         <div class="input-group-text">
                                                             <i class="bi bi-whatsapp"></i>
@@ -161,7 +161,7 @@
 
                                         <div class="col-md-6">
                                             <div class="mb-3">
-                                                <x-adminlte-input name="telegram" placeholder="Telegram" label-class="text-lightblue" id="edit_telegram" value="{{ old('perusahaan', auth()->user()->profile->telegram) }}">
+                                                <x-adminlte-input name="telegram" placeholder="Telegram" label-class="text-lightblue" id="edit_telegram" value="{{ old('perusahaan', auth()->user()->profil->telegram) }}">
                                                     <x-slot name="prependSlot">
                                                         <div class="input-group-text">
                                                             <i class="bi bi-telegram"></i>
@@ -171,7 +171,7 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <x-adminlte-input name="alamat" placeholder="Alamat" label-class="text-lightblue" id="edit_alamat" class="upper" value="{{ old('perusahaan', auth()->user()->profile->alamat) }}">
+                                                <x-adminlte-input name="alamat" placeholder="Alamat" label-class="text-lightblue" id="edit_alamat" class="upper" value="{{ old('perusahaan', auth()->user()->profil->alamat) }}">
                                                     <x-slot name="prependSlot">
                                                         <div class="input-group-text">
                                                             <i class="bi bi-house-fill"></i>
