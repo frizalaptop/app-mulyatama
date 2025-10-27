@@ -37,15 +37,6 @@
  * app\Models\Profile.php
  * app\Models\User.php
  * 
- * << Repository >>
- * app\Repositories\UserRepository.php
- * app\Repositories\ProfileRepository.php
- * app\Repositories\RoleRepository.php
- * 
- * << Service >>
- * app\Services\UserListService.php
- * app\Services\StatistikService.php
- * 
  * << Trait (Helper) >>
  * app\Traits\HandlersException.php
  * app\Traits\ServiceLogger.php
