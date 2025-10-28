@@ -272,9 +272,9 @@ table.dataTable>tbody>tr.child span.dtr-title {
 }
 
 
-#tableUserList td.col-status,
-#tableUserList th.col-status {
-    min-width: 80px;
+td.col-boolean,
+th.col-boolean {
+    min-width: 70px;
 }
 
 @media (min-width: 992px) {
