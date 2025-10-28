@@ -1,24 +1,19 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\BillboardController;
 use App\Http\Controllers\Klien\DashboardController as KlienDashboardController;
 use App\Http\Controllers\Admin\StatistikController;
 use App\Http\Controllers\Admin\User\UserListController;
 use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
 // Dashboard
 Route::get('/', [HomeController::class, 'index'])->name('home');
-
-// Route::prefix('profil')
-//     ->middleware(['auth'])
-//     ->group(function () {
-//         Route::get('/', [ProfilController::class, 'index'])->name('user.profile');
-//         Route::put('/user-profile', [ProfilController::class, 'index'])->name('profile.update');
-// });
 
 // Role admin 
 Route::prefix('admin')
@@ -71,7 +66,6 @@ Route::prefix('klien')
 
     });
 
-
 // Role umum
 Route::prefix('profil')
     ->middleware(['auth'])
@@ -84,5 +78,16 @@ Route::prefix('profil')
             ->name('profil.update.info');
     });
 
+Route::prefix('billboard')
+    ->middleware(['auth'])
+    ->group(function () {
 
+        Route::prefix('billboard-list')
+            ->group(function () {
+                Route::get('/', [BillboardController::class, 'index'])
+                    ->name('billboard.index');
+                Route::get('/tabel', [BillboardController::class, 'tabel'])
+                    ->name('billboard.list.tabel');
+            });
 
+    });
