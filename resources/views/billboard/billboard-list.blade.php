@@ -164,14 +164,14 @@
         </x-adminlte-modal>
     </form>
 
-    <!-- Modal Upload Billboard Picture -->
-    <form id="formUploadGambarBillboard" method="POST" data-cek="true">
+    <!-- Modal Update Billboard Picture -->
+    <form id="formUpdateGambarBillboard" method="POST" enctype="multipart/form-data">
         @csrf
-        <x-adminlte-modal id="modalUploadGambarBillboard" title="Upload Gambar Billboard" theme="blue" size='lg' v-centered disable-x="false">
+        <x-adminlte-modal id="modalUpdateGambarBillboard" title="Update Gambar Billboard" theme="blue" size='lg' v-centered disable-x="false">
             <div class="row pl-3 pr-3 pt-3">
                 <div class="col">
-                    <!-- Upload Gambar Billboard -->
-                    <x-adminlte-input-file name="gambar" placeholder="Upload Gambar" igroup-size="md">
+                    <!-- Update Gambar Billboard -->
+                    <x-adminlte-input-file name="gambar" placeholder="Update Gambar" igroup-size="md">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-image-fill"></i>
@@ -188,7 +188,7 @@
                         Loading...
                     </button>
                     <button type="submit" class="btn btn-primary m-1">
-                        Upload
+                        Update
                     </button>
                     <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal" class="m-1"/>
                 </div> 
@@ -203,7 +203,7 @@
         // Definisi route endpoint yang dibutuhkan
         window.routes = {
             dataTable: "{{ route('admin.billboard.list.tabel') }}",
-            uploadGambar: "{{ route('admin.billboard.list.upload', ['id' => ':id']) }}"
+            updateGambar: "{{ route('admin.billboard.list.update.gambar', ['id' => ':id']) }}"
         };
     </script>
     <script src="{{ asset('/vendor/jquery-validation/jquery.validate.min.js') }}"></script>

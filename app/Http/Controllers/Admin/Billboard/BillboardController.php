@@ -54,10 +54,10 @@ class BillboardController extends Controller
                     'updated_at' => $billboard->updated_at->format('Y-m-d H:i:s'),
 
                     'aksi' => '<div class="btn-group" role="group">
-                        <button class="btn btn-sm btn-warning btn-upload" 
+                        <button class="btn btn-sm btn-warning btn-update" 
                             data-id="' . $billboard->id . '" 
                             data-toggle="modal" 
-                            data-target="#modalUploadGambarBillboard">Upload</button>
+                            data-target="#modalUpdateGambarBillboard">Update</button>
                         <button class="btn btn-sm btn-dark btn-edit" 
                             data-id="' . $billboard->id . '" 
                             data-toggle="modal" 
@@ -69,6 +69,15 @@ class BillboardController extends Controller
             });
             
             return response()->json(['data' => $data]);
+        } catch (\Throwable $e) {
+            return $this->handleException($e);
+        }
+    }
+
+    public function updateGambar ()
+    {
+        try {
+            return 45;
         } catch (\Throwable $e) {
             return $this->handleException($e);
         }

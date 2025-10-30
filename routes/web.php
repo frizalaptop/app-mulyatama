@@ -68,8 +68,8 @@ Route::prefix('admin')
                                 ->name('admin.billboard.list.simpan'); 
                             Route::put('/update/{id}', [BillboardController::class, 'update'])
                                 ->name('admin.billboard.list.update'); 
-                            Route::post('/upload/{id}', [BillboardController::class, 'upload'])
-                                ->name('admin.billboard.list.upload'); 
+                            Route::post('/update-gambar/{id}', [BillboardController::class, 'updateGambar'])
+                                ->name('admin.billboard.list.update.gambar'); 
                         });
 
                 });
