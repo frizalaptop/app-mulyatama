@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\Billboard\BillboardController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\BillboardController;
 use App\Http\Controllers\Klien\DashboardController as KlienDashboardController;
 use App\Http\Controllers\Admin\StatistikController;
 use App\Http\Controllers\Admin\User\UserListController;
@@ -55,6 +55,25 @@ Route::prefix('admin')
 
                 });
 
+            Route::prefix('billboard')
+                ->group(function () {
+
+                    Route::prefix('billboard-list')
+                        ->group(function () {
+                            Route::get('/', [BillboardController::class, 'index'])
+                                ->name('admin.billboard.index');
+                            Route::get('/tabel', [BillboardController::class, 'tabel'])
+                                ->name('admin.billboard.list.tabel');
+                            Route::post('/simpan', [BillboardController::class, 'simpan'])
+                                ->name('admin.billboard.list.simpan'); 
+                            Route::put('/update/{id}', [BillboardController::class, 'update'])
+                                ->name('admin.billboard.list.update'); 
+                            Route::post('/upload/{id}', [BillboardController::class, 'upload'])
+                                ->name('admin.billboard.list.upload'); 
+                        });
+
+                });
+
     });
 
 // Role klien
@@ -78,16 +97,13 @@ Route::prefix('profil')
             ->name('profil.update.info');
     });
 
-Route::prefix('billboard')
-    ->middleware(['auth'])
-    ->group(function () {
+// Route::prefix('billboard')
+//     ->middleware(['auth'])
+//     ->group(function () {
 
-        Route::prefix('billboard-list')
-            ->group(function () {
-                Route::get('/', [BillboardController::class, 'index'])
-                    ->name('billboard.index');
-                Route::get('/tabel', [BillboardController::class, 'tabel'])
-                    ->name('billboard.list.tabel');
-            });
+//         Route::prefix('billboard-list')
+//             ->group(function () {
+                
+//             });
 
-    });
+//     });
