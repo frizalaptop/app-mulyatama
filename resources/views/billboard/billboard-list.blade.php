@@ -18,6 +18,13 @@
 		</div>
 	</div>
 
+    <!-- Modal Gambar Billboard -->
+    <div class="modal fade" id="modalGambarBillboard" tabindex="-1" role="dialog" aria-labelledby="gambarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <img id="previewBillboardImage" src="" alt="Gambar Billboard" class="img-fluid rounded shadow-sm" style="max-height: 85vh; width: auto; object-fit: contain;">>
+        </div>
+    </div>
+
     <!-- Modal Add Billboard -->
     <form id="formAddBillboard" method="POST" action="{{ route('admin.billboard.list.simpan') }}" >
         @csrf
@@ -65,9 +72,7 @@
                             </div>
                         </x-slot>
                     </x-adminlte-input>
-
                     
-
                     <!-- Unit -->
                     <x-adminlte-input name="unit" type="number" min="1" max="99" placeholder="Jumlah Unit" class="upper">
                         <x-slot name="prependSlot">
@@ -171,13 +176,13 @@
             <div class="row pl-3 pr-3 pt-3">
                 <div class="col">
                     <!-- Update Gambar Billboard -->
-                    <x-adminlte-input-file name="gambar" placeholder="Update Gambar" igroup-size="md">
+                    <x-adminlte-input name="gambar" type="file" label="Format: JPG, JPEG, PNG | Maksimal: 2 MB" igroup-size="md">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-image-fill"></i>
                             </div>
                         </x-slot>
-                    </x-adminlte-input-file>
+                    </x-adminlte-input>
                 </div>
             </div>
 
@@ -195,6 +200,8 @@
             </x-slot>
         </x-adminlte-modal>
     </form>
+
+    
 
 @stop
 
