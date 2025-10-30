@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Admin\Billboard;
 use App\Http\Controllers\Controller;
 use App\Models\Billboard;
 use App\Traits\HandlersException;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
 
 class BillboardController extends Controller
 {
@@ -54,16 +59,15 @@ class BillboardController extends Controller
                     'updated_at' => $billboard->updated_at->format('Y-m-d H:i:s'),
 
                     'aksi' => '<div class="btn-group" role="group">
-                        <button class="btn btn-sm btn-warning btn-update" 
-                            data-id="' . $billboard->id . '" 
-                            data-toggle="modal" 
-                            data-target="#modalUpdateGambarBillboard">Update</button>
+                        
                         <button class="btn btn-sm btn-dark btn-edit" 
                             data-id="' . $billboard->id . '" 
                             data-toggle="modal" 
                             data-target="#modalEditBillboard">Edit</button>
-                        <button class="btn btn-sm btn-success btn-detail" 
-                            data-id="' . $billboard->id . '">Detail</button>
+                        <button class="btn btn-sm btn-success btn-update" 
+                            data-id="' . $billboard->id . '" 
+                            data-toggle="modal" 
+                            data-target="#modalUpdateGambarBillboard">Upload Gambar</button>
                     </div>',
                 ];
             });
@@ -74,10 +78,38 @@ class BillboardController extends Controller
         }
     }
 
-    public function updateGambar ()
+    public function updateGambar (Request $request, $id)
     {
+        $request->validate([
+            'gambar' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
         try {
-            return 45;
+
+            DB::transaction( function () use ($request, $id) {
+
+                $billboard = Billboard::findOrFail($id);
+        
+                $manager = new ImageManager(new Driver());
+        
+                $file = $request->file('gambar');
+        
+                $namaFile = "{$billboard->id}_billboard.webp";
+        
+                $image = $manager->read($file)
+                    ->toWebp(75); // 0–100 (semakin kecil = semakin terkompres)
+        
+                $billboard->gambar = $namaFile;
+                $billboard->save();
+
+                DB::afterCommit( function () use ($namaFile, $image) {
+                    $path = "upload/billboard/{$namaFile}";
+                    Storage::disk('public')->put($path, $image);
+                });
+            });
+
+            return redirect()->back();
+
         } catch (\Throwable $e) {
             return $this->handleException($e);
         }
