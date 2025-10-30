@@ -5,8 +5,6 @@
     <link rel="stylesheet" href="{{ asset('/vendor/datatables-plugins/responsive/css/responsive.bootstrap4.min.css') }}">   
 @endpush
 
-
-
 @section('content')
 
     <div class="row">
@@ -93,7 +91,7 @@
             <div class="row pl-3 pr-3 pt-3">
                 <!-- akun -->
                 <div class="col-md-6">
-                    <x-adminlte-input name="name" placeholder="Nama Lengkap" label-class="text-lightblue">
+                    <x-adminlte-input name="name" placeholder="Nama Lengkap">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-person-circle"></i>
@@ -101,7 +99,7 @@
                         </x-slot>
                     </x-adminlte-input>
             
-                    <x-adminlte-input name="email" type="email" placeholder="Alamat Email" label-class="text-lightblue">
+                    <x-adminlte-input name="email" type="email" placeholder="Alamat Email">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-envelope-fill"></i>
@@ -109,7 +107,7 @@
                         </x-slot>
                     </x-adminlte-input>
             
-                    <x-adminlte-input name="password" type="password" placeholder="Password" label-class="text-lightblue">
+                    <x-adminlte-input name="password" type="password" placeholder="Password">
                         <x-slot name="prependSlot">
                             <div class="input-group-text toggle-password">
                                 <i class="bi bi-eye-fill"></i>
@@ -117,7 +115,7 @@
                         </x-slot>
                     </x-adminlte-input>
             
-                    <x-adminlte-input name="password_confirmation" type="password" placeholder="Konfirmasi Password" label-class="text-lightblue">
+                    <x-adminlte-input name="password_confirmation" type="password" placeholder="Konfirmasi Password">
                         <x-slot name="prependSlot">
                             <div class="input-group-text toggle-password">
                                 <i class="bi bi-eye-fill"></i>
@@ -158,7 +156,7 @@
 
                 <!-- profil -->
                 <div class="col-md-6">
-                    <x-adminlte-input name="perusahaan" placeholder="Perusahaan" label-class="text-lightblue" class="upper">
+                    <x-adminlte-input name="perusahaan" placeholder="Perusahaan" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-building-fill"></i>
@@ -166,7 +164,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="whatsapp" placeholder="Whatsapp" label-class="text-lightblue">
+                    <x-adminlte-input name="whatsapp" placeholder="Whatsapp">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-whatsapp"></i>
@@ -174,7 +172,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="telegram" placeholder="Telegram" label-class="text-lightblue">
+                    <x-adminlte-input name="telegram" placeholder="Telegram">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-telegram"></i>
@@ -182,7 +180,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="alamat" placeholder="Alamat" label-class="text-lightblue" class="upper">
+                    <x-adminlte-input name="alamat" placeholder="Alamat" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-house-fill"></i>
@@ -219,7 +217,7 @@
             <div class="row pl-3 pr-3 pt-3">
                 <!-- akun -->
                 <div class="col-md-6">
-                    <x-adminlte-input name="name" placeholder="Nama Lengkap" label-class="text-lightblue" id="edit_name">
+                    <x-adminlte-input name="name" placeholder="Nama Lengkap" id="edit_name">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-person-circle"></i>
@@ -227,7 +225,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="email" type="email" placeholder="Alamat Email" label-class="text-lightblue" id="edit_email">
+                    <x-adminlte-input name="email" type="email" placeholder="Alamat Email" id="edit_email">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-envelope-fill"></i>
@@ -235,7 +233,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="password" type="password" placeholder="Password (biarkan kosong jika tidak diganti)" label-class="text-lightblue" id="edit_password">
+                    <x-adminlte-input name="password" type="password" placeholder="Password (biarkan kosong jika tidak diganti)" id="edit_password">
                         <x-slot name="prependSlot">
                             <div class="input-group-text toggle-password">
                                 <i class="bi bi-eye-fill"></i>
@@ -243,7 +241,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="password_confirmation" type="password" placeholder="Konfirmasi Password" label-class="text-lightblue" id="edit_password_confirmation">
+                    <x-adminlte-input name="password_confirmation" type="password" placeholder="Konfirmasi Password" id="edit_password_confirmation">
                         <x-slot name="prependSlot">
                             <div class="input-group-text toggle-password">
                                 <i class="bi bi-eye-fill"></i>
@@ -284,7 +282,7 @@
 
                 <!-- profil -->
                 <div class="col-md-6">
-                    <x-adminlte-input name="perusahaan" placeholder="Perusahaan" label-class="text-lightblue" id="edit_perusahaan" class="upper">
+                    <x-adminlte-input name="perusahaan" placeholder="Perusahaan" id="edit_perusahaan" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-building-fill"></i>
@@ -292,7 +290,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="whatsapp" placeholder="Whatsapp" label-class="text-lightblue" id="edit_whatsapp">
+                    <x-adminlte-input name="whatsapp" placeholder="Whatsapp" id="edit_whatsapp">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-whatsapp"></i>
@@ -300,7 +298,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="telegram" placeholder="Telegram" label-class="text-lightblue" id="edit_telegram">
+                    <x-adminlte-input name="telegram" placeholder="Telegram" id="edit_telegram">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-telegram"></i>
@@ -308,7 +306,7 @@
                         </x-slot>
                     </x-adminlte-input>
 
-                    <x-adminlte-input name="alamat" placeholder="Alamat" label-class="text-lightblue" id="edit_alamat" class="upper">
+                    <x-adminlte-input name="alamat" placeholder="Alamat" id="edit_alamat" class="upper">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
                                 <i class="bi bi-house-fill"></i>
