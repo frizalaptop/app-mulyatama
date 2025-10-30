@@ -329,4 +329,11 @@ th.col-boolean {
   .dataTable tr.child .dtr-data {
     float: right;
   }
+
+  /* Batalkan float untuk kolom gambar saja */
+  .dataTable tr.child .dt-gambar .dtr-data {
+    float: none !important;
+    display: block;
+    text-align: right;
+  }
 }
