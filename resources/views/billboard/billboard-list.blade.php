@@ -9,10 +9,10 @@
 
 @section('content')
 
+    <!-- Table -->
 	<div class="row">
 		<div class="col-12">
 			<x-adminlte-card theme="light">
-				<!-- Table -->
 				<table id="tableBillboardList" class="table table-bordered table-hover dataTable dtr-inline"></table>
 			</x-adminlte-card>
 		</div>
@@ -169,7 +169,7 @@
         </x-adminlte-modal>
     </form>
 
-    <!-- Modal Update Billboard Picture -->
+    <!-- Modal Update Gambar Billboard -->
     <form id="formUpdateGambarBillboard" method="POST" enctype="multipart/form-data">
         @csrf
         <x-adminlte-modal id="modalUpdateGambarBillboard" title="Update Gambar Billboard" theme="blue" size='lg' v-centered disable-x="false">
@@ -201,6 +201,16 @@
         </x-adminlte-modal>
     </form>
 
+    <!-- Toast php Response message -->
+    @if (session('success') || $errors->any())
+    <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+        <div id="liveToast" class="toast {{ session('success') ? 'bg-success' : 'bg-danger' }}" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
+            <div class="toast-body">
+                {{ session('success') ?? $errors->first() }}
+            </div>
+        </div>
+    </div>
+    @endif
     
 
 @stop
