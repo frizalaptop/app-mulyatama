@@ -337,9 +337,9 @@
     <script>
         // Definisi route endpoint yang dibutuhkan
         window.routes = {
+            dataTable: "{{ route('admin.user.list.tabel') }}",
             getUser: "{{ route('admin.user.list.getId', ['id' => ':id']) }}",
             updateUser: "{{ route('admin.user.list.update', ['id' => ':id']) }}",
-            dataTable: "{{ route('admin.user.list.tabel') }}",
             statisticUser: "{{ route('admin.statistik.user.list') }}",
         };
     </script>
