@@ -81,7 +81,7 @@ class BillboardController extends Controller
     public function updateGambar (Request $request, $id)
     {
         $request->validate([
-            'gambar' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'gambar' => 'required|image|max:2048|mimes:jpg,jpeg,png',
         ]);
 
         try {
@@ -108,7 +108,7 @@ class BillboardController extends Controller
                 });
             });
 
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Gambar berhasil diperbarui.');
 
         } catch (\Throwable $e) {
             return $this->handleException($e);
