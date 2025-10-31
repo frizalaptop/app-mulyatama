@@ -64,6 +64,8 @@ Route::prefix('admin')
                                 ->name('admin.billboard.index');
                             Route::get('/tabel', [BillboardController::class, 'tabel'])
                                 ->name('admin.billboard.list.tabel');
+                            Route::get('/get-id/{id}', [BillboardController::class, 'getId'])
+                                ->name('admin.billboard.list.getId'); 
                             Route::post('/simpan', [BillboardController::class, 'simpan'])
                                 ->name('admin.billboard.list.simpan'); 
                             Route::put('/update/{id}', [BillboardController::class, 'update'])
