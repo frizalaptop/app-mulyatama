@@ -12,6 +12,7 @@ use App\Traits\HandlersException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Throwable;
 
 /**
  * Controller khusus admin untuk mengelola data user
@@ -30,7 +31,7 @@ class UserListController extends Controller
         try {
             $data = ['title' => 'User List'];
             return view('user.user-list', $data);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return $this->handleException($e);
         }
     }
@@ -60,7 +61,7 @@ class UserListController extends Controller
                 ];
             });
             return response()->json(['data' => $data]);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return $this->handleException($e);
         }
     }
@@ -86,7 +87,7 @@ class UserListController extends Controller
                 'message' => 'User ditemukan.',
                 'user' => $user,
             ]);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return $this->handleException($e, 'User tidak ditemukan');
         }
     }
@@ -126,7 +127,7 @@ class UserListController extends Controller
                 'success' => true,
                 'message' => 'User baru berhasil ditambahkan.',
             ]);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return $this->handleException($e);
         }
     }
@@ -191,7 +192,7 @@ class UserListController extends Controller
                 'success' => true,
                 'message' => 'User berhasil diperbarui.',
             ]);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return $this->handleException($e, 'User tidak ditemukan');
         }
     }
