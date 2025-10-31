@@ -74,10 +74,10 @@
         </div>
     </div>
 
+    <!-- Table -->
     <div class="row">
         <div class="col-12">
             <x-adminlte-card theme="light">
-                <!-- Table -->
                 <table id="tableUserList" class="table table-bordered table-hover dataTable dtr-inline"></table>
             </x-adminlte-card>
         </div>
