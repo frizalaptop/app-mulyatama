@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Admin\Billboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddUpdateBillboardRequest;
 use App\Models\Billboard;
 use App\Traits\HandlersException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Throwable;
 
 class BillboardController extends Controller
 {
@@ -25,7 +28,7 @@ class BillboardController extends Controller
         try {
             $data = ['title' => 'Billboard List'];
             return view('billboard.billboard-list', $data);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return $this->handleException($e);
         }
     }
@@ -38,7 +41,6 @@ class BillboardController extends Controller
     {
         try {
             $billboards = Billboard::all();
-
             $data = $billboards->map(function ($billboard) {
                 return [
                     'id' => $billboard->id,
@@ -49,7 +51,7 @@ class BillboardController extends Controller
                     'aktif' => $billboard->aktif,
                     'keterangan' => $billboard->keterangan,
                     'jenis' => $billboard->jenis,
-                    'ukuran' => "$billboard->panjang x $billboard->lebar",
+                    'ukuran' => "$billboard->lebar x $billboard->panjang",
                     'unit' => $billboard->unit,
                     'koordinat' => "$billboard->latitude | $billboard->longitude",
                     'gambar' => $billboard->gambar,
@@ -73,11 +75,113 @@ class BillboardController extends Controller
             });
             
             return response()->json(['data' => $data]);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return $this->handleException($e);
         }
     }
 
+    /**
+     * Mengambil data billboard berdasarkan id
+     * @param mixed $id billboard id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getId ($id) 
+    {
+        try {
+            $billboard = Billboard::findOrFail($id);
+            return response()->json([
+                'success' => true,
+                'message' => 'Billboard ditemukan.',
+                'billboard' => $billboard,
+            ]);
+        } catch (Throwable $e) {
+            return $this->handleException($e, 'Billboard tidak ditemukan');
+        }
+    }
+
+    /**
+     * Menambah data billboard
+     * @param \Illuminate\Http\Request $request [judul, area, lokasi, jenis, lebar, panjang, unit, latitude, longitude, aktif, keterangan]
+     * @return \Illuminate\Http\JsonResponse
+     */    
+    public function simpan (AddUpdateBillboardRequest $request)
+    {
+        try {
+            $data = $request->validated();
+            $user = Auth::user();
+            
+            Billboard::create([
+                'judul'     => $data['judul'],
+                'area'      => $data['area'],
+                'lokasi'    => $data['lokasi'],
+                'jenis'     => $data['jenis'],
+
+                'lebar'     => $data['lebar'],
+                'panjang'   => $data['panjang'],
+                'unit'      => $data['unit'],
+
+                'latitude'  => $data['latitude'],
+                'longitude' => $data['longitude'],
+
+                'aktif' => $data['aktif'] === 'Aktif',
+                'keterangan' => $data['keterangan'] ?? null,
+
+                'admin_buat' => $user->name,
+                'admin_ubah' => $user->name,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Billboard baru berhasil ditambahkan.',
+            ]);
+
+        } catch (Throwable $e) {
+            return $this->handleException($e);
+        }
+    }
+
+    /**
+     * Mengubah data billboard
+     * @param \Illuminate\Http\Request $request [judul, area, lokasi, jenis, lebar, panjang, unit, latitude, longitude, aktif, keterangan]
+     * @param mixed $id billboard id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function update (AddUpdateBillboardRequest $request, $id)
+    {
+        try {
+            $data = $request->validated();
+
+            $billboard = Billboard::findOrFail($id);
+
+            $billboard->judul = $data['judul'];
+            $billboard->area = $data['area'];
+            $billboard->lokasi = $data['lokasi'];
+            $billboard->jenis = $data['jenis'];
+            $billboard->lebar = $data['lebar'];
+            $billboard->panjang = $data['panjang'];
+            $billboard->unit = $data['unit'];
+            $billboard->latitude = $data['latitude'];
+            $billboard->longitude = $data['longitude'];
+            $billboard->aktif = $data['aktif'] === 'Aktif';
+            $billboard->keterangan = $data['keterangan'] ?? null;
+
+            $billboard->save();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'User berhasil diperbarui.',
+            ]);
+        } catch (Throwable $e) {
+            return $this->handleException($e, 'User tidak ditemukan');
+        }
+    }
+
+    /**
+     * Mengubah gambar billboard
+     * @param \Illuminate\Http\Request $request [gambar]
+     * @param mixed $id billboard id
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     */
     public function updateGambar (Request $request, $id)
     {
         $request->validate([
@@ -110,7 +214,7 @@ class BillboardController extends Controller
 
             return redirect()->back()->with('success', 'Gambar berhasil diperbarui.');
 
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             return $this->handleException($e);
         }
     }
