@@ -142,7 +142,7 @@
                     <!-- Keterangan -->
                     <x-adminlte-textarea name="keterangan" rows="1">
                         <x-slot name="label">
-                            Keterangan tambahan (opsional)
+                            Keterangan <span class="text-danger">*</span>
                         </x-slot>
                         <x-slot name="prependSlot">
                             <div class="input-group-text">

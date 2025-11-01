@@ -124,7 +124,7 @@ class BillboardController extends Controller
                 'longitude' => $data['longitude'],
 
                 'aktif' => $data['aktif'] === 'Aktif',
-                'keterangan' => $data['keterangan'] ?? null,
+                'keterangan' => $data['aktif'] === 'Aktif' ? null : $data['keterangan'],
 
                 'admin_buat' => $user->name,
                 'admin_ubah' => $user->name,
@@ -163,7 +163,7 @@ class BillboardController extends Controller
             $billboard->latitude = $data['latitude'];
             $billboard->longitude = $data['longitude'];
             $billboard->aktif = $data['aktif'] === 'Aktif';
-            $billboard->keterangan = $data['keterangan'] ?? null;
+            $billboard->keterangan = $data['aktif'] === 'Aktif' ? null : $data['keterangan'];
 
             $billboard->save();
             
