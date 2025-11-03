@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\Billboard\BillboardController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Klien\DashboardController as KlienDashboardController;
 use App\Http\Controllers\Admin\StatistikController;
 use App\Http\Controllers\Admin\User\UserListController;
+use App\Http\Controllers\Admin\Billboard\BillboardController;
+use App\Http\Controllers\Klien\Billboard\BillboardController as KlienBillboardController;
 use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -14,6 +15,14 @@ Auth::routes();
 
 // Dashboard
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Redirect By Role
+Route::get('/billboard', function () {
+    $userRole = Auth::user()->getRoleNames()->first();
+    return $userRole === 'Admin'
+        ? redirect()->route('admin.billboard.index')
+        : redirect()->route('klien.billboard.index');
+});
 
 // Role admin 
 Route::prefix('admin')
@@ -36,6 +45,7 @@ Route::prefix('admin')
 
                 });
 
+            // admin -> user
             Route::prefix('user')
                 ->group(function () {
 
@@ -55,6 +65,7 @@ Route::prefix('admin')
 
                 });
 
+            // admin -> billboard
             Route::prefix('billboard')
                 ->group(function () {
 
@@ -82,8 +93,24 @@ Route::prefix('admin')
 Route::prefix('klien')
     ->middleware(['auth', 'role:Klien'])
     ->group(function (){
+        
+        // klien dashboard
         Route::get('/', [KlienDashboardController::class, 'index'])
             ->name('klien.index');
+
+        // klien -> billboard
+        Route::prefix('billboard')
+            ->group(function () {
+
+                Route::prefix('billboard-list')
+                    ->group(function () {
+                        Route::get('/', [KlienBillboardController::class, 'index'])
+                            ->name('klien.billboard.index');
+                        Route::get('/tabel', [KlienBillboardController::class, 'tabel'])
+                            ->name('klien.billboard.list.tabel');
+                    });
+
+            });
 
     });
 
@@ -99,13 +126,3 @@ Route::prefix('profil')
             ->name('profil.update.info');
     });
 
-// Route::prefix('billboard')
-//     ->middleware(['auth'])
-//     ->group(function () {
-
-//         Route::prefix('billboard-list')
-//             ->group(function () {
-                
-//             });
-
-//     });
