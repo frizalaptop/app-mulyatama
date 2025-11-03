@@ -382,5 +382,5 @@
     <script src="{{ asset('page/custom_format.min.js') }}"></script>
     <script src="{{ asset('page/custom_form.min.js') }}"></script>
     <script src="{{ asset('page/custom_table.min.js') }}"></script>
-    <script src="{{ asset('page/billboard-list.min.js') }}"></script>
+    <script src="{{ asset('page/admin/billboard-list.min.js') }}"></script>
 @endpush

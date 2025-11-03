@@ -355,6 +355,6 @@
     <script src="{{ asset('page/custom_format.min.js') }}"></script>
     <script src="{{ asset('page/custom_form.min.js') }}"></script>
     <script src="{{ asset('page/custom_table.min.js') }}"></script>
-    <script src="{{ asset('page/user-list.min.js') }}"></script>
+    <script src="{{ asset('page/admin/user-list.min.js') }}"></script>
 @endpush
 
