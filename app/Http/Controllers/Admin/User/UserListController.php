@@ -30,7 +30,7 @@ class UserListController extends Controller
     {
         try {
             $data = ['title' => 'User List'];
-            return view('user.user-list', $data);
+            return view('admin.user.user-list', $data);
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
