@@ -317,7 +317,18 @@ return [
                 ],
                 [
                     'text' => 'User Login',
-                    'url'  => '/admin/user-login',
+                    'url'  => '/admin/user/user-login',
+                ],
+            ],
+        ],
+        [
+            'type'   => 'navbar-item',
+            'text'   => 'Billboard',
+            'topnav' => true,
+            'submenu' => [
+                [
+                    'text' => 'Billboard List',
+                    'url'  => '/billboard',
                 ],
             ],
         ],
@@ -358,12 +369,25 @@ return [
                 [
                     'text' => 'User List',
                     'url'  => '/admin/user/user-list',
-                    'icon' => 'bi bi-person-circle', // optional
+                    'icon' => 'bi bi-person-circle',
                 ],
                 [
                     'text' => 'User Login',
-                    'url'  => '/admin/user-login',
-                    'icon' => 'bi bi-person-circle', // optional
+                    'url'  => '/admin/user/user-login',
+                    'icon' => 'bi bi-person-circle',
+                ],
+            ],
+        ],
+
+        // Billboard with submenu
+        [
+            'text' => 'Billboard',
+            'icon' => 'bi bi-person-circle',
+            'submenu' => [
+                [
+                    'text' => 'Billboard List',
+                    'url'  => '/billboard',
+                    'icon' => 'bi bi-signpost',
                 ],
             ],
         ],
