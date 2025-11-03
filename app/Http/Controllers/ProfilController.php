@@ -23,7 +23,7 @@ class ProfilController extends Controller
     {
         try {
             $data = ['title' => 'Profil'];
-            return view('user.user-profile', $data);
+            return view('profil', $data);
         } catch (\Throwable $e) {
             return $this->handleException($e);
         }
