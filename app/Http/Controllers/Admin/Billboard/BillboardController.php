@@ -27,7 +27,7 @@ class BillboardController extends Controller
     {
         try {
             $data = ['title' => 'Billboard List'];
-            return view('billboard.billboard-list', $data);
+            return view('admin.billboard.billboard-list', $data);
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
@@ -152,6 +152,7 @@ class BillboardController extends Controller
             $data = $request->validated();
 
             $billboard = Billboard::findOrFail($id);
+            $user = Auth::user();
 
             $billboard->judul = $data['judul'];
             $billboard->area = $data['area'];
@@ -164,6 +165,7 @@ class BillboardController extends Controller
             $billboard->longitude = $data['longitude'];
             $billboard->aktif = $data['aktif'] === 'Aktif';
             $billboard->keterangan = $data['aktif'] === 'Aktif' ? null : $data['keterangan'];
+            $billboard->admin_ubah = $user->name;
 
             $billboard->save();
             
@@ -189,21 +191,22 @@ class BillboardController extends Controller
         ]);
 
         try {
-
             DB::transaction( function () use ($request, $id) {
 
                 $billboard = Billboard::findOrFail($id);
-        
-                $manager = new ImageManager(new Driver());
+                $user = Auth::user();
         
                 $file = $request->file('gambar');
-        
+                
                 $namaFile = "{$billboard->id}_billboard.webp";
+                
+                $manager = new ImageManager(new Driver());
         
                 $image = $manager->read($file)
                     ->toWebp(75); // 0–100 (semakin kecil = semakin terkompres)
         
                 $billboard->gambar = $namaFile;
+                $billboard->admin_ubah = $user->name;
                 $billboard->save();
 
                 DB::afterCommit( function () use ($namaFile, $image) {
