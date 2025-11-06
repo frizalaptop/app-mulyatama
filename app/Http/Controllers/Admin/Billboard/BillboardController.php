@@ -196,24 +196,26 @@ class BillboardController extends Controller
                 $user = Auth::user();
 
                 $file = $request->file('gambar');
-                $namaFileDasar = "{$billboard->id}_billboard";
-                $namaFileUtama = "{$namaFileDasar}.webp";     // gambar utama (asli)
-                $namaFileThumb = "thumb_{$namaFileDasar}.webp"; // thumbnail crop 100x100
+                $fileSizeMB = $file->getSize() / 1024 / 1024;
+                $quality = $fileSizeMB >= 0.8 ? 80 : 100;
+
+                $namaFile = "{$billboard->id}_billboard";
+                $namaFileUtama = "{$namaFile}.webp";
+                $namaFileThumb = "thum_{$namaFile}.webp";
 
                 $manager = new ImageManager(new Driver());
 
-                // Baca gambar asli
-                $originalImage = $manager->read($file)->toWebp(85); // versi asli, kompres ringan
+                $originalImage = $manager->read($file)->toWebp($quality); // versi asli
 
                 // Buat versi thumbnail (crop tengah 100x100)
                 $thumbnailImage = $manager->read($file)
-                    ->cover(100, 100)  // auto-crop & resize dengan center crop
-                    ->toWebp(80);
+                    ->cover(100, 100)
+                    ->toWebp(90);
 
                 // Update nama file utama di database
                 $billboard->gambar = $namaFileUtama;
                 $billboard->admin_ubah = $user->name;
-                $billboard->touch(); // update timestamp agar refresh cache gambar
+                $billboard->touch(); // update timestamp
                 $billboard->save();
 
                 // Simpan setelah commit ke storage
