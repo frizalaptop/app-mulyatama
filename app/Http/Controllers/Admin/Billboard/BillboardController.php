@@ -184,41 +184,51 @@ class BillboardController extends Controller
      * @param mixed $id billboard id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function updateGambar (Request $request, $id)
+    public function updateGambar(Request $request, $id)
     {
         $request->validate([
             'gambar' => 'required|image|max:2048|mimes:jpg,jpeg,png',
         ]);
 
         try {
-            DB::transaction( function () use ($request, $id) {
-
+            DB::transaction(function () use ($request, $id) {
                 $billboard = Billboard::findOrFail($id);
                 $user = Auth::user();
-        
+
                 $file = $request->file('gambar');
-                
-                $namaFile = "{$billboard->id}_billboard.webp";
-                
+                $namaFileDasar = "{$billboard->id}_billboard";
+                $namaFileUtama = "{$namaFileDasar}.webp";     // gambar utama (asli)
+                $namaFileThumb = "thumb_{$namaFileDasar}.webp"; // thumbnail crop 100x100
+
                 $manager = new ImageManager(new Driver());
-        
-                $image = $manager->read($file)
-                    ->toWebp(75); // 0–100 (semakin kecil = semakin terkompres)
-        
-                $billboard->gambar = $namaFile;
+
+                // Baca gambar asli
+                $originalImage = $manager->read($file)->toWebp(85); // versi asli, kompres ringan
+
+                // Buat versi thumbnail (crop tengah 100x100)
+                $thumbnailImage = $manager->read($file)
+                    ->cover(100, 100)  // auto-crop & resize dengan center crop
+                    ->toWebp(80);
+
+                // Update nama file utama di database
+                $billboard->gambar = $namaFileUtama;
                 $billboard->admin_ubah = $user->name;
+                $billboard->touch(); // update timestamp agar refresh cache gambar
                 $billboard->save();
 
-                DB::afterCommit( function () use ($namaFile, $image) {
-                    $path = "upload/billboard/{$namaFile}";
-                    Storage::disk('public')->put($path, $image);
+                // Simpan setelah commit ke storage
+                DB::afterCommit(function () use ($namaFileUtama, $namaFileThumb, $originalImage, $thumbnailImage) {
+                    // simpan versi asli
+                    Storage::disk('public')->put("upload/billboard/{$namaFileUtama}", $originalImage);
+                    // simpan versi thumbnail
+                    Storage::disk('public')->put("upload/billboard/{$namaFileThumb}", $thumbnailImage);
                 });
             });
 
-            return redirect()->back()->with('success', 'Gambar berhasil diperbarui.');
-
+            return redirect()->back()->with('success', 'Gambar dan thumbnail berhasil diperbarui.');
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
     }
+
 }
