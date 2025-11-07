@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\Profile;
 use App\Models\User;
 use App\Traits\HandlersException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -40,27 +41,76 @@ class UserListController extends Controller
      * Mengambil data-tabel user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function tabel ()
+    public function tabel (Request $request)
     {
         try {
-            $users = User::all();
-            $data = $users->map(function($user) {
+            // Kolom yang memiliki fitur pengurutan
+            $columns = [
+                0 => 'id',
+                1 => 'name',
+                3 => 'email',
+            ];
+
+            $draw   = $request->get('draw');
+            $start  = $request->get('start', 0);
+            $length = $request->get('length', 10);
+            $search = $request->input('search.value');
+            $order  = $request->input('order')[0] ?? ['column' => 1, 'dir' => 'asc'];
+            $customFilter = $request->input('columns', []);
+
+            $orderColumn = $columns[$order['column']];
+            $orderDir = $order['dir'];
+
+            $query = User::query();
+
+            if (!empty($search)) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+                });
+            }
+
+            foreach ($customFilter as $col) {
+                $colName = $col['data'] ?? null;
+                $colSearch = $col['search']['value'] ?? null;
+
+                if ($colName && $colSearch !== null && $colSearch !== '') {
+                    $query->where($colName, 'like', "%{$colSearch}%");
+                }
+            }
+
+            $recordsTotal = User::count();
+            $recordsFiltered = $query->count();
+
+            $data = $query
+                ->orderBy($orderColumn, $orderDir)
+                ->offset($start)
+                ->limit($length)
+                ->get();
+            
+            $data = $data->map(function ($row) {
                 return [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'status' => $user->active,
-                    'role' => $user->getRoleNames()->first(),
-                    'last_login_at' => $user->last_login_at?->format('Y-m-d H:i:s'),
-                    'created_at' => $user->created_at->format('Y-m-d H:i:s'),
-                    'updated_at' => $user->updated_at->format('Y-m-d H:i:s'),
+                    'id' => $row->id,
+                    'name' => $row->name,
+                    'email' => $row->email,
+                    'status' => $row->active,
+                    'role' => $row->getRoleNames()->first(),
+                    'last_login_at' => $row->last_login_at?->format('Y-m-d H:i:s'),
+                    'created_at' => $row->created_at->format('Y-m-d H:i:s'),
+                    'updated_at' => $row->updated_at->format('Y-m-d H:i:s'),
                     'aksi'  => '<div class="btn-group" role="group">
-                                <button class="btn btn-sm btn-dark btn-edit" data-id="'. $user->id .'" data-toggle="modal" data-target="#modalEditUser">Edit</button>
-                                <button class="btn btn-sm btn-success btn-profile" data-id="'. $user->id .'">Profil</button>
+                                <button class="btn btn-sm btn-dark btn-edit" data-id="'. $row->id .'" data-toggle="modal" data-target="#modalEditrow">Edit</button>
+                                <button class="btn btn-sm btn-success btn-profile" data-id="'. $row->id .'">Profil</button>
                            </div>'
                 ];
             });
-            return response()->json(['data' => $data]);
+
+            return response()->json([
+                'draw' => intval($draw),
+                'recordsTotal' => $recordsTotal,
+                'recordsFiltered' => $recordsFiltered,
+                'data' => $data,
+            ]);
         } catch (Throwable $e) {
             return $this->handleException($e);
         }

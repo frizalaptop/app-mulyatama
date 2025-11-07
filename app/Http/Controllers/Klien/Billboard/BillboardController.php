@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Klien\Billboard;
 use App\Http\Controllers\Controller;
 use App\Models\Billboard;
 use App\Traits\HandlersException;
+use Illuminate\Http\Request;
 use Throwable;
 
 class BillboardController extends Controller
@@ -30,44 +31,76 @@ class BillboardController extends Controller
      * Mengambil data-tabel billboard
      * @return \Illuminate\Http\JsonResponse
      */
-    public function tabel ()
+    public function tabel (Request $request)
     {
         try {
-            $billboards = Billboard::where('aktif', true)->get();
-            $data = $billboards->map(function ($billboard) {
-                return [
-                    'id' => $billboard->id,
-                    'judul' => $billboard->judul,
-                    'area' => $billboard->area,
-                    'lokasi' => $billboard->lokasi,
-                    'status' => $billboard->status,
-                    'aktif' => $billboard->aktif,
-                    'keterangan' => $billboard->keterangan,
-                    'jenis' => $billboard->jenis,
-                    'ukuran' => "$billboard->lebar x $billboard->panjang",
-                    'unit' => $billboard->unit,
-                    'koordinat' => "$billboard->latitude | $billboard->longitude",
-                    'gambar' => $billboard->gambar,
-                    'admin_buat' => $billboard->admin_buat,
-                    'admin_ubah' => $billboard->admin_ubah,
-                    'created_at' => $billboard->created_at->format('Y-m-d H:i:s'),
-                    'updated_at' => $billboard->updated_at->format('Y-m-d H:i:s'),
+            // Kolom yang memiliki fitur pengurutan
+            $columns = [
+                0 => 'id',
+                1 => 'judul',
+                2 => 'area',
+                3 => 'lokasi',
+            ];
 
-                    'aksi' => '<div class="btn-group" role="group">
-                        
-                        <button class="btn btn-sm btn-dark btn-edit" 
-                            data-id="' . $billboard->id . '" 
-                            data-toggle="modal" 
-                            data-target="#modalEditBillboard">Edit</button>
-                        <button class="btn btn-sm btn-success btn-update" 
-                            data-id="' . $billboard->id . '" 
-                            data-toggle="modal" 
-                            data-target="#modalUpdateGambarBillboard">Upload Gambar</button>
-                    </div>',
+            $draw   = $request->get('draw');
+            $start  = $request->get('start', 0);
+            $length = $request->get('length', 10);
+            $search = $request->input('search.value');
+            $order  = $request->input('order')[0] ?? ['column' => 1, 'dir' => 'asc'];
+            $customFilter = $request->input('columns', []);
+
+            $orderColumn = $columns[$order['column']];
+            $orderDir = $order['dir'];
+
+            $query = Billboard::where('aktif', 1);
+
+            if (!empty($search)) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('judul', 'like', "%{$search}%")
+                    ->orWhere('area', 'like', "%{$search}%")
+                    ->orWhere('lokasi', 'like', "%{$search}%");
+                });
+            }
+
+            foreach ($customFilter as $col) {
+                $colName = $col['data'] ?? null;
+                $colSearch = $col['search']['value'] ?? null;
+
+                if ($colName && $colSearch !== null && $colSearch !== '') {
+                    $query->where($colName, 'like', "%{$colSearch}%");
+                }
+            }
+
+            $recordsTotal = Billboard::where('aktif', 1)->count();
+            $recordsFiltered = $query->count();
+
+            $data = $query
+                ->orderBy($orderColumn, $orderDir)
+                ->offset($start)
+                ->limit($length)
+                ->get();
+
+            $data = $data->map(function ($row) {
+                return [
+                    'id' => $row->id,
+                    'judul' => $row->judul,
+                    'area' => $row->area,
+                    'lokasi' => $row->lokasi,
+                    'status' => $row->status,
+                    'jenis' => $row->jenis,
+                    'ukuran' => "$row->lebar x $row->panjang",
+                    'unit' => $row->unit,
+                    'koordinat' => "$row->latitude | $row->longitude",
+                    'gambar' => $row->gambar,
                 ];
             });
-            
-            return response()->json(['data' => $data]);
+
+            return response()->json([
+                'draw' => intval($draw),
+                'recordsTotal' => $recordsTotal,
+                'recordsFiltered' => $recordsFiltered,
+                'data' => $data,
+            ]);
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
