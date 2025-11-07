@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Billboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Helpers\ControllerHelpers;
 use App\Http\Requests\AddUpdateBillboardRequest;
 use App\Models\Billboard;
 use App\Traits\HandlersException;
@@ -37,56 +38,17 @@ class BillboardController extends Controller
      * Mengambil data-tabel billboard
      * @return \Illuminate\Http\JsonResponse
      */
-    public function tabel (Request $request)
+    public function tabel (Request $request, ControllerHelpers $helper)
     {
         try {
-            // Kolom yang memiliki fitur pengurutan
-            $columns = [
-                0 => 'id',
-                1 => 'judul',
-                2 => 'area',
-                3 => 'lokasi',
-            ];
+            $result = $helper->tabelHelper(
+                request: $request,
+                query: Billboard::query(),
+                orderableColumns: ['id', 'judul', 'area', 'lokasi'],
+                searchableColumns: ['judul', 'area', 'lokasi']
+            );
 
-            $draw   = $request->get('draw');
-            $start  = $request->get('start', 0);
-            $length = $request->get('length', 10);
-            $search = $request->input('search.value');
-            $order  = $request->input('order')[0] ?? ['column' => 1, 'dir' => 'asc'];
-            $customFilter = $request->input('columns', []);
-
-            $orderColumn = $columns[$order['column']];
-            $orderDir = $order['dir'];
-
-            $query = Billboard::query();
-
-            if (!empty($search)) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('judul', 'like', "%{$search}%")
-                    ->orWhere('area', 'like', "%{$search}%")
-                    ->orWhere('lokasi', 'like', "%{$search}%");
-                });
-            }
-
-            foreach ($customFilter as $col) {
-                $colName = $col['data'] ?? null;
-                $colSearch = $col['search']['value'] ?? null;
-
-                if ($colName && $colSearch !== null && $colSearch !== '') {
-                    $query->where($colName, 'like', "%{$colSearch}%");
-                }
-            }
-
-            $recordsTotal = Billboard::count();
-            $recordsFiltered = $query->count();
-
-            $data = $query
-                ->orderBy($orderColumn, $orderDir)
-                ->offset($start)
-                ->limit($length)
-                ->get();
-
-            $data = $data->map(function ($row) {
+            $result['data'] = collect($result['data'])->map(function ($row) {
                 return [
                     'id' => $row->id,
                     'judul' => $row->judul,
@@ -117,12 +79,7 @@ class BillboardController extends Controller
                 ];
             });
 
-            return response()->json([
-                'draw' => intval($draw),
-                'recordsTotal' => $recordsTotal,
-                'recordsFiltered' => $recordsFiltered,
-                'data' => $data,
-            ]);
+            return response()->json($result);
         } catch (Throwable $e) {
             return $this->handleException($e);
         }

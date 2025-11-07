@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Events\UserSensitiveDataChanged;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Helpers\ControllerHelpers;
 use App\Http\Requests\AddUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Profile;
@@ -41,76 +42,46 @@ class UserListController extends Controller
      * Mengambil data-tabel user
      * @return \Illuminate\Http\JsonResponse
      */
-    public function tabel (Request $request)
+    public function tabel (Request $request, ControllerHelpers $helper)
     {
         try {
-            // Kolom yang memiliki fitur pengurutan
-            $columns = [
-                0 => 'id',
-                1 => 'name',
-                3 => 'email',
-            ];
+            $query = User::query()
+                ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+                ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                ->select('users.*', 'roles.name as role');
 
-            $draw   = $request->get('draw');
-            $start  = $request->get('start', 0);
-            $length = $request->get('length', 10);
-            $search = $request->input('search.value');
-            $order  = $request->input('order')[0] ?? ['column' => 1, 'dir' => 'asc'];
-            $customFilter = $request->input('columns', []);
-
-            $orderColumn = $columns[$order['column']];
-            $orderDir = $order['dir'];
-
-            $query = User::query();
-
-            if (!empty($search)) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
-                });
-            }
-
-            foreach ($customFilter as $col) {
-                $colName = $col['data'] ?? null;
-                $colSearch = $col['search']['value'] ?? null;
-
-                if ($colName && $colSearch !== null && $colSearch !== '') {
-                    $query->where($colName, 'like', "%{$colSearch}%");
+            $result = $helper->tabelHelper(
+                request: $request,
+                query: $query,
+                orderableColumns: ['id', 'name', 'email'],
+                searchableColumns: ['users.name', 'users.email'],
+                customColumnFilter: function ($query, $colName, $colSearch) {
+                    if ($colName === 'role') {
+                        $query->where('roles.name', 'like', "%{$colSearch}%");
+                        return true;
+                    }
+                    return false;
                 }
-            }
+            );
 
-            $recordsTotal = User::count();
-            $recordsFiltered = $query->count();
-
-            $data = $query
-                ->orderBy($orderColumn, $orderDir)
-                ->offset($start)
-                ->limit($length)
-                ->get();
-            
-            $data = $data->map(function ($row) {
+            $result['data'] = collect($result['data'])->map(function ($row) {
                 return [
                     'id' => $row->id,
                     'name' => $row->name,
                     'email' => $row->email,
-                    'status' => $row->active,
-                    'role' => $row->getRoleNames()->first(),
+                    'aktif' => $row->aktif,
+                    'role' => $row->role,
                     'last_login_at' => $row->last_login_at?->format('Y-m-d H:i:s'),
                     'created_at' => $row->created_at->format('Y-m-d H:i:s'),
                     'updated_at' => $row->updated_at->format('Y-m-d H:i:s'),
-                    'aksi'  => '<div class="btn-group" role="group">
-                                <button class="btn btn-sm btn-dark btn-edit" data-id="'. $row->id .'" data-toggle="modal" data-target="#modalEditrow">Edit</button>
-                                <button class="btn btn-sm btn-success btn-profile" data-id="'. $row->id .'">Profil</button>
-                           </div>'
+                    'aksi'  =>  '<div class="btn-group" role="group">
+                                    <button class="btn btn-sm btn-dark btn-edit" data-id="'. $row->id .'" data-toggle="modal" data-target="#modalEditUser">Edit</button>
+                                    <button class="btn btn-sm btn-success btn-profile" data-id="'. $row->id .'">Profil</button>
+                                </div>'
                 ];
             });
 
-            return response()->json([
-                'draw' => intval($draw),
-                'recordsTotal' => $recordsTotal,
-                'recordsFiltered' => $recordsFiltered,
-                'data' => $data,
-            ]);
+            return response()->json($result);
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
@@ -158,7 +129,7 @@ class UserListController extends Controller
                     'name'     => $data['name'],
                     'email'    => $data['email'],
                     'password' => Hash::make($data['password']),
-                    'active'   => $data['aktivasi'] === 'Aktif',
+                    'aktif'   => $data['aktif'] === 'Aktif',
                 ]);
 
                 // 2️ Buat profil untuk user tersebut
@@ -200,8 +171,8 @@ class UserListController extends Controller
                 $user->name = $data['name'];
                 $user->email = $data['email'];
 
-                if (!empty($data['aktivasi'])) {
-                    $user->active = $data['aktivasi'] === 'Aktif';
+                if (!empty($data['aktif'])) {
+                    $user->aktif = $data['aktif'] === 'Aktif';
                 }
 
                 $changes = [];
