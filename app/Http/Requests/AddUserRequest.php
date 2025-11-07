@@ -41,7 +41,7 @@ class AddUserRequest extends FormRequest
             'telegram' => 'nullable|string|max:255',
             'alamat' => 'nullable|string',
 
-            'aktivasi' => 'required|string|in:Aktif,Nonaktif',
+            'aktif' => 'required|string|in:Aktif,Nonaktif',
             'role' => 'required|string|in:Admin,Klien'
         ];
     }
