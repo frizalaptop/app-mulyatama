@@ -22,9 +22,9 @@ class StatistikController extends Controller
         try {
             $userTotal = User::count();
 
-            $userAktif = User::where('active', true)->count();
+            $userAktif = User::where('aktif', true)->count();
 
-            $userNonaktif = User::where('active', false)->count();
+            $userNonaktif = User::where('aktif', false)->count();
 
             $userAdmin = User::whereHas('roles', function ($q) {
                 $q->where('name', 'Admin');
