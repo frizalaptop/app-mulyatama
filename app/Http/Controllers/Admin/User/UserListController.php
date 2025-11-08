@@ -53,7 +53,6 @@ class UserListController extends Controller
             $result = $helper->tabelHelper(
                 request: $request,
                 query: $query,
-                orderableColumns: ['id', 'name', 'email'],
                 searchableColumns: ['users.name', 'users.email'],
                 customColumnFilter: function ($query, $colName, $colSearch) {
                     if ($colName === 'role') {

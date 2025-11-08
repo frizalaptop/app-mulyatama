@@ -38,8 +38,7 @@ class BillboardController extends Controller
             $result = $helper->tabelHelper(
                 request: $request,
                 query: Billboard::where('aktif', 1),
-                orderableColumns: ['id', 'judul', 'area', 'lokasi'],
-                searchableColumns: ['judul', 'area', 'lokasi']
+                searchableColumns: ['judul', 'area', 'lokasi', 'jenis']
             );
 
             $result['data'] = collect($result['data'])->map(function ($row) {
