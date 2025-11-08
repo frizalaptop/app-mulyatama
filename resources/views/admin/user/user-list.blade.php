@@ -339,6 +339,7 @@
         window.routes = {
             dataTable: "{{ route('admin.user.list.tabel') }}",
             getUser: "{{ route('admin.user.list.getId', ['id' => ':id']) }}",
+            opsiFilter: "{{ route('admin.user.list.opsi.filter') }}",
             updateUser: "{{ route('admin.user.list.update', ['id' => ':id']) }}",
             statisticUser: "{{ route('admin.statistik.user.list') }}",
         };

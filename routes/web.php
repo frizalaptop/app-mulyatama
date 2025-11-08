@@ -57,6 +57,8 @@ Route::prefix('admin')
                                 ->name('admin.user.list.tabel');
                             Route::get('/get-id/{id}', [UserListController::class, 'getId'])
                                 ->name('admin.user.list.getId'); 
+                            Route::get('/opsi-filter', [UserListController::class, 'opsiFilter'])
+                                ->name('admin.user.list.opsi.filter');
                             Route::post('/simpan', [UserListController::class, 'simpan'])
                                 ->name('admin.user.list.simpan'); 
                             Route::put('/update/{id}', [UserListController::class, 'update'])
@@ -77,6 +79,8 @@ Route::prefix('admin')
                                 ->name('admin.billboard.list.tabel');
                             Route::get('/get-id/{id}', [BillboardController::class, 'getId'])
                                 ->name('admin.billboard.list.getId'); 
+                            Route::get('/opsi-filter', [BillboardController::class, 'opsiFilter'])
+                                ->name('admin.billboard.list.opsi.filter');
                             Route::post('/simpan', [BillboardController::class, 'simpan'])
                                 ->name('admin.billboard.list.simpan'); 
                             Route::put('/update/{id}', [BillboardController::class, 'update'])
@@ -108,6 +112,8 @@ Route::prefix('klien')
                             ->name('klien.billboard.index');
                         Route::get('/tabel', [KlienBillboardController::class, 'tabel'])
                             ->name('klien.billboard.list.tabel');
+                        Route::get('/opsi-filter', [BillboardController::class, 'opsiFilter'])
+                            ->name('klien.billboard.list.opsi.filter');
                     });
 
             });

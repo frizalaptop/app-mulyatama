@@ -32,6 +32,7 @@
         // Definisi route endpoint yang dibutuhkan
         window.routes = {
             dataTable: "{{ route('klien.billboard.list.tabel') }}",
+            opsiFilter: "{{ route('klien.billboard.list.opsi.filter') }}",
         };
     </script>
     <script src="{{ asset('/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
