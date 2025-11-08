@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers\Helpers;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
+
 class ControllerHelpers
 {
+    /**
+     * Logika pengambilan data untuk method tabel pada setiap controller
+     * @param \Illuminate\Http\Request $request http request instance
+     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model $query query builder
+     * @param array $searchableColumns kolom yang dapat dicari
+     * @param callable $customColumnFilter (opsional) kolom yang dapat difilter
+     * @return array{data: mixed, draw: int, recordsFiltered: mixed, recordsTotal: mixed}
+     */
     public function tabelHelper(
-        $request,
-        $query,
-        array $orderableColumns,
+        Request $request,
+        Builder|Model $query,
         array $searchableColumns = [],
         ?callable $customColumnFilter = null
     ) {
@@ -15,13 +26,15 @@ class ControllerHelpers
         $draw   = $request->get('draw');
         $start  = $request->get('start', 0);
         $length = $request->get('length', 10);
+        
+        // Atur pencarian & filter
         $search = $request->input('search.value');
-        $order  = $request->input('order')[0] ?? ['column' => 1, 'dir' => 'asc'];
         $customFilter = $request->input('columns', []);
-
+        
         // Atur urutan
-        $orderColumn = $orderableColumns[$order['column']] ?? $orderableColumns[0];
-        $orderDir = $order['dir'] ?? 'asc';
+        $order  = $request->input('order')[0] ?? ['column' => 1, 'dir' => 'asc'];
+        $orderColumn = $request->input("columns.{$order['column']}.data") ?? 'id';
+        $orderDir = $order['dir'];
 
         // Pencarian global
         if (!empty($search) && !empty($searchableColumns)) {
