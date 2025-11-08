@@ -177,10 +177,12 @@
             <!-- FOOTER (Navigation) -->
             <x-slot name="footerSlot">
                 <div class="d-flex justify-content-between w-100 ">
-                    <button type="button" class="btn btn-secondary" id="prevBtn">Sebelumnya</button>
                     <div>
-                        <button type="button" class="btn btn-primary outline-0" id="nextBtn">Selanjutnya</button>
-                        <button type="submit" class="btn btn-success d-none outline-0" id="submitBtn">Simpan</button>
+                        <button type="button" class="btn btn-secondary" id="prevBtn">Sebelumnya</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary" id="nextBtn">Selanjutnya</button>
+                        <button type="submit" class="btn btn-success d-none" id="submitBtn">Simpan</button>
                         <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal" class="m-1"/>
                     </div>
                 </div>
@@ -341,10 +343,12 @@
             <!-- FOOTER (Navigation) -->
             <x-slot name="footerSlot">
                 <div class="d-flex justify-content-between w-100">
-                    <button type="button" class="btn btn-secondary" id="editPrevBtn">Sebelumnya</button>
                     <div>
-                        <button type="button" class="btn btn-primary outline-0" id="editNextBtn">Selanjutnya</button>
-                        <button type="submit" class="btn btn-success d-none outline-0" id="editSubmitBtn">Update</button>
+                        <button type="button" class="btn btn-secondary" id="editPrevBtn">Sebelumnya</button>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary" id="editNextBtn">Selanjutnya</button>
+                        <button type="submit" class="btn btn-success d-none" id="editSubmitBtn">Update</button>
                         <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal" class="m-1"/>
                     </div>
                 </div>
