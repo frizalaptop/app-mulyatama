@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 use Throwable;
 
 /**
@@ -110,6 +111,35 @@ class UserListController extends Controller
         } catch (Throwable $e) {
             return $this->handleException($e, 'User tidak ditemukan');
         }
+    }
+
+    /**
+     * Mengambil opsi filter user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function opsiFilter()
+    {
+        return response()->json([
+            'aktif' => User::query()
+                ->select('aktif')
+                ->distinct()
+                ->pluck('aktif')
+                ->map(fn ($s) => [
+                    'value' => $s,
+                    'text' => $s == 1 ? 'Aktif' : 'Nonaktif',
+                ])
+                ->values(),
+            
+            'role' => Role::query()
+                ->select('name')
+                ->distinct()
+                ->pluck('name')
+                ->map(fn ($r) => [
+                    'value' => $r,
+                    'text' => ucwords($r), // Upper setiap kata
+                ])
+                ->values(),
+        ]);
     }
 
     /**

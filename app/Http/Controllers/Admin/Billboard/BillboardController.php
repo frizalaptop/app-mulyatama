@@ -36,7 +36,9 @@ class BillboardController extends Controller
 
     /**
      * Mengambil data-tabel billboard
-     * @return \Illuminate\Http\JsonResponse
+     * @param \Illuminate\Http\Request $request instance http request
+     * @param \App\Http\Controllers\Helpers\ControllerHelpers $helper instance helper controller
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function tabel (Request $request, ControllerHelpers $helper)
     {
@@ -104,6 +106,35 @@ class BillboardController extends Controller
     }
 
     /**
+     * Mengambil opsi filter billboard
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function opsiFilter()
+    {
+        return response()->json([
+            'status' => Billboard::query()
+                ->select('status')
+                ->distinct()
+                ->pluck('status')
+                ->map(fn ($s) => [
+                    'value' => $s,
+                    'text' => $s == 1 ? 'Tersedia' : 'Tersewa',
+                ])
+                ->values(),
+
+            'jenis' => Billboard::query()
+                ->select('jenis')
+                ->distinct()
+                ->pluck('jenis')
+                ->map(fn ($j) => [
+                    'value' => $j,
+                    'text' => ucwords($j),
+                ])
+                ->values(),
+        ]);
+    }
+
+    /**
      * Menambah data billboard
      * @param \Illuminate\Http\Request $request [judul, area, lokasi, jenis, lebar, panjang, unit, latitude, longitude, aktif, keterangan]
      * @return \Illuminate\Http\JsonResponse
@@ -118,7 +149,7 @@ class BillboardController extends Controller
                 'judul'     => $data['judul'],
                 'area'      => $data['area'],
                 'lokasi'    => $data['lokasi'],
-                'jenis'     => $data['jenis'],
+                'jenis'     => ucwords($data['jenis']),
 
                 'lebar'     => $data['lebar'],
                 'panjang'   => $data['panjang'],
@@ -161,7 +192,7 @@ class BillboardController extends Controller
             $billboard->judul = $data['judul'];
             $billboard->area = $data['area'];
             $billboard->lokasi = $data['lokasi'];
-            $billboard->jenis = $data['jenis'];
+            $billboard->jenis = ucwords($data['jenis']);
             $billboard->lebar = $data['lebar'];
             $billboard->panjang = $data['panjang'];
             $billboard->unit = $data['unit'];

@@ -61,4 +61,33 @@ class BillboardController extends Controller
             return $this->handleException($e);
         }
     }
+
+    /**
+     * Mengambil opsi filter billboard
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function opsiFilter()
+    {
+        return response()->json([
+            'status' => Billboard::query()
+                ->select('status')
+                ->distinct()
+                ->pluck('status')
+                ->map(fn ($s) => [
+                    'value' => $s,
+                    'text' => $s == 1 ? 'Tersedia' : 'Tersewa',
+                ])
+                ->values(),
+
+            'jenis' => Billboard::query()
+                ->select('jenis')
+                ->distinct()
+                ->pluck('jenis')
+                ->map(fn ($j) => [
+                    'value' => $j,
+                    'text' => ucwords($j),
+                ])
+                ->values(),
+        ]);
+    }
 }
