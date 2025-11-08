@@ -179,8 +179,8 @@
                 <div class="d-flex justify-content-between w-100 ">
                     <button type="button" class="btn btn-secondary" id="prevBtn">Sebelumnya</button>
                     <div>
-                        <button type="button" class="btn btn-primary" id="nextBtn">Selanjutnya</button>
-                        <button type="submit" class="btn btn-success d-none" id="submitBtn">Simpan</button>
+                        <button type="button" class="btn btn-primary outline-0" id="nextBtn">Selanjutnya</button>
+                        <button type="submit" class="btn btn-success d-none outline-0" id="submitBtn">Simpan</button>
                         <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal" class="m-1"/>
                     </div>
                 </div>
@@ -194,139 +194,159 @@
         @method('PUT')
         <x-adminlte-modal id="modalEditBillboard" title="Edit Billboard" theme="blue" size='lg' v-centered disable-x="false">
 
-            <div class="row pl-3 pr-3 pt-3">
-                <div class="col">
-                    <!-- Judul -->
-                    <x-adminlte-input name="judul" id="edit_judul" placeholder="Judul Billboard" class="upper">
-                        <x-slot name="prependSlot">
-                            <div class="input-group-text">
-                                <i class="bi bi-megaphone-fill"></i>
-                            </div>
-                        </x-slot>
-                    </x-adminlte-input>
+            <!-- Progress bar -->
+            <div class="px-3 pt-2">
+                <div class="progress" style="height: 6px;">
+                    <div class="progress-bar bg-primary" id="editProgressBar" role="progressbar" style="width: 33%; transition: width 0.4s;"></div>
                 </div>
             </div>
 
-            <div class="row pl-3 pr-3">
-                <div class="col-md-6">
-
-                    <!-- Area -->
-                    <x-adminlte-input name="area" id="edit_area" placeholder="Area" class="upper">
-                        <x-slot name="prependSlot">
-                            <div class="input-group-text">
-                                <i class="bi bi-geo-alt-fill"></i>
-                            </div>
-                        </x-slot>
-                    </x-adminlte-input>
-
-                    <!-- Lokasi -->
-                    <x-adminlte-input name="lokasi" id="edit_lokasi" placeholder="Lokasi" class="upper">
-                        <x-slot name="prependSlot">
-                            <div class="input-group-text">
-                                <i class="bi bi-map-fill"></i>
-                            </div>
-                        </x-slot>
-                    </x-adminlte-input>
-
-                    <!-- Jenis Billboard -->
-                    <x-adminlte-input name="jenis" id="edit_jenis" placeholder="Jenis" class="upper">
-                        <x-slot name="prependSlot">
-                            <div class="input-group-text">
-                                <i class="bi bi-columns-gap"></i>
-                            </div>
-                        </x-slot>
-                    </x-adminlte-input>
-                    
-                    <!-- Unit -->
-                    <x-adminlte-input name="unit" id="edit_unit" placeholder="Jumlah Unit" type="number" min="1" max="99" class="upper">
-                        <x-slot name="prependSlot">
-                            <div class="input-group-text">
-                                <i class="bi bi-grid-3x3-gap-fill"></i>
-                            </div>
-                        </x-slot>
-                    </x-adminlte-input>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <!-- Aktif -->
-                            <x-adminlte-select name="aktif" id="edit_aktif">
-                                <x-slot name="label">
-                                    Status <span class="text-danger">*</span>
-                                </x-slot>
-                                <x-slot name="prependSlot">
-                                    <div class="input-group-text">
-                                        <i class="bi bi-toggle-on"></i>
-                                    </div>
-                                </x-slot>
-                                <x-adminlte-options :options="['Aktif'=> 'Aktif', 'Nonaktif' => 'Nonaktif']"/>
-                            </x-adminlte-select>
-                        </div>
+            <!-- STEP 1 -->
+            <div class="step" id="editStep1">
+                <div class="row pl-3 pr-3 pt-3">
+                    <div class="col">
+                        <!-- Judul -->
+                        <x-adminlte-input name="judul" id="edit_judul" placeholder="Judul Billboard" class="upper">
+                            <x-slot name="prependSlot">
+                                <div class="input-group-text">
+                                    <i class="bi bi-megaphone-fill"></i>
+                                </div>
+                            </x-slot>
+                        </x-adminlte-input>
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <!-- Lebar -->
-                    <x-adminlte-input name="lebar" id="edit_lebar" placeholder="Lebar (meter)" type="number" min="1" max="99">
-                        <x-slot name="prependSlot">
-                            <div class="input-group-text">
-                                <i class="bi bi-arrows"></i>
-                            </div>
-                        </x-slot>
-                    </x-adminlte-input>
+                <div class="row pl-3 pr-3">
+                    <div class="col-md-6">
+                        <!-- Area -->
+                        <x-adminlte-input name="area" id="edit_area" placeholder="Area" class="upper">
+                            <x-slot name="prependSlot">
+                                <div class="input-group-text">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </div>
+                            </x-slot>
+                        </x-adminlte-input>
 
-                    <!-- Panjang -->
-                    <x-adminlte-input name="panjang" id="edit_panjang" placeholder="Panjang (meter)" type="number" min="1" max="99">
-                        <x-slot name="prependSlot">
-                            <div class="input-group-text">
-                                <i class="bi bi-arrows-vertical"></i>
-                            </div>
-                        </x-slot>
-                    </x-adminlte-input>
+                        <!-- Lokasi -->
+                        <x-adminlte-input name="lokasi" id="edit_lokasi" placeholder="Lokasi" class="upper">
+                            <x-slot name="prependSlot">
+                                <div class="input-group-text">
+                                    <i class="bi bi-map-fill"></i>
+                                </div>
+                            </x-slot>
+                        </x-adminlte-input>
+                    </div>
 
-                    
+                    <div class="col-md-6">
+                        <!-- Jenis Billboard -->
+                        <x-adminlte-input name="jenis" id="edit_jenis" placeholder="Jenis Billboard" class="upper">
+                            <x-slot name="prependSlot">
+                                <div class="input-group-text">
+                                    <i class="bi bi-columns-gap"></i>
+                                </div>
+                            </x-slot>
+                        </x-adminlte-input>
 
-                    <!-- Koordinat (Latitude) -->
-                    <x-adminlte-input name="latitude" id="edit_latitude" placeholder="Latitude">
-                        <x-slot name="prependSlot">
-                            <div class="input-group-text">
-                                <i class="bi bi-compass-fill"></i>
-                            </div>
-                        </x-slot>
-                    </x-adminlte-input>
-
-                    <!-- Koordinat (Longitude) -->
-                    <x-adminlte-input name="longitude" id="edit_longitude" placeholder="Longitude">
-                        <x-slot name="prependSlot">
-                            <div class="input-group-text">
-                                <i class="bi bi-compass"></i>
-                            </div>
-                        </x-slot>
-                    </x-adminlte-input>
-
-                    <!-- Keterangan -->
-                    <x-adminlte-textarea name="keterangan" id="edit_keterangan" rows="1">
-                        <x-slot name="label">
-                            Keterangan tambahan (opsional)
-                        </x-slot>
-                        <x-slot name="prependSlot">
-                            <div class="input-group-text">
-                                <i class="bi bi-card-text"></i>
-                            </div>
-                        </x-slot>
-                    </x-adminlte-textarea>
+                        <!-- Unit -->
+                        <x-adminlte-input name="unit" id="edit_unit" type="number" min="1" max="99" placeholder="Jumlah Unit" class="upper">
+                            <x-slot name="prependSlot">
+                                <div class="input-group-text">
+                                    <i class="bi bi-grid-3x3-gap-fill"></i>
+                                </div>
+                            </x-slot>
+                        </x-adminlte-input>
+                    </div>
                 </div>
             </div>
 
+            <!-- STEP 2 -->
+            <div class="step d-none" id="editStep2">
+                <div class="row pl-3 pr-3 pt-3">
+                    <div class="col-md-6">
+                        <!-- Lebar -->
+                        <x-adminlte-input name="lebar" id="edit_lebar" type="number" min="1" max="99" placeholder="Lebar (meter)">
+                            <x-slot name="prependSlot">
+                                <div class="input-group-text">
+                                    <i class="bi bi-arrows"></i>
+                                </div>
+                            </x-slot>
+                        </x-adminlte-input>
+
+                        <!-- Panjang -->
+                        <x-adminlte-input name="panjang" id="edit_panjang" type="number" min="1" max="99" placeholder="Panjang (meter)">
+                            <x-slot name="prependSlot">
+                                <div class="input-group-text">
+                                    <i class="bi bi-arrows-vertical"></i>
+                                </div>
+                            </x-slot>
+                        </x-adminlte-input>
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Latitude -->
+                        <x-adminlte-input name="latitude" id="edit_latitude" placeholder="Latitude">
+                            <x-slot name="prependSlot">
+                                <div class="input-group-text">
+                                    <i class="bi bi-compass-fill"></i>
+                                </div>
+                            </x-slot>
+                        </x-adminlte-input>
+
+                        <!-- Longitude -->
+                        <x-adminlte-input name="longitude" id="edit_longitude" placeholder="Longitude">
+                            <x-slot name="prependSlot">
+                                <div class="input-group-text">
+                                    <i class="bi bi-compass"></i>
+                                </div>
+                            </x-slot>
+                        </x-adminlte-input>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div class="step d-none" id="editStep3">
+                <div class="row pl-3 pr-3 pt-3">
+                    <div class="col-md-6">
+                        <!-- Status -->
+                        <x-adminlte-select name="aktif" id="edit_aktif">
+                            <x-slot name="label">
+                                Status <span class="text-danger">*</span>
+                            </x-slot>
+                            <x-slot name="prependSlot">
+                                <div class="input-group-text">
+                                    <i class="bi bi-toggle-on"></i>
+                                </div>
+                            </x-slot>
+                            <x-adminlte-options :options="['Aktif'=> 'Aktif', 'Nonaktif' => 'Nonaktif']"/>
+                        </x-adminlte-select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <!-- Keterangan -->
+                        <x-adminlte-textarea name="keterangan" id="edit_keterangan" rows="2">
+                            <x-slot name="label">
+                                Keterangan <span class="text-danger">*</span>
+                            </x-slot>
+                            <x-slot name="prependSlot">
+                                <div class="input-group-text">
+                                    <i class="bi bi-card-text"></i>
+                                </div>
+                            </x-slot>
+                        </x-adminlte-textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER (Navigation) -->
             <x-slot name="footerSlot">
-                <div class="d-flex justify-content-end w-100">
-                    <button type="button" id="btn-loading" class="btn btn-primary" disabled="" style="display: none;">
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        Loading...
-                    </button>
-                    <button type="submit" class="btn btn-primary m-1">
-                        Update
-                    </button>
-                    <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal" class="m-1"/>
+                <div class="d-flex justify-content-between w-100">
+                    <button type="button" class="btn btn-secondary" id="editPrevBtn">Sebelumnya</button>
+                    <div>
+                        <button type="button" class="btn btn-primary outline-0" id="editNextBtn">Selanjutnya</button>
+                        <button type="submit" class="btn btn-success d-none outline-0" id="editSubmitBtn">Update</button>
+                        <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal" class="m-1"/>
+                    </div>
                 </div>
             </x-slot>
 
