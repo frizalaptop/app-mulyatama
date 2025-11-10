@@ -5,6 +5,7 @@ use App\Http\Controllers\Klien\DashboardController as KlienDashboardController;
 use App\Http\Controllers\Admin\StatistikController;
 use App\Http\Controllers\Admin\User\UserListController;
 use App\Http\Controllers\Admin\Billboard\BillboardController;
+use App\Http\Controllers\admin\billboard\BillboardSewaController;
 use App\Http\Controllers\Klien\Billboard\BillboardController as KlienBillboardController;
 use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,8 @@ Route::prefix('admin')
                                 ->name('admin.user.list.tabel');
                             Route::get('/get-id/{id}', [UserListController::class, 'getId'])
                                 ->name('admin.user.list.getId'); 
+                            Route::get('/get-email/{email}', [UserListController::class, 'getEmail'])
+                                ->name('admin.user.list.getEmail'); 
                             Route::get('/opsi-filter', [UserListController::class, 'opsiFilter'])
                                 ->name('admin.user.list.opsi.filter');
                             Route::post('/simpan', [UserListController::class, 'simpan'])
@@ -87,6 +90,14 @@ Route::prefix('admin')
                                 ->name('admin.billboard.list.update'); 
                             Route::post('/update-gambar/{id}', [BillboardController::class, 'updateGambar'])
                                 ->name('admin.billboard.list.update.gambar'); 
+                        });
+
+                    Route:: prefix('billboard-sewa')
+                        ->group(function () {
+                            Route::get('/', [BillboardSewaController::class, 'index'])
+                                ->name('admin.billboard.sewa.tabel');
+                            Route::post('/simpan', [BillboardSewaController::class, 'simpan'])
+                                ->name('admin.billboard.sewa.simpan'); 
                         });
 
                 });
