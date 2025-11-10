@@ -363,7 +363,6 @@
         <x-adminlte-modal id="modalUpdateGambarBillboard" title="Update Gambar Billboard" theme="blue" size='lg' v-centered disable-x="false">
             <div class="row pl-3 pr-3 pt-3">
                 <div class="col">
-                    <!-- Update Gambar Billboard -->
                     <x-adminlte-input name="gambar" type="file" label="Format: JPG, JPEG, PNG | Maksimal: 2 MB" igroup-size="md">
                         <x-slot name="prependSlot">
                             <div class="input-group-text">
@@ -376,12 +375,106 @@
 
             <x-slot name="footerSlot">
                 <div class="d-flex justify-content-end w-100">
-                    <button type="button" id="btn-loading" class="btn btn-primary" disabled="" style="display: none;">
+                    <button type="button" id="btn-loading" class="btn btn-primary"  style="display: none;">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Loading...
                     </button>
                     <button type="submit" class="btn btn-primary m-1">
                         Update
+                    </button>
+                    <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal" class="m-1"/>
+                </div> 
+            </x-slot>
+        </x-adminlte-modal>
+    </form>
+
+    <!-- Modal Sewa Billboard -->
+    <form id="formSewaBillboard" method="POST">
+        @csrf
+        <x-adminlte-modal id="modalSewaBillboard" title="Sewa Billboard" theme="blue" size='lg' v-centered disable-x="false">
+            <div class="row pl-3 pr-3">
+                <div class="col-md-6">
+
+                    <!-- Email -->
+                    <x-adminlte-input name="penyewa_email" type="email" label="Email Penyewa">
+                        <x-slot name="prependSlot">
+                            <div class="input-group-text">
+                                <i class="bi bi-envelope-fill"></i>
+                            </div>
+                        </x-slot>
+                        <x-slot name="appendSlot">
+                            <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" title="Cari email pengguna">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </x-slot>
+                    </x-adminlte-input>
+
+                    <!-- Name -->
+                    <x-adminlte-input name="penyewa_name" label="Nama Penyewa" readonly>
+                        <x-slot name="prependSlot">
+                            <div class="input-group-text">
+                                <i class="bi-person-circle"></i>
+                            </div>
+                        </x-slot>
+                    </x-adminlte-input>
+
+                    <!-- Periode -->
+                    <x-adminlte-input name="periode" label="Periode Penyewaan (bulan)" type="number" min="1" max="99">
+                        <x-slot name="prependSlot">
+                            <div class="input-group-text">
+                                <i class="bi bi-hourglass-split"></i>
+                            </div>
+                        </x-slot>
+                    </x-adminlte-input>
+
+                </div>
+
+                <div class="col-md-6">
+                    <!-- ID Billoard -->
+                    <x-adminlte-input name="billboard_id" type="number" id="sewa_billboard_id" label="ID Billboard" readonly>
+                        <x-slot name="prependSlot">
+                            <div class="input-group-text">
+                                <i class="bi bi-hash"></i>
+                            </div>
+                        </x-slot>
+                    </x-adminlte-input>
+
+                    <x-adminlte-input name="billboard_judul" id="sewa_billboard_judul" label="Judul Billboard" class="upper" readonly>
+                        <x-slot name="prependSlot">
+                            <div class="input-group-text">
+                                <i class="bi bi-megaphone-fill"></i>
+                            </div>
+                        </x-slot>
+                    </x-adminlte-input>
+
+                     <!-- Tanggal Mulai -->
+                    <x-adminlte-input name="tgl_awal" type="date" label="Tanggal Awal">
+                        <x-slot name="prependSlot">
+                            <div class="input-group-text">
+                                <i class="bi bi-calendar-event"></i>
+                            </div>
+                        </x-slot>
+                    </x-adminlte-input>
+
+                    <!-- Tanggal Berakhir -->
+                    <x-adminlte-input name="tgl_akhir" type="date" label="Tanggal Berakhir" readonly>
+                        <x-slot name="prependSlot">
+                            <div class="input-group-text">
+                                <i class="bi bi-calendar-check"></i>
+                            </div>
+                        </x-slot>
+                    </x-adminlte-input>
+                </div>
+            </div>
+        
+            <x-slot name="footerSlot">
+                <div class="d-flex justify-content-end w-100">
+                    <button type="button" id="btn-loading" class="btn btn-primary" disabled="" style="display: none;">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                    <button type="submit" class="btn btn-primary m-1">
+                        Submit
                     </button>
                     <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal" class="m-1"/>
                 </div> 
@@ -411,7 +504,9 @@
             getBillboard: "{{ route('admin.billboard.list.getId', ['id' => ':id']) }}",
             opsiFilter: "{{ route('admin.billboard.list.opsi.filter') }}",
             updateBillboard: "{{ route('admin.billboard.list.update', ['id' => ':id']) }}",
-            updateGambar: "{{ route('admin.billboard.list.update.gambar', ['id' => ':id']) }}"
+            updateGambar: "{{ route('admin.billboard.list.update.gambar', ['id' => ':id']) }}",
+            sewaBillboard: "{{ route('admin.billboard.sewa.simpan') }}",
+            getUserByEmail: "{{ route('admin.user.list.getEmail', ['email' => ':email']) }}",
         };
     </script>
     <script src="{{ asset('/vendor/jquery-validation/jquery.validate.min.js') }}"></script>
