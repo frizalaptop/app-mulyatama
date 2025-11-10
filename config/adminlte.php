@@ -330,6 +330,10 @@ return [
                     'text' => 'Billboard List',
                     'url'  => '/billboard',
                 ],
+                [
+                    'text' => 'Billboard Sewa',
+                    'url'  => '/admin/billboard/billboard-sewa',
+                ],
             ],
         ],
         [
