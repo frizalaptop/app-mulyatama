@@ -75,8 +75,14 @@ class BillboardController extends Controller
                                     <button class="btn btn-sm btn-success btn-update" 
                                         data-id="' . $row->id . '" 
                                         data-toggle="modal" 
-                                        data-target="#modalUpdateGambarBillboard">Upload Gambar</button>
-                                </div>',
+                                        data-target="#modalUpdateGambarBillboard">Upload Gambar</button>'.
+                                    ($row->aktif && $row->status ? 
+                                        '<button class="btn btn-sm btn-info btn-sewa" 
+                                            data-id="' . $row->id . '" 
+                                            data-toggle="modal" 
+                                            data-target="#modalSewaBillboard">Sewakan</button>'
+                                        : '')
+                                .'</div>',
                 ];
             });
 
@@ -111,7 +117,8 @@ class BillboardController extends Controller
      */
     public function opsiFilter()
     {
-        return response()->json([
+        try {
+            return response()->json([
             'status' => Billboard::query()
                 ->select('status')
                 ->distinct()
@@ -132,6 +139,10 @@ class BillboardController extends Controller
                 ])
                 ->values(),
         ]);
+        } catch (Throwable $e) {
+            return $this->handleException($e);
+        }
+        
     }
 
     /**
@@ -219,7 +230,7 @@ class BillboardController extends Controller
      * @param mixed $id billboard id
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function updateGambar(Request $request, $id)
+    public function updateGambar (Request $request, $id)
     {
         $request->validate([
             'gambar' => 'required|image|max:2048|mimes:jpg,jpeg,png',
