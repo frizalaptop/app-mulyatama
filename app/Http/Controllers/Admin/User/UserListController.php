@@ -114,6 +114,26 @@ class UserListController extends Controller
     }
 
     /**
+     * Mengambil data user berdasarkan email
+     * @param mixed $email user email
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getEmail ($email) 
+    {
+        try {
+            $user = User::where('email', $email)->firstOrFail(['name']);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User ditemukan.',
+                'user' => $user,
+            ]);
+        } catch (Throwable $e) {
+            return $this->handleException($e, 'User tidak ditemukan');
+        }
+    }
+
+    /**
      * Mengambil opsi filter user
      * @return \Illuminate\Http\JsonResponse
      */
