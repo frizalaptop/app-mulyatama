@@ -8,7 +8,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-12 col-md-4 col-lg col-5">
+        <div class="col-12 col-md-4 col-lg">
             <div class="small-box bg-dark">
                 <div class="overlay dark">
                     <span class="spinner-border wh-3rem" role="status"></span>
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="col-6 col-md-4 col-lg col-5">
+        <div class="col-6 col-md-4 col-lg">
             <div class="small-box bg-primary">
                 <div class="overlay dark">
                     <span class="spinner-border wh-3rem" role="status"></span>
@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div class="col-6 col-md-4 col-lg col-5">
+        <div class="col-6 col-md-4 col-lg">
             <div class="small-box bg-danger">
                 <div class="overlay dark">
                     <span class="spinner-border wh-3rem" role="status"></span>
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="col-6 col-md-4 col-lg col-5">
+        <div class="col-6 col-md-4 col-lg">
             <div class="small-box bg-success">
                 <div class="overlay dark">
                     <span class="spinner-border wh-3rem" role="status"></span>
@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <div class="col-6 col-md-4 col-lg col-5">
+        <div class="col-6 col-md-4 col-lg">
             <div class="small-box bg-success">
                 <div class="overlay dark">
                     <span class="spinner-border wh-3rem" role="status"></span>
