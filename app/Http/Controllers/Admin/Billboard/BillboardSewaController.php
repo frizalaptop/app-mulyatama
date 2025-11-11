@@ -29,10 +29,9 @@ class BillboardSewaController extends Controller
     public function simpan ()
     {
         try {
-
-
             return response()->json([
-                'status' => true,
+                'success' => true,
+                'message' => 'Penyewaan Billboard baru berhasil ditambahkan.',
             ]);
         } catch (Throwable $e) {
             return $this->handleException($e);
