@@ -51,6 +51,7 @@ class ControllerHelpers
             $colSearch = $col['search']['value'] ?? null;
 
             if ($colName && $colSearch !== null && $colSearch !== '') {
+                // select data lanjutan jika yang difilter adalah kolom tabel relasi
                 if ($customColumnFilter && $customColumnFilter($query, $colName, $colSearch) === true) {
                     continue;
                 }
