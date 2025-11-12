@@ -10,13 +10,13 @@
 @section('content')
 
     <!-- Table -->
-	<!-- <div class="row">
+	<div class="row">
 		<div class="col-12">
 			<x-adminlte-card theme="light">
-				<table id="tableBillboardList" class="table table-bordered table-hover dataTable dtr-inline"></table>
+				<table id="tableBillboardSewa" class="table table-bordered table-hover dataTable dtr-inline"></table>
 			</x-adminlte-card>
 		</div>
-	</div> -->
+	</div>
 
 @stop
 
@@ -24,8 +24,8 @@
     <script>
         // Definisi route endpoint yang dibutuhkan
         window.routes = {
-            dataTable: "{{ route('admin.billboard.list.tabel') }}",
-
+            dataTable: "{{ route('admin.billboard.sewa.tabel') }}",
+            opsiFilter: "{{ route('admin.billboard.sewa.opsi.filter') }}",
         };
     </script>
     <script src="{{ asset('/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
@@ -37,5 +37,5 @@
     <script src="{{ asset('/vendor/datatables-plugins/jszip/jszip.min.js') }}"></script>
     <script src="{{ asset('page/custom_format.min.js') }}"></script>
     <script src="{{ asset('page/custom_table.min.js') }}"></script>
-    <!-- <script src="{{ asset('page/admin/billboard-sewa.min.js') }}"></script> -->
+    <script src="{{ asset('page/admin/billboard-sewa.min.js') }}"></script>
 @endpush
