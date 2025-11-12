@@ -1,7 +1,7 @@
 @extends('adminlte::page')
 
 @section('usermenu_body')
-    <a href="{{ route('profil.index') }}" class="dropdown-item">
+    <a href="{{ route('profil') }}" class="dropdown-item">
         <i class="bi bi-person mr-3"></i></i> Profil
     </a>
     <div class="dropdown-divider"></div>
