@@ -49,7 +49,16 @@ class UserListController extends Controller
             $query = User::query()
                 ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
                 ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
-                ->select('users.*', 'roles.name as role');
+                ->select([
+                    'users.id',
+                    'users.name',
+                    'users.email',
+                    'users.aktif',
+                    'users.last_login_at',
+                    'users.created_at',
+                    'users.updated_at',
+                    'roles.name as role'
+                ]);
 
             $result = $helper->tabelHelper(
                 request: $request,
