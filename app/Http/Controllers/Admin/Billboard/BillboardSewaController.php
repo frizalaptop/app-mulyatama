@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\admin\billboard;
+namespace App\Http\Controllers\Admin\Billboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Helpers\ControllerHelpers;
 use App\Models\Billboard;
 use App\Models\BillboardSewa;
 use App\Models\User;
@@ -33,6 +34,104 @@ class BillboardSewaController extends Controller
     }
 
     /**
+     * Mengambil data-tabel billboard
+     * @param \Illuminate\Http\Request $request instance http request
+     * @param \App\Http\Controllers\Helpers\ControllerHelpers $helper instance helper controller
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
+    public function tabel (Request $request, ControllerHelpers $helper)
+    {
+        try {
+            $result = $helper->tabelHelper(
+                request: $request,
+                query: BillboardSewa::query()
+                    ->leftJoin('billboards', 'billboard_sewa.billboard_id', '=', 'billboards.id')
+                    ->leftJoin('users', 'billboard_sewa.user_id', '=', 'users.id')
+                    ->select([
+                        'billboard_sewa.id',
+                        'billboard_sewa.periode',
+                        'billboard_sewa.tgl_awal',
+                        'billboard_sewa.tgl_akhir',
+                        'billboard_sewa.admin_buat',
+                        'billboard_sewa.admin_ubah',
+                        'billboard_sewa.created_at',
+                        'billboards.judul',
+                        'billboards.lokasi',
+                        'billboards.jenis',
+                        'users.email',
+                    ]),
+                searchableColumns: [
+                    'billboards.judul',
+                    'billboards.lokasi',
+                    'billboards.jenis',
+                    'users.email',  
+                ],
+                customColumnFilter: function ($query, $colName, $colSearch) {
+                    if ($colName === 'periode') {
+                        $query->where('billboard_sewa.periode', $colSearch);
+                        return true;
+                    }
+                    return false;
+                }
+            );
+
+            $result['data'] = collect($result['data'])->map(function ($row) {
+                return [
+                    'id' => $row->id,
+                    'periode' => $row->periode,
+                    'tgl_awal' => $row->tgl_awal,
+                    'tgl_akhir' => $row->tgl_akhir,
+                    'admin_buat' => $row->admin_buat,
+                    'admin_ubah' => $row->admin_ubah,
+                    'created_at' => $row->created_at->format('Y-m-d H:i:s'),
+                    'judul' => $row->judul,
+                    'lokasi' => $row->lokasi,
+                    'jenis' => $row->jenis,
+                    'email' => $row->email,
+                    'countdown' => $row->tgl_akhir,
+                ];
+            });
+
+            return response()->json($result);
+        } catch (Throwable $e) {
+            return $this->handleException($e);
+        }
+    }
+
+    /**
+     * Mengambil opsi filter billboard sewa
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function opsiFilter()
+    {
+        try {
+            return response()->json([
+            'periode' => BillboardSewa::query()
+                ->select('periode')
+                ->distinct()
+                ->pluck('periode')
+                ->map(fn ($p) => [
+                    'value' => $p,
+                    'text' => $p.' bulan',
+                ])
+                ->values(),
+
+            'jenis' => Billboard::query()
+                ->select('jenis')
+                ->distinct()
+                ->pluck('jenis')
+                ->map(fn ($j) => [
+                    'value' => $j,
+                    'text' => ucwords($j),
+                ])
+                ->values(),
+        ]);
+        } catch (Throwable $e) {
+            return $this->handleException($e);
+        }
+    }
+
+    /**
      * Menambah data sewa billboard
      * @param \Illuminate\Http\Request $request [penyewa_email, penyewa_name, billboard_id, billboard_judul, periode, tgl_awal]
      * @return \Illuminate\Http\JsonResponse
@@ -46,7 +145,7 @@ class BillboardSewaController extends Controller
                 'billboard_id'     => 'required|integer',
                 'billboard_judul'  => 'required|string|max:255',
                 'periode'          => 'required|integer|min:1',
-                'tgl_awal'         => 'required|date',
+                'tgl_awal'         => 'required|date|after_or_equal:today',
             ]);
 
             DB::transaction(function () use ($validated) {
@@ -55,7 +154,13 @@ class BillboardSewaController extends Controller
 
                 if (!$billboard->status) {
                     throw ValidationException::withMessages([
-                        'billboard_id' => 'Billboard masih dalam masa sewa.',
+                        'billboard_id' => 'Billboard masih dalam masa penyewaan.',
+                    ]);
+                }
+
+                if (!$billboard->aktif) {
+                    throw ValidationException::withMessages([
+                        'billboard_id' => 'Billboard masih dalam masa pemeliharaan.',
                     ]);
                 }
 
@@ -100,5 +205,4 @@ class BillboardSewaController extends Controller
             return $this->handleException($e);
         }
     }
-    
 }
