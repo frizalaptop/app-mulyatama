@@ -183,6 +183,10 @@
                     <div>
                         <button type="button" class="btn btn-primary" id="nextBtn">Selanjutnya</button>
                         <button type="submit" class="btn btn-success d-none" id="submitBtn">Simpan</button>
+                        <button type="button" id="btn-loading" class="btn btn-primary" disabled="" style="display: none;">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button>
                         <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal" class="m-1"/>
                     </div>
                 </div>
@@ -349,6 +353,10 @@
                     <div>
                         <button type="button" class="btn btn-primary" id="editNextBtn">Selanjutnya</button>
                         <button type="submit" class="btn btn-success d-none" id="editSubmitBtn">Update</button>
+                        <button type="button" id="btn-loading" class="btn btn-primary" disabled="" style="display: none;">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button>
                         <x-adminlte-button theme="danger" label="Batal" data-dismiss="modal" class="m-1"/>
                     </div>
                 </div>
