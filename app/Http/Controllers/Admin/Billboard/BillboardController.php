@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 use Throwable;
@@ -142,7 +143,6 @@ class BillboardController extends Controller
         } catch (Throwable $e) {
             return $this->handleException($e);
         }
-        
     }
 
     /**
@@ -196,8 +196,16 @@ class BillboardController extends Controller
     {
         try {
             $data = $request->validated();
+            $data['aktif'] = $data['aktif'] === 'Aktif' ? 1 : 0;
 
             $billboard = Billboard::findOrFail($id);
+            
+            if ($data['aktif'] !== $billboard->aktif) {
+                throw ValidationException::withMessages([
+                    'billboard_id' => 'Billboard masih dalam masa penyewaan.',
+                ]);
+            }
+            
             $user = Auth::user();
 
             $billboard->judul = $data['judul'];
@@ -209,7 +217,7 @@ class BillboardController extends Controller
             $billboard->unit = $data['unit'];
             $billboard->latitude = $data['latitude'];
             $billboard->longitude = $data['longitude'];
-            $billboard->aktif = $data['aktif'] === 'Aktif';
+            $billboard->aktif = $data['aktif'];
             $billboard->keterangan = $data['aktif'] === 'Aktif' ? null : $data['keterangan'];
             $billboard->admin_ubah = $user->name;
 
