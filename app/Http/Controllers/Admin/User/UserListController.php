@@ -57,6 +57,8 @@ class UserListController extends Controller
                     'users.last_login_at',
                     'users.created_at',
                     'users.updated_at',
+                    'users.admin_buat',
+                    'users.admin_ubah',
                     'roles.name as role'
                 ]);
 
@@ -83,6 +85,8 @@ class UserListController extends Controller
                     'last_login_at' => $row->last_login_at?->format('Y-m-d H:i:s'),
                     'created_at' => $row->created_at->format('Y-m-d H:i:s'),
                     'updated_at' => $row->updated_at->format('Y-m-d H:i:s'),
+                    'admin_buat' => $row->admin_buat,
+                    'admin_ubah' => $row->admin_ubah,
                     'aksi'  =>  '<div class="btn-group" role="group">
                                     <button class="btn btn-sm btn-dark btn-edit" data-id="'. $row->id .'" data-toggle="modal" data-target="#modalEditUser">Edit</button>
                                     <button class="btn btn-sm btn-success btn-profile" data-id="'. $row->id .'">Profil</button>
@@ -182,15 +186,17 @@ class UserListController extends Controller
             $data = $request->validated();
 
             DB::transaction(function () use ($data) {
-                // 1️ Buat user baru
+                $nameCurrentUser = Auth::user()->name;
+
                 $user = User::create([
                     'name'     => $data['name'],
                     'email'    => $data['email'],
                     'password' => Hash::make($data['password']),
                     'aktif'   => $data['aktif'] === 'Aktif',
+                    'admin_buat'    => $nameCurrentUser,
+                    'admin_ubah'    => $nameCurrentUser,
                 ]);
 
-                // 2️ Buat profil untuk user tersebut
                 Profile::create([
                     'user_id'    => $user->id,
                     'perusahaan' => $data['perusahaan'] ?? null,
@@ -199,7 +205,6 @@ class UserListController extends Controller
                     'alamat'     => $data['alamat'] ?? null,
                 ]);
 
-                // 3️ Tambahkan role ke user
                 $user->assignRole($data['role']);
             });
             return response()->json([
@@ -223,11 +228,13 @@ class UserListController extends Controller
             $data = $request->validated();
 
             DB::transaction(function () use ($id, $data) {
+                $currentUser = Auth::user();
                 $user = User::findOrFail($id);
                 $oldEmail = $user->email;
 
                 $user->name = $data['name'];
                 $user->email = $data['email'];
+                $user->admin_ubah = $currentUser->name;
 
                 if (!empty($data['aktif'])) {
                     $user->aktif = $data['aktif'] === 'Aktif';
@@ -262,8 +269,8 @@ class UserListController extends Controller
                 }
 
                 if (!empty($changes)) {
-                    DB::afterCommit(function () use ($user, $changes) {
-                        event(new UserSensitiveDataChanged($user, $changes, Auth::user()->id));
+                    DB::afterCommit(function () use ($currentUser, $user, $changes) {
+                        event(new UserSensitiveDataChanged($user, $changes, $currentUser->id));
                     });
                 }
             });

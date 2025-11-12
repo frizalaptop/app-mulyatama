@@ -25,6 +25,8 @@ class User extends Authenticatable
         'password',
         'last_login_at',
         'aktif',
+        'admin_buat',
+        'admin_ubah',
     ];
 
     /**
