@@ -7,22 +7,37 @@ use App\Http\Controllers\Admin\User\UserListController;
 use App\Http\Controllers\Admin\Billboard\BillboardController;
 use App\Http\Controllers\admin\billboard\BillboardSewaController;
 use App\Http\Controllers\Klien\Billboard\BillboardController as KlienBillboardController;
+use App\Http\Controllers\Klien\Billboard\BillboardSewaController as KlienBillboardSewaController;
 use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 
 // Dashboard
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
-// Redirect By Role
-Route::get('/billboard', function () {
-    $userRole = Auth::user()->getRoleNames()->first();
-    return $userRole === 'Admin'
-        ? redirect()->route('admin.billboard.index')
-        : redirect()->route('klien.billboard.index');
+Route::middleware('auth')->group(function () {
+    Route::get('/', function () {
+        $userRole = Auth::user()->getRoleNames()->first();
+        return $userRole === 'Admin'
+            ? redirect()->route('admin')
+            : redirect()->route('klien');
+    });
+    
+    // Global route billboard list
+    Route::get('/billboard-list', function () {
+        $userRole = Auth::user()->getRoleNames()->first();
+        return $userRole === 'Admin'
+            ? redirect()->route('admin.billboard.list')
+            : redirect()->route('klien.billboard.list');
+    });
+    
+    // Global route billboard sewa
+    Route::get('/billboard-sewa', function () {
+        $userRole = Auth::user()->getRoleNames()->first();
+        return $userRole === 'Admin'
+            ? redirect()->route('admin.billboard.sewa')
+            : redirect()->route('klien.billboard.sewa');
+    });
 });
 
 // Role admin 
@@ -33,7 +48,7 @@ Route::prefix('admin')
 
             // admin dashboard
             Route::get('/', [DashboardController::class, 'index'])
-                ->name('admin.index');
+                ->name('admin');
 
             // admin -> statistik json
             Route::prefix('statistik')
@@ -77,7 +92,7 @@ Route::prefix('admin')
                     Route::prefix('billboard-list')
                         ->group(function () {
                             Route::get('/', [BillboardController::class, 'index'])
-                                ->name('admin.billboard.index');
+                                ->name('admin.billboard.list');
                             Route::get('/tabel', [BillboardController::class, 'tabel'])
                                 ->name('admin.billboard.list.tabel');
                             Route::get('/get-id/{id}', [BillboardController::class, 'getId'])
@@ -95,7 +110,11 @@ Route::prefix('admin')
                     Route:: prefix('billboard-sewa')
                         ->group(function () {
                             Route::get('/', [BillboardSewaController::class, 'index'])
+                                ->name('admin.billboard.sewa');
+                            Route::get('/tabel', [BillboardSewaController::class, 'tabel'])
                                 ->name('admin.billboard.sewa.tabel');
+                            Route::get('/opsi-filter', [BillboardSewaController::class, 'opsiFilter'])
+                                ->name('admin.billboard.sewa.opsi.filter');
                             Route::post('/simpan', [BillboardSewaController::class, 'simpan'])
                                 ->name('admin.billboard.sewa.simpan'); 
                         });
@@ -111,7 +130,7 @@ Route::prefix('klien')
         
         // klien dashboard
         Route::get('/', [KlienDashboardController::class, 'index'])
-            ->name('klien.index');
+            ->name('klien');
 
         // klien -> billboard
         Route::prefix('billboard')
@@ -120,11 +139,23 @@ Route::prefix('klien')
                 Route::prefix('billboard-list')
                     ->group(function () {
                         Route::get('/', [KlienBillboardController::class, 'index'])
-                            ->name('klien.billboard.index');
+                            ->name('klien.billboard.list');
                         Route::get('/tabel', [KlienBillboardController::class, 'tabel'])
                             ->name('klien.billboard.list.tabel');
                         Route::get('/opsi-filter', [BillboardController::class, 'opsiFilter'])
                             ->name('klien.billboard.list.opsi.filter');
+                    });
+
+                Route:: prefix('billboard-sewa')
+                    ->group(function () {
+                        Route::get('/', [KlienBillboardSewaController::class, 'index'])
+                            ->name('klien.billboard.sewa');
+                        Route::get('/tabel', [KlienBillboardSewaController::class, 'tabel'])
+                            ->name('klien.billboard.sewa.tabel');
+                        Route::get('/opsi-filter', [KlienBillboardSewaController::class, 'opsiFilter'])
+                            ->name('klien.billboard.sewa.opsi.filter');
+                        Route::post('/simpan', [KlienBillboardSewaController::class, 'simpan'])
+                            ->name('klien.billboard.sewa.simpan'); 
                     });
 
             });
@@ -136,7 +167,7 @@ Route::prefix('profil')
     ->middleware(['auth'])
     ->group(function () {
         Route::get('/', [ProfilController::class, 'index'])
-            ->name('profil.index');
+            ->name('profil');
         Route::put('/update-akun/{userId}', [ProfilController::class, 'updateAkun'])
             ->name('profil.update.akun');
         Route::put('/update-info/{userId}', [ProfilController::class, 'updateInfo'])

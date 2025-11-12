@@ -328,11 +328,11 @@ return [
             'submenu' => [
                 [
                     'text' => 'Billboard List',
-                    'url'  => '/billboard',
+                    'url'  => '/billboard-list',
                 ],
                 [
                     'text' => 'Billboard Sewa',
-                    'url'  => '/admin/billboard/billboard-sewa',
+                    'url'  => '/billboard-sewa',
                 ],
             ],
         ],
@@ -386,11 +386,16 @@ return [
         // Billboard with submenu
         [
             'text' => 'Billboard',
-            'icon' => 'bi bi-person-circle',
+            'icon' => 'bi bi-signpost',
             'submenu' => [
                 [
                     'text' => 'Billboard List',
-                    'url'  => '/billboard',
+                    'url'  => '/billboard-list',
+                    'icon' => 'bi bi-signpost',
+                ],
+                [
+                    'text' => 'Billboard Sewa',
+                    'url'  => '/billboard-sewa',
                     'icon' => 'bi bi-signpost',
                 ],
             ],
