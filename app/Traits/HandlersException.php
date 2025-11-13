@@ -35,7 +35,7 @@ trait HandlersException {
             $message = 'Terjadi kesalahan pada server.';
 
             // Log hanya untuk error 500
-            $this->logException($e);
+            $this->logExceptionHttp($e);
         }
 
         // Jika permintaan AJAX → JSON response
