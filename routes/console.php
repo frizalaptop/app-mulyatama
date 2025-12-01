@@ -10,3 +10,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command('billboard:update-status')->daily();
+
+Schedule::command('billboard:check-billboard-reminder')->daily();
