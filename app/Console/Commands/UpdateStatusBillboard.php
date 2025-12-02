@@ -14,64 +14,95 @@ class UpdateStatusBillboard extends Command
     use ServiceLogger;
 
     /**
-     * The name and signature of the console command.
+     * Cara memanggil perintah artisan.
      *
      * @var string
      */
     protected $signature = 'billboard:update-status';
 
     /**
-     * The console command description.
+     * Deskripsi perintah.
      *
      * @var string
      */
     protected $description = 'Perbarui status billboard menjadi tersedia jika masa sewanya sudah berakhir.';
 
     /**
-     * Execute the console command.
+     * Eksekusi perintah console.
      */
     public function handle()
     {
         try {
+            // Dapatkan tanggal hari ini
             $today = Carbon::today();
 
-            $expiredBillboardIds = DB::table('billboard_sewa')
-                ->join('billboards', 'billboards.id', '=', 'billboard_sewa.billboard_id')
-                ->whereDate('billboard_sewa.tgl_akhir', '<', $today)
-                ->where('billboards.status', 0)
-                ->pluck('billboards.id');
+            // Cari billboard yang masa sewanya berakhir hari ini
+            $billboardIds = $this->fetchBillboardExpiredIds($today);
 
-            if ($expiredBillboardIds->isEmpty()) {
-                $message = 'Tidak ada billboard yang masa sewanya berakhir hari ini.';
-                $this->info($message);
-                $this->logSuccessCommand($this->signature, $message);
+            // Jika tidak ada billboard yang perlu diperbarui
+            if ($billboardIds->isEmpty()) {
+                // Tandai sebagai sukses tanpa perubahan
+                $this->handleNoData();
                 return SymfonyCommand::SUCCESS;
             }
 
-            DB::transaction(function () use ($expiredBillboardIds) {
-                DB::table('billboards')
-                    ->whereIn('id', $expiredBillboardIds)
-                    ->update([
-                        'status' => 1,
-                        'updated_at' => now(),
-                    ]);
-            });
+            // Perbarui status billboard menjadi tersedia
+            $this->updateBillboardStatus($billboardIds);
 
-            $count = $expiredBillboardIds->count();
-            $message = "Berhasil memperbarui status {$count} billboard menjadi tersedia.";
-            $this->info($message);
-
-            $this->logSuccessCommand($this->signature, $message, [
-                'count' => $count,
-                'ids' => $expiredBillboardIds,
-            ]);
-
+            // Tandai sebagai sukses dengan perubahan
+            $this->handleSuccessCommand($billboardIds);
             return SymfonyCommand::SUCCESS;
-
         } catch (\Throwable $e) {
-            $this->error('Terjadi kesalahan: ' . $e->getMessage());
-            $this->logExceptionCommand($this->signature, $e);
+            // Tandai kesalahan dan log error yang terjadi
+            $this->handleErrorCommand($e);
             return SymfonyCommand::FAILURE;
         }
+    }
+
+    private function fetchBillboardExpiredIds(Carbon $today)
+    {
+        return DB::table('billboards')
+            ->where('status', 0) // Status non-aktif
+            ->whereNotExists(function ($query) use ($today) {
+                $query->select(DB::raw(1))
+                    ->from('billboard_sewa')
+                    ->whereRaw('billboard_sewa.billboard_id = billboards.id')
+                    ->where('billboard_sewa.tgl_akhir', '>=', $today);
+            })
+            ->pluck('billboards.id');
+    }
+
+    private function handleNoData()
+    {
+        $message = 'Tidak ada billboard yang masa sewanya berakhir hari ini.';
+        $this->info($message);
+        $this->logSuccessCommand($this->signature, $message);
+    }
+
+    private function updateBillboardStatus($billboardIds)
+    {
+        DB::table('billboards')
+            ->whereIn('id', $billboardIds)
+            ->update([
+                'status' => 1,
+                'updated_at' => now(),
+            ]);
+    }
+
+    private function handleSuccessCommand($billboardIds)
+    {
+        $count = $billboardIds->count();
+        $message = "Berhasil memperbarui status {$count} billboard menjadi tersedia.";
+        $this->info($message);
+        $this->logSuccessCommand($this->signature, $message, [
+            'count' => $count,
+            'ids' => $billboardIds,
+        ]);
+    }
+
+    private function handleErrorCommand($error)
+    {
+        $this->error('Terjadi kesalahan: ' . $error->getMessage());
+        $this->logExceptionCommand($this->signature, $error);
     }
 }

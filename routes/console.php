@@ -9,6 +9,6 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-Schedule::command('billboard:update-status')->daily();
-
-Schedule::command('billboard:check-billboard-reminder')->daily();
+Schedule::command('billboard:update-status')
+    ->daily()
+    ->at('00:03');
