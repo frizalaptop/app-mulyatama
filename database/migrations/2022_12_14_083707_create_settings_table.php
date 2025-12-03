@@ -15,6 +15,12 @@ return new class extends Migration
             $table->string('name');
             $table->boolean('locked')->default(false);
             $table->json('payload');
+            $table
+                ->string('admin_buat', 100)
+                ->default('System');
+            $table
+                ->string('admin_ubah', 100)
+                ->default('System');
 
             $table->timestamps();
 
