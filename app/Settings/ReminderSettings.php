@@ -4,12 +4,13 @@ namespace App\Settings;
 
 use Spatie\LaravelSettings\Settings;
 
-class NotificationSettings extends Settings
+class ReminderSettings extends Settings
 {
-    public int $remember_day;
+    public array $klien;
+    public array $admin;
 
     public static function group(): string
     {
-        return 'notification';
+        return 'reminder';
     }
 }
