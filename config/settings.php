@@ -1,6 +1,6 @@
 <?php
 
-use App\Settings\NotificationSettings;
+use App\Settings\ReminderSettings;
 
 return [
 
@@ -9,7 +9,7 @@ return [
      * put them (manually) here.
      */
     'settings' => [
-        NotificationSettings::class,
+        ReminderSettings::class,
     ],
 
     /*
