@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Helpers;
 
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
@@ -11,14 +12,14 @@ class ControllerHelpers
     /**
      * Logika pengambilan data untuk method tabel pada setiap controller
      * @param \Illuminate\Http\Request $request http request instance
-     * @param \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model $query query builder
+     * @param EloquentBuilder|QueryBuilder|\Illuminate\Database\Eloquent\Model $query query builder
      * @param array $searchableColumns kolom yang dapat dicari
      * @param callable $customColumnFilter (opsional) kolom yang dapat difilter
      * @return array{data: mixed, draw: int, recordsFiltered: mixed, recordsTotal: mixed}
      */
     public function tabelHelper(
         Request $request,
-        Builder|Model $query,
+        EloquentBuilder|QueryBuilder|Model $query,
         array $searchableColumns = [],
         ?callable $customColumnFilter = null
     ) {
