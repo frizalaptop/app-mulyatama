@@ -14,14 +14,14 @@ class CheckBillboardReminder extends Command
     use ServiceLogger;
 
     /**
-     * The name and signature of the console command.
+     * Cara memanggil perintah artisan.
      *
      * @var string
      */
     protected $signature = 'billboard:check-billboard-reminder';
 
     /**
-     * The console command description.
+     * Deskripsi perintah.
      *
      * @var string
      */
@@ -33,24 +33,23 @@ class CheckBillboardReminder extends Command
     public function handle()
     {
         try {
+            // Dapatkan tanggal hari ini
             $today = Carbon::today();
 
             // Hari-hari reminder
             $reminderDays = [30, 14, 7, 1];
 
-            // Menampung seluruh data (tanpa grup hari)
+            // Menampung seluruh data
             $results = collect();
 
+            // Cek sisa hari sewa untuk setiap hari-hari reminder
             foreach ($reminderDays as $day) {
                 $targetDate = $today->copy()->addDays($day);
                 $data = $this->fetchDataByDay($targetDate, $day);
                 
-                $results = $results->merge($data); // Gabung ke collection
+                $results = $results->merge($data);
                 $this->info("Reminder {$day} hari: " . $data->count() . " data ditemukan.");
-                
-                Log::info($targetDate);
 
-                // Logging
                 $this->logSuccessCommand($this->signature, "Reminder {$day} hari ditemukan {$data->count()} data.", [
                     'day' => $day,
                     'count' => $data->count(),
@@ -59,18 +58,17 @@ class CheckBillboardReminder extends Command
 
             // Jika tidak ada data
             if ($results->isEmpty()) {
+                // Tandai sebagai sukses tanpa pembuatan job
                 $this->handleNoData();
                 return SymfonyCommand::SUCCESS;
             }
 
-            // Dispatch job tunggal, data sudah lengkap & flat
+            // Dispatch job & tandai command sukses
             $this->dispacthEmailJob($results);
-
-            $this->info("Berhasil memproses reminder dan mengirim ke Queue.");
             return SymfonyCommand::SUCCESS;
         } catch (\Throwable $e) {
-            $this->error("Terjadi kesalahan: " . $e->getMessage());
-            $this->logExceptionCommand($this->signature, $e);
+            // Tandai kesalahan dan log error yang terjadi
+            $this->handleErrorCommand($e);
             return SymfonyCommand::FAILURE;
         }
     }
@@ -94,18 +92,26 @@ class CheckBillboardReminder extends Command
             )
             ->get();
     }
-    private function dispacthEmailJob($data)
-    {
-        foreach ($data as $index => $item) {
-            dispatch(new \App\Jobs\SendReminderEmailJob($item))
-                ->delay(now()->addSeconds($index * 12));
-        }
-    }
 
     private function handleNoData()
     {
         $message = "Tidak ada billboard yang mendekati masa berakhir.";
         $this->info($message);
         $this->logSuccessCommand($this->signature, $message);
+    }
+
+    private function dispacthEmailJob($data)
+    {
+        foreach ($data as $index => $item) {
+            dispatch(new \App\Jobs\SendReminderEmailJob($item))
+                ->delay(now()->addSeconds($index * 12));
+        }
+        $this->info("Berhasil memproses reminder dan mengirim ke Queue.");
+    }
+
+    private function handleErrorCommand($error)
+    {
+        $this->error("Terjadi kesalahan: " . $error->getMessage());
+        $this->logExceptionCommand($this->signature, $error);
     }
 }
