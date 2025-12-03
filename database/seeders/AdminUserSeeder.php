@@ -19,6 +19,8 @@ class AdminUserSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'password' => Hash::make('cirebon321'),
+                'admin_buat' => "System",
+                'admin_ubah' => "System",
             ]
         );
 
