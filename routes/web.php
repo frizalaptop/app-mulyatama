@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\StatistikController;
 use App\Http\Controllers\Admin\User\UserListController;
 use App\Http\Controllers\Admin\Billboard\BillboardController;
 use App\Http\Controllers\admin\billboard\BillboardSewaController;
+use App\Http\Controllers\Admin\Setting\SettingReminderController;
 use App\Http\Controllers\Klien\Billboard\BillboardController as KlienBillboardController;
 use App\Http\Controllers\Klien\Billboard\BillboardSewaController as KlienBillboardSewaController;
 use App\Http\Controllers\ProfilController;
@@ -117,6 +118,26 @@ Route::prefix('admin')
                                 ->name('admin.billboard.sewa.opsi.filter');
                             Route::post('/simpan', [BillboardSewaController::class, 'simpan'])
                                 ->name('admin.billboard.sewa.simpan'); 
+                        });
+
+                });
+            
+            // admin -> setting
+            Route::prefix('setting')
+                ->group(function () {
+
+                    Route::prefix('reminder')
+                        ->group(function () {
+                            Route::get('/', [SettingReminderController::class, 'index'])
+                                ->name('admin.setting.reminder');
+                            Route::get('/tabel', [SettingReminderController::class, 'tabel'])
+                                ->name('admin.setting.reminder.tabel');
+                            Route::get('/get-id/{id}', [SettingReminderController::class, 'getId'])
+                                ->name('admin.setting.reminder.getId');
+                            Route::get('/opsi-filter', [SettingReminderController::class, 'opsiFilter'])
+                                ->name('admin.setting.reminder.filter');
+                            Route::put('/update/{id}', [SettingReminderController::class, 'update'])
+                                ->name('admin.setting.reminder.update');
                         });
 
                 });
