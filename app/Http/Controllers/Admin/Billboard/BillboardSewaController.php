@@ -88,7 +88,7 @@ class BillboardSewaController extends Controller
                     'lokasi' => $row->lokasi,
                     'jenis' => $row->jenis,
                     'email' => $row->email,
-                    'countdown' => $row->tgl_akhir,
+                    'countdown' => [$row->tgl_awal, $row->tgl_akhir],
                 ];
             });
 
