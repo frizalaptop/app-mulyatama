@@ -20,7 +20,7 @@ class BillboardFactory extends Factory
             'judul' => $this->faker->words(2, true), // contoh: "Billboard A"
             'area' => $this->faker->randomElement(['Kota Cirebon', 'Kabupaten Cirebon', 'Kuningan', 'Majalengka', 'Indramayu']),
             'lokasi' => 'Jl. ' . $this->faker->streetName() . ' - ' . $this->faker->city(),
-            'status' => 1,
+            'status' => 0,
             'aktif' => 1,
             'keterangan' => $this->faker->optional()->sentence(),
             'jenis' => $this->faker->randomElement(['Backlight', 'Frontlight', 'Street Sign']),
@@ -30,8 +30,8 @@ class BillboardFactory extends Factory
             'latitude' => $this->faker->latitude(-6.8, -6.6),
             'longitude' => $this->faker->longitude(108.4, 108.6),
             'gambar' => null,
-            'admin_buat' => $this->faker->randomElement(['Wawan', 'Admin', 'Friza']),
-            'admin_ubah' => $this->faker->randomElement(['Wawan', 'Admin', 'Friza']),
+            'admin_buat' => "System",
+            'admin_ubah' => "System",
             'created_at' => now(),
             'updated_at' => now(),
         ];
