@@ -12,3 +12,9 @@ Artisan::command('inspire', function () {
 Schedule::command('billboard:update-status')
     ->daily()
     ->at('00:03');
+
+Schedule::command('billboard:check-billboard-reminder')
+    ->daily()
+    ->at('00:05');
+
+Schedule::command('queue:retry all')->everyFiveMinutes();
