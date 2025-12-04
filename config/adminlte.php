@@ -343,11 +343,15 @@ return [
             'submenu' => [
                 [
                     'text' => 'Setting Umum',
-                    'url'  => '/admin/setting-umum',
+                    'url'  => '/admin/setting/umum',
                 ],
                 [
                     'text' => 'Setting Cache',
-                    'url'  => '/admin/setting-cache',
+                    'url'  => '/admin/setting/cache',
+                ],
+                [
+                    'text' => 'Setting Reminder',
+                    'url'  => '/admin/setting/reminder',
                 ],
             ],
         ],
@@ -408,12 +412,17 @@ return [
             'submenu' => [
                 [
                     'text' => 'Setting Umum',
-                    'url'  => '/admin/setting-umum',
+                    'url'  => '/admin/setting/umum',
                     'icon' => 'bi bi-gear'
                 ],
                 [
                     'text' => 'Setting Cache',
-                    'url'  => '/admin/setting-cache',
+                    'url'  => '/admin/setting/cache',
+                    'icon' => 'bi bi-gear'
+                ],
+                [
+                    'text' => 'Setting Reminder',
+                    'url'  => '/admin/setting/reminder',
                     'icon' => 'bi bi-gear'
                 ],
             ],
