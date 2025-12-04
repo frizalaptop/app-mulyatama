@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Mail;
 class SendReminderEmailJob implements ShouldQueue
 {
     use Queueable;
-    protected $data;
-    public $tries = 5;
+    protected $data; // data yang akan digunakan dalam email
+    public $tries = 5; // jumlah percobaan maksimal
 
     /**
      * Create a new job instance.
