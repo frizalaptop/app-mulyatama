@@ -6,7 +6,6 @@ use App\Traits\ServiceLogger;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
 class CheckBillboardReminder extends Command
@@ -36,10 +35,10 @@ class CheckBillboardReminder extends Command
             // Dapatkan tanggal hari ini
             $today = Carbon::today();
 
-            // Hari-hari reminder
-            $reminderDays = [30, 14, 7, 1];
+            // Dapatkan setting hari-hari reminder dari database
+            $reminderDays = $this->fetchDaySettings();
 
-            // Menampung seluruh data
+            // Menampung seluruh data dari iterasi
             $results = collect();
 
             // Cek sisa hari sewa untuk setiap hari-hari reminder
@@ -71,6 +70,15 @@ class CheckBillboardReminder extends Command
             $this->handleErrorCommand($e);
             return SymfonyCommand::FAILURE;
         }
+    }
+
+    private function fetchDaySettings()
+    {
+        $reminderSetting = DB::table('settings')
+            ->where('group', 'reminder')
+            ->where('name', 'klien')
+            ->value('payload');
+        return $reminderSetting ? json_decode($reminderSetting, true) : [30, 14, 7, 1];
     }
 
     private function fetchDataByDay(Carbon $targetDate, int $day)
