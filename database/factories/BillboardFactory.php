@@ -22,7 +22,7 @@ class BillboardFactory extends Factory
             'lokasi' => 'Jl. ' . $this->faker->streetName() . ' - ' . $this->faker->city(),
             'status' => 0,
             'aktif' => 1,
-            'keterangan' => $this->faker->optional()->sentence(),
+            'keterangan' => null,
             'jenis' => $this->faker->randomElement(['Backlight', 'Frontlight', 'Street Sign']),
             'lebar' => $this->faker->randomFloat(1, 4, 12),
             'panjang' => $this->faker->randomFloat(1, 3, 8),
