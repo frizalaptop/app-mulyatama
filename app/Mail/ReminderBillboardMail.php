@@ -3,12 +3,15 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+/**
+ * Email untuk remender masa sewa billboard
+ * @see app\Jobs\SendReminderEmailJob.php
+ */
 class ReminderBillboardMail extends Mailable
 {
     use Queueable, SerializesModels;

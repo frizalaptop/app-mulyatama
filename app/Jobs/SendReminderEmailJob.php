@@ -6,6 +6,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Mail;
 
+/**
+ * Job untuk handle pengiriman email
+ * @see app\Console\Commands\CheckBillboardReminder.php
+ */
 class SendReminderEmailJob implements ShouldQueue
 {
     use Queueable;

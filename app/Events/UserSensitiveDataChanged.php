@@ -9,7 +9,7 @@ use Illuminate\Queue\SerializesModels;
 
 /**
  * Event ini dipicu ketika instance User merubah data sensitif (email atau password)
- * @see app\Listeners\LogUserSensitiveDataChange.php sebagai event yang didengan
+ * @see app\Listeners\LogUserSensitiveDataChange.php sebagai event yang didengar
  * @see app\Services\UserListService.php sebagai event yang dibuat
  */
 class UserSensitiveDataChanged

@@ -4,6 +4,16 @@
  * README
  * File ini hanya berisi dokumentasi atau catatan penting terkait proyek ini.
  * 
+ * << cara menggunakan Starter Data (seeder) >>
+ * php artisan migrate:fresh
+ * php artisan db:seed
+ * 
+ * << cara menjalankan cron job tiruan laravel>>
+ * php artisan schedule:work
+ * 
+ * << cara menjalankan queue email laravel >>
+ * php artisan queue:work --queue=email
+ * 
  * << Route >>
  * routes\web.php
  * 
@@ -17,6 +27,7 @@
  * config\app.php
  * config\database.php
  * config\adminlte.php
+ * config\settings.php (spatie/larevel-settings)
  * 
  * << Event >>
  * app\Events\UserSensitiveDataChanged.php
@@ -27,6 +38,7 @@
  * app\Http\Controllers\Admin\User\UserListController.php
  * app\Http\Controllers\Admin\DashboardController.php
  * app\Http\Controllers\Admin\StatistikController.php
+ * app\Http\Controllers\Admin\Setting\SettingReminderController.php
  * 
  * << Controller Klien >>
  * app\Http\Controllers\Klien\Billboard\BillboardController.php
@@ -68,6 +80,7 @@
  * public\page\admin\billboard-list.min.js
  * public\page\admin\billboard-sewa.min.js
  * public\page\admin\user-list.min.js
+ * public\page\admin\setting-reminder.min.js
  * public\page\klien\billboard-list.min.js
  * public\page\klien\billboard-sewa.min.js
  * 
@@ -80,6 +93,7 @@
  * resources\views\klien
  * resources\views\errors (Error Pages)
  * resources\views\profil.blade.php
+ * resources\views\emails (Email Layout)
  * 
  * << Migration >>
  * database\migrations
@@ -90,7 +104,7 @@
  * << Factory Database >>
  * database\factories
  * 
- * << File Bahasa >>
+ * << File Bahasa Pesan Validasi >>
  * lang
  * 
  * 

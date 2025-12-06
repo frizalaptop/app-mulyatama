@@ -14,6 +14,11 @@ class SettingReminderController extends Controller
 {
 
     use HandlersException;
+
+    /**
+     * Mengambil view remender setting 
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         try {
@@ -24,6 +29,12 @@ class SettingReminderController extends Controller
         }
     }
 
+    /**
+     * Mengambil data-tabel remender setting
+     * @param \Illuminate\Http\Request $request instance http request
+     * @param \App\Http\Controllers\Helpers\ControllerHelpers $helper instance helper controller
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
+     */
     public function tabel (Request $request, ControllerHelpers $helper)
     {
         try {
@@ -58,6 +69,11 @@ class SettingReminderController extends Controller
         }
     }
 
+    /**
+     * Mengambil data remnder setting berdasarkan id
+     * @param mixed $id settings id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getId ($id) 
     {
         try {
@@ -98,6 +114,12 @@ class SettingReminderController extends Controller
         }
     }
 
+    /**
+     * Mengubah data remender setting
+     * @param \Illuminate\Http\Request $request [payload]
+     * @param mixed $id settings id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, $id)
     {
         $validated = $request->validate([

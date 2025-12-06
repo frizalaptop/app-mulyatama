@@ -8,7 +8,11 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
-
+/**
+ * Command untuk update status menjadi "tersedia" ketika suatu billboard sudah habis masa sewa
+ * cara menjalankan "billboard:update-status"
+ * @see routes\console.php dipanggil oleh task scheduller
+ */
 class UpdateStatusBillboard extends Command
 {
     use ServiceLogger;

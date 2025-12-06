@@ -8,6 +8,12 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 
+/**
+ * Command untuk pengecekan reminder
+ * remender tersedia: email
+ * cara menjalankan "php artisan billboard:check-billboard-reminder"
+ * @see routes\console.php dipanggil oleh task scheduller
+ */
 class CheckBillboardReminder extends Command
 {
     use ServiceLogger;

@@ -10,11 +10,11 @@ use Illuminate\Http\Request;
 class ControllerHelpers
 {
     /**
-     * Logika pengambilan data untuk method tabel pada setiap controller
+     * @see app\Http\Controllers Logika pengambilan data untuk method tabel
      * @param \Illuminate\Http\Request $request http request instance
      * @param EloquentBuilder|QueryBuilder|\Illuminate\Database\Eloquent\Model $query query builder
      * @param array $searchableColumns kolom yang dapat dicari
-     * @param callable $customColumnFilter (opsional) kolom yang dapat difilter
+     * @param callable $customColumnFilter (opsional) function berisi logika pengambilan kolom yang dapat difilter
      * @return array{data: mixed, draw: int, recordsFiltered: mixed, recordsTotal: mixed}
      */
     public function tabelHelper(
